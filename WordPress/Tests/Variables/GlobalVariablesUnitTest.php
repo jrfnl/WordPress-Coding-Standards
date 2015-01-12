@@ -23,6 +23,13 @@ class WordPress_Tests_Variables_GlobalVariablesUnitTest extends AbstractSniffUni
 		return array(
 			3 => 1,
 			6 => 1,
+			18 => 1,
+			20 => 1,
+			23 => 1,
+			25 => 1,
+			28 => 1,
+			30 => 1,
+			33 => 1,
 		);
 
 
