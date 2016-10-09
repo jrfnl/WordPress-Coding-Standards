@@ -128,6 +128,7 @@
 
 	<!-- Discourage a number of functions for usage in a theme. -->
 	<rule ref="WordPress.PHP.DiscouragedFunctions"/>
+	<rule ref="WordPress.PHP.POSIXFunctions"/>
 
 	<!-- Prohibit overwriting of WordPress global variables. -->
 	<rule ref="WordPress.Variables.GlobalVariables"/>
