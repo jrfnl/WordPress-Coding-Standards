@@ -111,6 +111,34 @@ class ControlStructureSpacingSniff extends Sniff {
 	 * @return void
 	 */
 	public function process_token( $stackPtr ) {
+
+ini_set( 'xdebug.overload_var_dump', 1 );
+
+static $dumped = false;
+if($dumped === false) {
+    echo "\n";
+    foreach( $this->tokens as $ptr => $token ) {
+        if ( ! isset( $token['length'] ) ) {
+            $token['length'] = strlen($token['content']);
+        }
+        if ( $token['code'] === T_WHITESPACE || $token['code'] === T_DOC_COMMENT_WHITESPACE ) {
+            if ( strpos( $token['content'], "\t" ) !== false ) {
+                $token['content'] = str_replace( "\t", '\t', $token['content'] );
+            }
+            if ( isset( $token['orig_content'] ) ) {
+                $token['content'] .= ' :: Orig: ' . str_replace( "\t", '\t', $token['orig_content'] );
+            }
+        }
+        echo $ptr . ' :: L' . str_pad( $token['line'] , 3, '0', STR_PAD_LEFT ) . ' :: C' . $token['column'] . ' :: ' . $token['type'] . ' :: (' . $token['length'] . ') :: ' . $token['content'] . "\n";
+        if ( $token['code'] === T_USE ) {
+            var_dump( $token );
+            var_dump( $this->get_use_type( $ptr ) );
+        }
+    }
+    unset( $ptr, $token );
+    $dumped = true;
+}
+
 		$this->spaces_before_closure_open_paren = (int) $this->spaces_before_closure_open_paren;
 
 		if ( isset( $this->tokens[ ( $stackPtr + 1 ) ] ) && \T_WHITESPACE !== $this->tokens[ ( $stackPtr + 1 ) ]['code']
@@ -166,7 +194,7 @@ class ControlStructureSpacingSniff extends Sniff {
 		}
 
 		$parenthesisOpener = $this->phpcsFile->findNext( Tokens::$emptyTokens, ( $stackPtr + 1 ), null, true );
-
+var_dump( $parenthesisOpener );
 		// If this is a function declaration.
 		if ( \T_FUNCTION === $this->tokens[ $stackPtr ]['code'] ) {
 
