@@ -6,9 +6,16 @@
 class ezcReflectionMethod extends ReflectionMethod {
     use ezcReflectionReturnInfo;
 }
+
 class MyHelloWorld {
     use \Hello, World;
 }
+
+class MyHelloWorld {
+    use \Hello,
+		World;
+}
+
 
 class MyClass1 {
     use \HelloWorld { sayHello as protected; }
@@ -68,8 +75,16 @@ use const My\Full\CONSTANT;
 // Multi-use statement.
 use My\Full\Classname as Another, My\Full\NSname;
 
+use My\Full\Classname as Another,
+	My\Full\NSname;
+
 // Group use statements (PHP 7+)
 use some\namespace\{ClassA, ClassB, ClassC as C};
+use some\namespace\{
+	ClassA,
+	ClassB,
+	ClassC as C
+};
 use function some\namespace\{fn_a, fn_b, fn_c};
 use const some\namespace\{ConstA, ConstB, ConstC};
 
@@ -79,5 +94,3 @@ use some\namespace\{
 	ClassB,
 	ClassC as C,
 };
-
-
