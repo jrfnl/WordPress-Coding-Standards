@@ -70,21 +70,21 @@ class UseStatementSpacingSniff extends Sniff {
 	 *
 	 * @var boolean
 	 */
-	public $blank_line_check = false;
+//	public $blank_line_check = false;
 
 	/**
 	 * Check for blank lines after control structures.
 	 *
 	 * @var boolean
 	 */
-	public $blank_line_after_check = true;
+//	public $blank_line_after_check = true;
 
 	/**
 	 * Require for space before T_COLON when using the alternative syntax for control structures.
 	 *
 	 * @var string one of 'required', 'forbidden', 'optional'
 	 */
-	public $space_before_colon = 'required';
+//	public $space_before_colon = 'required';
 
 	/**
 	 * How many spaces should be between a T_CLOSURE and T_OPEN_PARENTHESIS.
@@ -95,7 +95,7 @@ class UseStatementSpacingSniff extends Sniff {
 	 *
 	 * @var int
 	 */
-	public $spaces_before_closure_open_paren = -1;
+//	public $spaces_before_closure_open_paren = -1;
 
 	/**
 	 * Tokens for which to ignore extra space on the inside of parenthesis.
@@ -107,36 +107,39 @@ class UseStatementSpacingSniff extends Sniff {
 	 *
 	 * @var array
 	 */
-	private $ignore_extra_space_after_open_paren = array(
+/*	private $ignore_extra_space_after_open_paren = array(
 		T_FUNCTION => true,
 		T_CLOSURE  => true,
 		T_DO       => true,
 		T_ELSE     => true,
 		T_TRY      => true,
 	);
+*/
+
+/*
+	private $keyword_tokens = array(
+		'T_USE' =>
+		'T_COMMA':
+		'T_AS':
+		'T_INSTEADOF':
+		'T_PUBLIC':
+		'T_PROTECTED':
+		'T_PRIVATE':
+		'T_FINAL':
+  	);
+*/
 
 	/**
 	 * Returns an array of tokens this test wants to listen for.
+	 *
+	 * @since 0.14.0
 	 *
 	 * @return array
 	 */
 	public function register() {
 		return array(
-			T_IF,
-			T_WHILE,
-			T_FOREACH,
-			T_FOR,
-			T_SWITCH,
-			T_DO,
-			T_ELSE,
-			T_ELSEIF,
-			T_FUNCTION,
-			T_CLOSURE,
 			T_USE,
-			T_TRY,
-			T_CATCH,
 		);
-
 	}
 
 	/**
@@ -175,6 +178,103 @@ if($dumped === false) {
     $dumped = true;
 }
 
+
+		/*
+		Walk
+		*/
+		
+		$use_type    = $this->get_use_type( $stackPtr );
+		$close_token = T_SEMICOLON;
+		$multiline   = false;
+		$first_comma = null;
+
+		for ( $i = $stackPtr; $i < $this->phpcsFile->numTokens; $i++ ) {
+			if ( $this->tokens[ $i ]['code'] === $close_token ) {
+				break;
+			}
+
+			if ( isset( Tokens::$emptyTokens[ $this->tokens[ $i ]['code'] ] ) ) {
+				continue;
+			}
+
+			switch( $this->tokens[ $i ]['type'] ) {
+				case 'T_COMMA':
+					if ( ! isset( $first_comma ) ) {
+						// Use this to walk back to correct multi-line if found out later ?
+						$first_comma = $i;
+					}
+					break;
+
+				case 'T_USE':
+				case 'T_AS':
+				case 'T_INSTEADOF':
+				case 'T_PUBLIC':
+				case 'T_PROTECTED':
+				case 'T_PRIVATE':
+				case 'T_FINAL':
+
+
+					if ( T_USE !== $this->tokens[ $i ]['code'] && T_COMMA !== $this->tokens[ $i ]['code'] ) {
+						if ( T_WHITESPACE !== $this->tokens[ ( $i - 1 ) ]['code'] ) {
+							// There should be whitespace before the %s keyword.
+							// $data = array( strtolower( $this->tokens[ $i ]['content'] ) );
+							// Add one space before.
+						} elseif ( ' ' !== $this->tokens[ ( $i - 1 ) ]['content'] ) {
+							// There should be exactly one space before
+							// Replace token.
+						}
+					}
+
+					if ( ! isset( $this->tokens[ ( $i + 1  ) ] ) ) {
+						break;
+					}
+
+					if ( ( isset( Tokens::$scopeModifiers[ $this->tokens[ $i ]['code'] ] )
+							|| T_FINAL === $this->tokens[ $i ]['code'] )
+						&& T_SEMICOLON === $this->tokens[ ( $i + 1  ) ]['code']
+					) {
+						break;
+					}
+
+					if ( T_WHITESPACE !== $this->tokens[ ( $i + 1 ) ]['code'] ) {
+						// There should be whitespace after the %s keyword.
+						// $data = array( strtolower( $this->tokens[ $i ]['content'] ) );
+						// Add one space before.
+					} elseif ( ' ' !== $this->tokens[ ( $i + 1 ) ]['content'] ) {
+						// There should be exactly one space before
+						// Replace token.
+					}
+
+					//..
+					break;
+
+				case 'T_STRING':
+					if ( 'function' === $this->tokens[ $i ]['content']
+						|| 'const' === $this->tokens[ $i ]['content']
+					) {
+						
+						// Check spacing
+						// Check lowercase
+					}
+					//..
+					break;
+
+				case 'T_CURLY_OPEN_BRACE':
+					//..
+					if ( $this->tokens[ $i ]['line'] !== $this->tokens[ $closer ]['line'] ) {
+						$multi_line === true;
+					}
+					$close_token = T_CURLY_CLOSE_BRACE;
+					break;
+
+
+
+			}
+		}
+
+
+
+/*
 		$this->spaces_before_closure_open_paren = (int) $this->spaces_before_closure_open_paren;
 
 		if ( isset( $this->tokens[ ( $stackPtr + 1 ) ] ) && T_WHITESPACE !== $this->tokens[ ( $stackPtr + 1 ) ]['code']
@@ -612,7 +712,7 @@ var_dump( $parenthesisOpener );
 				}
 			}
 		}
-
+*/
 	} // End process_token().
 
 } // End class.
