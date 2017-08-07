@@ -182,7 +182,7 @@ if($dumped === false) {
 		/*
 		Walk
 		*/
-		
+
 		$use_type    = $this->get_use_type( $stackPtr );
 		$close_token = T_SEMICOLON;
 		$multiline   = false;
@@ -202,6 +202,19 @@ if($dumped === false) {
 					if ( ! isset( $first_comma ) ) {
 						// Use this to walk back to correct multi-line if found out later ?
 						$first_comma = $i;
+					}
+
+					if ( ! isset( $this->tokens[ ( $i + 1  ) ] ) ) {
+						break;
+					}
+
+					if ( T_WHITESPACE !== $this->tokens[ ( $i + 1 ) ]['code'] ) {
+						// There should be whitespace after the %s keyword.
+						// $data = array( strtolower( $this->tokens[ $i ]['content'] ) );
+						// Add one space before.
+					} elseif ( ' ' !== $this->tokens[ ( $i + 1 ) ]['content'] ) {
+						// There should be exactly one space before
+						// Replace token.
 					}
 					break;
 
@@ -252,7 +265,7 @@ if($dumped === false) {
 					if ( 'function' === $this->tokens[ $i ]['content']
 						|| 'const' === $this->tokens[ $i ]['content']
 					) {
-						
+
 						// Check spacing
 						// Check lowercase
 					}
