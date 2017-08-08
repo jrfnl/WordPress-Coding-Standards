@@ -21,17 +21,17 @@ use My\Full\Classname as Another,
 	My\Full\NSname;
 
 // Group use statements (PHP 7+)
-use some\namespace\{ClassA, ClassB, ClassC as C};
-use some\namespace\{
+use some\name\{ClassA, ClassB, ClassC as C};
+use some\name\{
 	ClassA,
 	ClassB,
 	ClassC as C
 };
-use function some\namespace\{fn_a, fn_b, fn_c};
-use const some\namespace\{ConstA, ConstB, ConstC};
+use function some\name\{fn_a, fn_b, fn_c};
+use const some\name\{ConstA, ConstB, ConstC};
 
 // Group use with trailing comma (PHP 7.2+)
-use some\namespace\{
+use some\name\{
 	ClassA,
 	ClassB,
 	ClassC as C,

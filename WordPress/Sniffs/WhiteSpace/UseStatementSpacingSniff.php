@@ -32,6 +32,7 @@ use PHP_CodeSniffer_Tokens as Tokens;
  *   - There should be no space between the namespace separator and the brace.
  *   - There should be exactly one space or a new line after the open brace.
  *   - There should be exactly one space or a new line before the close brace.
+ *   - There should be no space between the close brace and the colon.
  *   - Should be either truly single line or truly multi-line, i.e.:
  *     Single line: all items on one line and the open and close brace on that same line.
  *     Multi-line:
@@ -150,7 +151,7 @@ class UseStatementSpacingSniff extends Sniff {
 	 * @return void
 	 */
 	public function process_token( $stackPtr ) {
-
+/*
 ini_set( 'xdebug.overload_var_dump', 1 );
 
 static $dumped = false;
@@ -177,7 +178,7 @@ if($dumped === false) {
     unset( $ptr, $token );
     $dumped = true;
 }
-
+*/
 
 		/*
 		Walk
