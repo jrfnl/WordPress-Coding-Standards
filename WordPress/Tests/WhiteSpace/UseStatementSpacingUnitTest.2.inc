@@ -3,34 +3,32 @@
 /*
  * Use with closures.
  */
-$message = 'hello';
+$example = function ( $arg ) use ( $message ) {}; // OK.
+$example = function () use ( &$message ) {}; // OK.
+$callback = function ( $quantity, $product ) use ( $tax, &$total ) {}; // OK.
+$callback = function ( $quantity, $product ) use (
+	$tax,
+	&$total
+) {}; // OK.
 
-$example = function ($arg) use ($message) {};
-$example = function () use (&$message) {};
-$callback = function ($quantity, $product) use ($tax, &$total) {};
+$example = function ( $arg )use ( $message ) {}; // Bad - no space before use.
+$example = function ( $arg )    use ( $message ) {}; // Bad - too much space before use.
+$example = function ( $arg ) use( $message ) {}; // Bad - no space between use and open parenthesis.
+$example = function ( $arg ) use   ( $message ) {}; // Bad - too much space between use and open parenthesis.
+// Covered by Squiz.Functions.FunctionDeclarationArgumentSpacing
+// $example = function ( $arg ) use ($message ) {}; // Bad - no space after open parenthesis.
+// $example = function ( $arg ) use (  $message ) {}; // Bad - too much space after open parenthesis.
+// $example = function ( $arg ) use ( $message) {}; // Bad - no space before close parenthesis.
+// $example = function ( $arg ) use ( $message   ) {}; // Bad - too much space before close parenthesis.
+$example = function ( $arg ) use ( $message ){}; // Bad - no space between close parenthesis and open brace.
+$example = function ( $arg ) use ( $message )    {}; // Bad - too much space between close parenthesis and open brace.
 
-// @codingStandardsChangeSetting WordPress.WhiteSpace.ControlStructureSpacing spaces_before_closure_open_paren 0
+$example = function ( $arg )use($message){}; // Bad x 5.
+$example = function () use(&$message) {}; // Bad x 3.
 
-$closureWithArgsAndVars = function( $arg1, $arg2 ) use ( $var1, $var2 ) {}; // Ok.
-$closureWithArgsAndVars = function ( $arg1, $arg2 ) use ( $var1, $var2 ) {}; // Bad.
-
-// @codingStandardsChangeSetting WordPress.WhiteSpace.ControlStructureSpacing spaces_before_closure_open_paren 1
-
-$closureWithArgsAndVars = function ( $arg1, $arg2 ) use ( $var1, $var2 ) {}; // Ok.
-
-$closureWithArgsAndVars = function ( $arg1, $arg2 ) use( $var1, $var2 ) {}; // Bad, no space before open parenthesis prohibited.
-$closureWithArgsAndVars = function ( $arg1, $arg2 ) use  ( $var1, $var2 ) {}; // Bad, expected exactly one space before opening parenthesis.
-
-$closureWithArgsAndVars = function ( $arg1, $arg2 ) use ( $var1, $var2 ){}; // Bad, space between closing parenthesis and control structure required.
-$closureWithArgsAndVars = function ( $arg1, $arg2 ) use ( $var1, $var2 )  {}; // Bad, expected exactly one space between closing parenthesis and control structure.
-
-$closureWithArgsAndVars = function ( $arg1, $arg2 )use ( $var1, $var2 ) {}; // Bad, expected exactly one space between closing parenthesis and control structure.
-$closureWithArgsAndVars = function ( $arg1, $arg2 )  use ( $var1, $var2 ) {}; // Bad, expected exactly one space between closing parenthesis and control structure.
-
-// Namespaces.
-use Foo\Admin;
-
-// @codingStandardsChangeSetting WordPress.WhiteSpace.ControlStructureSpacing spaces_before_closure_open_paren -1
-
-$closureWithArgsAndVars = function( $arg1, $arg2 ) use ( $var1, $var2 ) {}; // Ok.
-$closureWithArgsAndVars = function ( $arg1, $arg2 ) use ( $var1, $var2 ) {}; // Ok.
+$callback = function ( $quantity, $product )use($tax ,&$total){}; // Bad x 7.
+// Covered by Squiz.Functions.FunctionDeclarationArgumentSpacing
+// $callback = function ( $quantity, $product ) use ( $tax ,&$total ) {}; // Bad x 2 - spacing around comma.
+// $callback = function ( $quantity, $product ) use ( $tax,         &$total ) {}; // Bad - too much space after comma.
+$callback = function ( $quantity, $product ) use ( $tax,
+&$total ){}; // Bad - too much space after comma.
