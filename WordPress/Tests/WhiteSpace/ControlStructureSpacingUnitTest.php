@@ -70,6 +70,15 @@ class ControlStructureSpacingUnitTest extends AbstractSniffUnitTest {
 					247 => 1,
 					257 => 1,
 					267 => 1,
+			
+			96  => 1,
+			102 => 1,
+			104 => 1,
+			108 => 2,
+			112 => 2,
+			159 => 1,
+			169 => 1,
+			179 => 1,
 				);
 
 				/*
