@@ -216,12 +216,16 @@
 			<property name="checkClosures" value="true"/>
 		</properties>
 	</rule>
+	<rule ref="WordPress.Functions.FunctionDeclaration"/>
 	<rule ref="Squiz.Functions.FunctionDeclarationArgumentSpacing">
 		<properties>
 			<property name="equalsSpacing" value="1"/>
 			<property name="requiredSpacesAfterOpen" value="1"/>
 			<property name="requiredSpacesBeforeClose" value="1"/>
 		</properties>
+		<!-- Disabled for duplicate messages with ControlStructure sniff. Should be enabled once functions
+		     are no longer (incorrectly) checked by that sniff. -->
+		<!--<exclude name="Squiz.Functions.FunctionDeclarationArgumentSpacing.SpacingBeforeClose"/>-->
 	</rule>
 	<rule ref="Squiz.Functions.FunctionDeclarationArgumentSpacing.SpacingBeforeClose">
 		<severity>0</severity>
