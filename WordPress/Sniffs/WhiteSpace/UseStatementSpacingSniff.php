@@ -151,7 +151,7 @@ class UseStatementSpacingSniff extends Sniff {
 	 * @return void
 	 */
 	public function process_token( $stackPtr ) {
-/*
+
 ini_set( 'xdebug.overload_var_dump', 1 );
 
 static $dumped = false;
@@ -178,13 +178,24 @@ if($dumped === false) {
     unset( $ptr, $token );
     $dumped = true;
 }
-*/
+
 
 		/*
 		Walk
 		*/
 
-		$use_type    = $this->get_use_type( $stackPtr );
+		$use_type = $this->get_use_type( $stackPtr );
+		
+		if ( 'closure' === $use_type ) {
+		}
+
+
+
+
+
+
+
+
 		$close_token = T_SEMICOLON;
 		$multiline   = false;
 		$first_comma = null;
@@ -728,5 +739,159 @@ var_dump( $parenthesisOpener );
 		}
 */
 	} // End process_token().
+	
+	
+	/**
+	 * Check for correct spacing around a comma found in a use statement.
+	 *
+	 * @since 0.14.0
+	 *
+	 * @param int $commaPtr Pointer to the comma in the token stack.
+	 * @param int $stackPtr Pointer to the use keyword in the token stack.
+	 *
+	 * @return void
+	 */
+	protected function process_comma( $commaPtr, $stackPtr ) {
+		if ( ! isset( $this->tokens[ ( $commaPtr - 1  ) ] ) ) {
+			return;
+		}
+
+		if ( T_WHITESPACE === $this->tokens[ ( $commaPtr - 1 ) ]['code'] ) {
+			// There should be no whitespace before the comma.
+/*
+			$newlines = 0;
+			$spaces   = 0;
+			for ( $i = ( $commaPtr - 1 ); $i > $stackPtr; $i-- ) {
+
+				if ( T_WHITESPACE === $this->tokens[ $i ]['code'] ) {
+					if ( $this->tokens[ $i ]['content'] === $this->phpcsFile->eolChar ) {
+						$newlines++;
+					} else {
+						$spaces += $this->tokens[ $i ]['length'];
+					}
+				} elseif ( T_COMMENT === $this->tokens[ $i ]['code'] ) {
+					break;
+				}
+			}
+
+			$space_phrases = array();
+			if ( $spaces > 0 ) {
+				$space_phrases[] = $spaces . ' spaces';
+			}
+			if ( $newlines > 0 ) {
+				$space_phrases[] = $newlines . ' newlines';
+			}
+			unset( $newlines, $spaces );
+
+			$fix = $this->phpcsFile->addFixableError(
+				'Expected 0 spaces between "%s" and comma; %s found',
+				$maybe_comma,
+				'SpaceBeforeComma',
+				array(
+					$this->tokens[ $last_content ]['content'],
+					implode( ' and ', $space_phrases ),
+				)
+			);
+
+			if ( true === $fix ) {
+				$this->phpcsFile->fixer->beginChangeset();
+				for ( $i = $item['end']; $i > $last_content; $i-- ) {
+
+					if ( T_WHITESPACE === $this->tokens[ $i ]['code'] ) {
+						$this->phpcsFile->fixer->replaceToken( $i, '' );
+
+					} elseif ( T_COMMENT === $this->tokens[ $i ]['code'] ) {
+						// We need to move the comma to before the comment.
+						$this->phpcsFile->fixer->addContent( $last_content, ',' );
+						$this->phpcsFile->fixer->replaceToken( $maybe_comma, '' );
+
+						/*
+						 * No need to worry about removing too much whitespace in
+						 * combination with a `//` comment as in that case, the newline
+						 * is part of the comment, so we're good.
+						 * /
+
+						break;
+					}
+				}
+				$this->phpcsFile->fixer->endChangeset();
+			}
+*/
+		}
+		
+		if ( ! isset( $this->tokens[ ( $commaPtr + 1  ) ] ) ) {
+			// Shouldn't happen, but just in case.
+			return;
+		}
+
+
+		if ( T_WHITESPACE !== $this->tokens[ ( $commaPtr + 1 ) ]['code'] ) {
+			// There should be whitespace after each comma in a use statement.
+			// $data = array( strtolower( $this->tokens[ $i ]['content'] ) );
+			// Add one space before.
+		} elseif ( ' ' !== $this->tokens[ ( $commaPtr + 1 ) ]['content'] ) {
+			// There should be exactly one space after the comma
+			// Replace token.
+		}
+		
+/*
+			$next_token = $this->tokens[ ( $maybe_comma + 1 ) ];
+
+			if ( T_WHITESPACE === $next_token['code'] ) {
+
+				if ( false === $single_line && $this->phpcsFile->eolChar === $next_token['content'] ) {
+					continue;
+				}
+
+				$next_non_whitespace = $this->phpcsFile->findNext(
+					T_WHITESPACE,
+					($maybe_comma + 1 ),
+					$closer,
+					true
+				);
+
+				if ( false === $next_non_whitespace
+					|| ( false === $single_line
+						&& $this->tokens[ $next_non_whitespace ]['line'] === $this->tokens[ $maybe_comma ]['line']
+						&& T_COMMENT === $this->tokens[ $next_non_whitespace ]['code'] )
+				) {
+					continue;
+				}
+
+				$space_length = $next_token['length'];
+				if ( 1 === $space_length ) {
+					continue;
+				}
+
+				$fix = $this->phpcsFile->addFixableError(
+					'Expected 1 space between comma and "%s"; %s found',
+					$maybe_comma,
+					'SpaceAfterComma',
+					array(
+						$this->tokens[ $next_non_whitespace ]['content'],
+						$space_length,
+					)
+				);
+
+				if ( true === $fix ) {
+					$this->phpcsFile->fixer->replaceToken( ( $maybe_comma + 1 ), ' ' );
+				}
+			} else {
+				// This is either a comment or a mixed single/multi-line array.
+				// Just add a space and let other sniffs sort out the array layout.
+				$fix = $this->phpcsFile->addFixableError(
+					'Expected 1 space between comma and "%s"; 0 found',
+					$maybe_comma,
+					'NoSpaceAfterComma',
+					array( $next_token['content'] )
+				);
+
+				if ( true === $fix ) {
+					$this->phpcsFile->fixer->addContent( $maybe_comma, ' ' );
+				}
+			}
+		}
+*/
+	}
 
 } // End class.
