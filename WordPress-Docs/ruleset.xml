@@ -58,7 +58,7 @@
 		<!-- WP states not all functions require @return -->
 		<exclude name="Squiz.Commenting.FunctionComment.MissingReturn"/>
 		<!-- Excluded to allow param documentation for arrays  -->
-		<exclude name="Squiz.Commenting.FunctionComment.ParamCommentNotCapital"/>
+<!--		<exclude name="Squiz.Commenting.FunctionComment.ParamCommentNotCapital"/>-->
 		<!-- Excluded to allow param documentation for arrays  -->
 		<exclude name="Squiz.Commenting.FunctionComment.SpacingAfterParamName"/>
 		<!-- It is too early for PHP7 features to be required -->
@@ -69,7 +69,7 @@
 		<!-- Exclude to allow duplicate hooks to be documented -->
 		<exclude name="Squiz.Commenting.InlineComment.DocBlock"/>
 		<!-- Excluded to allow /* translators: ... */ comments -->
-		<exclude name="Squiz.Commenting.InlineComment.NotCapital"/>
+<!--		<exclude name="Squiz.Commenting.InlineComment.NotCapital"/>-->
 
 		<!-- Not in Inline Docs standard, and a code smell -->
 		<exclude name="Squiz.Commenting.LongConditionClosingComment"/>
