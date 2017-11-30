@@ -90,6 +90,11 @@ if($dumped === false) {
 	$dumped = true;
 }
 
+		// Not interested in //-style inline comments.
+		if ( substr( $this->tokens[ $stackPtr ]['content'], 0, 2 ) !== '/*' ) {
+			return;
+		}
+
 		/*
 		 * Check one line comments.
 		 * - Check for empty one-liners.
@@ -175,19 +180,19 @@ return;
 		 * Find all parts of a multi-line block comment.
 		 */
 		$comment_opener      = $stackPtr;
-		$comment_closer      = $stackPtr;
-		$lines               = array();
-		$comment_text        = ''; // All text without new lines.
+		$comment_closer      = null;
 		$first_content_token = null;
 		$last_content_token  = null;
+		$lines               = array();
+
+		$opener_content      = substr( $this->tokens[ $stackPtr ]['content'], 2 );
+		$comment_text        = trim( $opener_content );
+		if ( '' !== $comment_text ) {
+			$first_content_token = $stackPtr;
+		}
+
 		for ( $i = ( $stackPtr + 1 ); $i < $this->phpcsFile->numTokens; $i++ ) {
 			if ( T_COMMENT !== $this->tokens[ $i ]['code'] ) {
-				$comment_closer = ( $i - 1 );
-				break;
-			}
-
-			if ( '*/' === substr( $this->tokens[ $i ]['content'], -2 ) ) {
-				$comment_closer = $i;
 				break;
 			}
 
@@ -195,6 +200,16 @@ return;
 
 				$content         = ( isset( $matches[4] ) ? $matches[4] : '' );
 				$trimmed_content = trim( $content );
+
+				if ( '*/' === substr( $this->tokens[ $i ]['content'], -2 ) ) {
+// Hier klopt nog iets niet....
+					$trimmed_content  = substr( $trimmed_content, 0, ( strlen( $trimmed_content ) - 2 ) );
+					$trimmed_content .= trim( $trimmed_content );
+					$comment_closer   = $i;
+//					break;
+				}
+
+				$comment_text .= $trimmed_content;
 
 				$lines[ $i ] = array(
 					'indent'           => ( isset( $matches[1] ) ? $matches[1] : '' ),
@@ -204,8 +219,6 @@ return;
 					'trimmed_content'  => $trimmed_content,
 					'is_blank'         => ( '' === $trimmed_content ? true : false ),
 				);
-				
-				$comment_text .= $trimmed_content;
 
 				if ( '' !== $trimmed_content ) {
 					$last_content_token = $i;
@@ -213,6 +226,10 @@ return;
 					if ( ! isset( $first_content_token ) ) {
 						$first_content_token = $i;
 					}
+				}
+
+				if ( isset( $comment_closer ) ) {
+					break;
 				}
 
 			} else {

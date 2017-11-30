@@ -50,6 +50,16 @@ $var = 'a'; /* The open tag should be on its own line.
 		 * The close tag is not on its own line.
 		 *//* Another comment. */ // More comments.
 
+/* The open tag should be on its own line + superfluous blank lines.
+ *
+ *
+ */
+
+/*
+ *
+ *
+ * The close tag is not on its own line + superfluous blank lines. */
+
 /*
  *
  *
