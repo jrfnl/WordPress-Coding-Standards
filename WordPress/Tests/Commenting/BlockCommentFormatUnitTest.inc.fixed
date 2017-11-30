@@ -1,0 +1,125 @@
+<?php
+
+/*
+ * This is a correctly formatted multi-line block comment.
+ *
+ * This is another paragraph.
+ */
+
+		/*
+		 * This is a correctly formatted multi-line block comment.
+		 *
+		 * This is another paragraph.
+		 */
+
+	// Empty multi-line block comment.
+	/*
+	 *
+	 */
+
+/*
+ * Incorrect - one line multi-line block comment.
+ */
+
+		/*
+		 * The open tag should be on its own line.
+		 *
+		 * The close tag is not on its own line.
+		 */
+
+$var = 'a';
+ /* The open tag should be on its own line.
+  *
+  * The close tag is not on its own line.
+  */ apply_filters( 'something', $number );
+
+/* Another comment. */
+ /* The open tag should be on its own line.
+  *
+  * The close tag is not on its own line.
+  */
+ // More comments.
+
+/*
+ * Incorrectly formatted: There are no spaces after the stars.
+ *
+ * This is another paragraph.
+ */
+
+/*
+ *      Incorrectly formatted: There are too many spaces after the stars, but this will not be addressed.
+ *
+ *         This is another paragraph.
+ */
+
+/*
+ * Incorrectly formatted: The stars are missing and the indentation is off.
+ *
+ * This is another paragraph.
+ */
+
+		/*
+		 * Incorrectly formatted: The stars are missing and the indentation is off.
+		 *
+		 * This is another paragraph.
+		 */
+
+/*
+ * This is an INcorrectly aligned multi-line block comment: no space before stars.
+ *
+ * This is another paragraph.
+ */
+
+		/*
+		 * This is an INcorrectly aligned multi-line block comment: no space before stars.
+		 *
+		 * This is another paragraph.
+		 */
+
+/*
+ * This is an INcorrectly aligned multi-line block comment: too much space before stars.
+ *
+ * This is another paragraph.
+ */
+
+		/*
+		 * This is an INcorrectly aligned multi-line block comment: too much space before stars.
+		 *
+		 * This is another paragraph.
+		 */
+
+		/*
+		 * This is a INcorrectly aligned multi-line block comment: stars not aligned.
+		 *
+		 * This is another paragraph.
+		 */
+
+		/*
+		 * This is a INcorrectly aligned multi-line block comment: stars not aligned.
+		 *
+		 * This is another paragraph.
+		 */
+
+		/*
+		 * This is a INcorrectly aligned multi-line block comment: stars not aligned.
+		 *
+		 * This is another paragraph.
+		 */
+
+		/*
+		 * This is a INcorrectly aligned multi-line block comment: stars not aligned.
+		 *
+		 * This is another paragraph.
+		 */
+
+		/*
+		 * This is a INcorrectly aligned multi-line block comment: stars not aligned.
+		 *
+		 * This is another paragraph.
+		 */
+
+		/*
+		 * This is a INcorrectly aligned multi-line block comment: stars not aligned.
+		 *
+		 * This is another paragraph.
+		 */
