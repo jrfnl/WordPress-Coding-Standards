@@ -13,15 +13,18 @@ use WordPress\Sniff;
 use PHP_CodeSniffer\Util\Tokens;
 
 /**
- * Verifies the formatting of a multi-line comment.
+ * Verifies the formatting of a block comment.
  *
- * - A multi-line comment should not be empty.
- * - The comment opener and closer should each be the only content on their own line.
- * - The first content of the multi-line comment should start on the line below the opener.
- * - The last content of the multi-line comment should be on the line above the closer.
- * - Each line in the comment should start with a star.
- * - Stars should be aligned with the first star in the comment opener.
+ * - A block comment should not be empty.
+ * - For a multi-line block, the comment opener and closer should each be the only
+ *   content on the line.
+ * - The first content of the multi-line block comment should start on the line below the opener.
+ * - The last content of the multi-line block comment should be on the line above the closer.
+ * - Each line in a multi-line block comment should start with a star.
+ * - Stars should be aligned with the star in the comment opener.
  * - There should be a minimum of one space after each star (unless it is an empty comment line).
+ * - In the case of single-line block comment, there should be one space after the opener
+ *   and before the closer.
  *
  * This sniff doesn't concern itself with single-line vs multi-line comment styles.
  * This sniff doesn't concern itself with the indentation of the comment opener.
@@ -87,8 +90,6 @@ if($dumped === false) {
 	$dumped = true;
 }
 
-return;
-
 		/*
 		 * Check one line comments.
 		 * - Check for empty one-liners.
@@ -96,7 +97,7 @@ return;
 		 * - Check for exactly one space before closer.
 		 */
 		if ( '*/' === substr( $this->tokens[ $stackPtr ]['content'], -2 ) ) {
-			if ( preg_match( '`^/\*(\s*)(\S.*\S)?(\s*)\*/$`', $this->tokens[ $stackPtr ]['content'], $matches ) === 1 ) {
+			if ( preg_match( '`^/\*(\s*)((?:\S.*\S)?)(\s*)\*/$`', $this->tokens[ $stackPtr ]['content'], $matches ) === 1 ) {
 				if ( ! isset( $matches[2] ) || '' === $matches[2] ) {
 					$this->phpcsFile->addError( 'Empty comment found.', $stackPtr, 'Empty' );
 				} else {
@@ -145,25 +146,80 @@ return;
 			return;
 		}
 
+return;
 
 		/*
-		 * Find the end of multi-line block comment.
+		 * Determine the required indentation for multi-line block comments
+		 * based on the block comment opener.
 		 */
-		$lines = array( $i );
-		$comment_content = '';
-		for ( $i = $stackPtr; $i < $this->phpcsFile->numTokens; $i++ ) {
+		$required_indent = '';
+		$required_column = ( $this->tokens[ $stackPtr ]['column'] + 1 );
+		if ( T_WHITESPACE === $this->tokens[ ( $stackPtr - 1 ) ]['code']
+			&& $this->tokens[ ( $stackPtr - 1 ) ]['line'] === $this->tokens[ $stackPtr ]['line']
+		) {
+			// If tabs are being converted to spaces by the tokeniser, the
+			// original content should be used instead of the converted content.
+			if ( isset( $this->tokens[ ( $stackPtr - 1 ) ]['orig_content'] ) ) {
+				$required_indent = $this->tokens[ ( $stackPtr - 1 ) ]['orig_content'];
+			} else {
+				$required_indent = $this->tokens[ ( $stackPtr - 1 ) ]['content'];
+			}
+		}
+
+		$required_indent .= ' ';
+		
+		// Set expected spaces for easy compare with converted content.
+		$expected_spaces  = str_repeat( ' ', $required_column );
+
+		/*
+		 * Find all parts of a multi-line block comment.
+		 */
+		$comment_opener      = $stackPtr;
+		$comment_closer      = $stackPtr;
+		$lines               = array();
+		$comment_text        = ''; // All text without new lines.
+		$first_content_token = null;
+		$last_content_token  = null;
+		for ( $i = ( $stackPtr + 1 ); $i < $this->phpcsFile->numTokens; $i++ ) {
 			if ( T_COMMENT !== $this->tokens[ $i ]['code'] ) {
 				$comment_closer = ( $i - 1 );
 				break;
 			}
 
 			if ( '*/' === substr( $this->tokens[ $i ]['content'], -2 ) ) {
-				$lines[]        = $i;
 				$comment_closer = $i;
 				break;
 			}
 
-			$lines[] = $i;
+			if ( preg_match( "`^([ \t]*)(\*?)([ \t]*)(\S?.*)$`s", $this->tokens[ $i ]['content'], $matches ) === 1 ) {
+
+				$content         = ( isset( $matches[4] ) ? $matches[4] : '' );
+				$trimmed_content = trim( $content );
+
+				$lines[ $i ] = array(
+					'indent'           => ( isset( $matches[1] ) ? $matches[1] : '' ),
+					'has_star'         => ( isset( $matches[2] ) && '*' === $matches[2] ? true : false ),
+					'space_after_star' => ( isset( $matches[3] ) ? $matches[3] : '' ),
+					'content'          => $content,
+					'trimmed_content'  => $trimmed_content,
+					'is_blank'         => ( '' === $trimmed_content ? true : false ),
+				);
+				
+				$comment_text .= $trimmed_content;
+
+				if ( '' !== $trimmed_content ) {
+					$last_content_token = $i;
+
+					if ( ! isset( $first_content_token ) ) {
+						$first_content_token = $i;
+					}
+				}
+
+			} else {
+				$lines[ $i ] = array(
+					'malformed' => true,
+				);
+			}
 		}
 
 		if ( ! isset( $comment_closer ) ) {
@@ -193,36 +249,54 @@ return;
 			// [3] => check that there is at least one space
 
 
-		if ( ! isset( $this->tokens[ $stackPtr ]['comment_closer'] ) ) {
-			return;
-		}
+		/**
+		 * Check for empty block comments.
+		 */
+		$is_empty = false;
+		if ( ! isset ( $first_content_token ) || trim( $comment_text ) === '' ) {
+			$this->phpcsFile->addError( 'A block comment should not be empty.', $stackPtr, 'Empty' );
 
-		$comment_closer = $this->tokens[ $stackPtr ]['comment_closer'];
-
-		$empty = [
-			T_DOC_COMMENT_WHITESPACE,
-			T_DOC_COMMENT_STAR,
-		];
-
-		$next_content = $this->phpcsFile->findNext(
-			array( T_DOC_COMMENT_WHITESPACE, T_DOC_COMMENT_STAR ),
-			( $stackPtr + 1 ),
-			$comment_closer,
-			true
-		);
-		if ( false === $next_content ) {
-			// No content at all.
-			$this->phpcsFile->addError( 'A docblock should not be empty.', $stackPtr, 'Empty' );
+			$is_empty = true; // Prevent reporting on empty lines when block comment is completely empty.
 		}
 
 		/*
-		 * Check whether the docblock closer is on its own line.
+		 * Examine the docblock closer.
 		 */
+		if ( false === $is_empty ) {
+			if ( ( $last_content_token + 1 ) < $comment_closer ) {
+
+				$fix = $this->phpcsFile->addFixableError(
+					'Blank line(s) found at end of block comment.',
+					( $last_content_token + 1 ),
+					'BlankLineBeforeCloser'
+				);
+
+				if ( true === $fix ) {
+					$this->phpcsFile->fixer->beginChangeset();
+
+					for ( $i = ( $last_content_token + 1 ); $i < $comment_closer; $i++ ) {
+						if ( $this->tokens[ $comment_closer ]['line'] === $this->tokens[ $i ]['line'] ) {
+							break;
+						}
+
+						// Make double sure that we're not removing anything we shouldn't.
+						if ( trim( $this->tokens[ $i ]['content'], " \t\r\n*" ) === '' ) {
+							$this->phpcsFile->fixer->replaceToken( $i, '' );
+						}
+					}
+
+					$this->phpcsFile->fixer->endChangeset();
+				}
+			}
+		}
+// fix from here
 		$prev = $this->phpcsFile->findPrevious( T_DOC_COMMENT_WHITESPACE, ( $comment_closer - 1 ), null, true );
-		if ( $this->tokens[ $comment_closer ]['line'] === $this->tokens[ $prev ]['line'] ) {
+		if ( false !== $prev
+			&& $this->tokens[ $comment_closer ]['line'] === $this->tokens[ $prev ]['line']
+		) {
 			$fix = $this->phpcsFile->addFixableError(
 				'The docblock closer should be on a line by itself. Content found before closer.',
-				$comment_closer,
+				$prev,
 				'ContentBeforeCloser'
 			);
 
@@ -231,69 +305,199 @@ return;
 				$this->phpcsFile->fixer->replaceToken( $prev, $trimmed . $this->phpcsFile->eolChar );
 			}
 		}
+		unset( $prev );
 
 		$next = $this->phpcsFile->findNext( T_WHITESPACE, ( $comment_closer + 1 ), null, true );
-		if ( $this->tokens[ $comment_closer ]['line'] === $this->tokens[ $next ]['line'] ) {
-			$fix = $this->phpcsFile->addFixableError(
-				'The docblock closer should be on a line by itself. Content found after closer.',
-				$comment_closer,
-				'ContentAfterCloser'
-			);
+		if ( false !== $next ) {
+			if ( $this->tokens[ $comment_closer ]['line'] === $this->tokens[ $next ]['line'] ) {
+				$fix = $this->phpcsFile->addFixableError(
+					'The docblock closer should be on a line by itself. Content found after closer.',
+					$next,
+					'ContentAfterCloser'
+				);
 
-			if ( true === $fix ) {
-				$this->phpcsFile->fixer->addNewline( $comment_closer );
+				if ( true === $fix ) {
+					// @JRF Or should this be add new line before $next ?
+					$this->phpcsFile->fixer->addNewline( $comment_closer );
+				}
+			} elseif ( ( $this->tokens[ $comment_closer ]['line'] + 1 ) !== $this->tokens[ $next ]['line'] ) {
+				$error      = 'There should be no blank line after a docblock.';
+				$error_code = 'BlankLineAfter';
+
+				if ( isset( Tokens::$commentTokens[ $this->tokens[ $next ]['code'] ] ) ) {
+					// Only report the error, don't try to fix it as it would cause a fixer conflict.
+					$this->phpcsFile->addError( $error, $comment_closer, $error_code );
+				} else {
+					$fix = $this->phpcsFile->addFixableError( $error, $comment_closer, $error_code );
+
+					if ( true === $fix ) {
+						$this->phpcsFile->fixer->beginChangeset();
+
+						for ( $i = ( $comment_closer + 1 ); $i < $next; $i++ ) {
+							if ( $this->tokens[ $next ]['line'] === $this->tokens[ $i ]['line'] ) {
+								break;
+							}
+
+							if ( $this->tokens[ $comment_closer ]['line'] === $this->tokens[ $i ]['line'] ) {
+								continue;
+							}
+
+							$this->phpcsFile->fixer->replaceToken( $i, '' );
+						}
+
+						$this->phpcsFile->fixer->endChangeset();
+					}
+				}
 			}
 		}
-		unset( $prev, $next );
+		unset( $next );
 
 		/*
 		 * Check docblock closer style.
 		 */
-		if ( '*/' !== $this->tokens[ $comment_closer ]['content'] ) {
-			$fix = $this->phpcsFile->addFixableError(
+		if ( '*/' !== trim( $this->tokens[ $comment_closer ]['content'] ) ) {
+			$this->phpcsFile->addError(
 				'Block comments must be ended with */',
 				$comment_closer,
 				'WrongEnd'
 			);
-
-			if ( true === $fix ) {
-				$this->phpcsFile->fixer->replaceToken( $comment_closer, '*/' );
-			}
 		}
 
 		/*
-		 * Check whether the docblock opener is on its own line.
+		 * Examine the docblock opener.
 		 */
-		$next = $this->phpcsFile->findNext( T_DOC_COMMENT_WHITESPACE, ( $stackPtr + 1 ), null, true );
-		if ( $this->tokens[ $stackPtr ]['line'] === $this->tokens[ $next ]['line'] ) {
-			$fix = $this->phpcsFile->addFixableError(
-				'The docblock opener should be on a line by itself. Content found after opener.',
-				$stackPtr,
-				'ContentAfterOpener'
-			);
+/*OK*/		if ( false === $is_empty ) {
+			if ( ( $stackPtr + 1 ) < $first_content_token ) {
 
-			if ( true === $fix ) {
-				$this->phpcsFile->fixer->addNewline( $stackPtr );
+				$fix = $this->phpcsFile->addFixableError(
+					'Blank line(s) found at start of block comment.',
+					( $stackPtr + 1 ),
+					'BlankLineAfterOpener'
+				);
+
+				if ( true === $fix ) {
+					$this->phpcsFile->fixer->beginChangeset();
+
+					for ( $i = ( $stackPtr + 1 ); $i < $first_content_token; $i++ ) {
+						if ( $this->tokens[ $first_content_token ]['line'] === $this->tokens[ $i ]['line'] ) {
+							break;
+						}
+
+						// Make double sure that we're not removing anything we shouldn't.
+						if ( trim( $this->tokens[ $i ]['content'], " \t\r\n*" ) === '' ) {
+							$this->phpcsFile->fixer->replaceToken( $i, '' );
+						}
+					}
+
+					$this->phpcsFile->fixer->endChangeset();
+				}
 			}
+		}
+// TODO
+		if ( false === $allow_short ) {
+			$next = $this->phpcsFile->findNext( T_DOC_COMMENT_WHITESPACE, ( $stackPtr + 1 ), null, true );
+			if ( false !== $next
+				&& $this->tokens[ $stackPtr ]['line'] === $this->tokens[ $next ]['line']
+			) {
+				$fix = $this->phpcsFile->addFixableError(
+					'The docblock opener should be on a line by itself. Content found after opener.',
+					$next,
+					'ContentAfterOpener'
+				);
+
+				if ( true === $fix ) {
+					$this->phpcsFile->fixer->addNewline( $stackPtr );
+				}
+			}
+			unset( $next );
 		}
 
 		$prev = $this->phpcsFile->findPrevious( T_WHITESPACE, ( $stackPtr - 1 ), null, true );
-		if ( $this->tokens[ $stackPtr ]['line'] === $this->tokens[ $prev ]['line'] ) {
-			$fix = $this->phpcsFile->addFixableError(
-				'The docblock opener should be on a line by itself. Content found before opener.',
-				$stackPtr,
-				'ContentBeforeOpener'
-			);
+		if ( false !== $prev ) {
+			if ( $this->tokens[ $stackPtr ]['line'] === $this->tokens[ $prev ]['line'] ) {
+				$fix = $this->phpcsFile->addFixableError(
+					'The docblock opener should be on a line by itself. Content found before opener.',
+					$prev,
+					'ContentBeforeOpener'
+				);
 
-			if ( true === $fix ) {
-				$this->phpcsFile->fixer->addNewline( $prev );
+				if ( true === $fix ) {
+					$this->phpcsFile->fixer->addNewline( $prev );
+				}
+
+				// If there is content before the opener, the alignment will be off anyway, so stop here.
+				return;
+
+			} elseif ( ( $this->tokens[ $stackPtr ]['line'] - $this->tokens[ $prev ]['line'] ) < 2 ) {
+				$error      = 'A blank line is required before a docblock.';
+				$error_code = 'NoBlankLineBefore';
+
+				if ( isset( Tokens::$commentTokens[ $this->tokens[ $prev ]['code'] ] ) ) {
+					// Only report the error, don't try to fix it as it would cause a fixer conflict.
+					$this->phpcsFile->addError( $error, $stackPtr, $error_code );
+				} else {
+					$fix = $this->phpcsFile->addFixableError( $error, $stackPtr, $error_code );
+
+					if ( true === $fix ) {
+						$this->phpcsFile->fixer->addNewline( $prev );
+					}
+				}
+			}
+		}
+		unset( $prev );
+
+		if ( true === $is_one_liner && true === $allow_short ) {
+			/*
+			 * Check spacing within a one-liner.
+			 */
+			if ( T_DOC_COMMENT_WHITESPACE !== $this->tokens[ ( $stackPtr + 1 ) ]['code'] ) {
+				$fix = $this->phpcsFile->addFixableError(
+					'There should be one space between the comment opener and the content.',
+					$stackPtr,
+					'NoSpaceAfterOpener'
+				);
+
+				if ( true === $fix ) {
+					$this->phpcsFile->fixer->addContent( $stackPtr, ' ' );
+				}
+			} elseif ( ' ' !== $this->tokens[ ( $stackPtr + 1 ) ]['content'] ) {
+				$fix = $this->phpcsFile->addFixableError(
+					'There should be one space between the comment opener and the content.',
+					$stackPtr,
+					'SpaceAfterOpener'
+				);
+
+				if ( true === $fix ) {
+					$this->phpcsFile->fixer->replaceToken( ( $stackPtr + 1 ), ' ' );
+				}
 			}
 
-			// If there is content before the opener, the alignment will be off anyway, so stop here.
+			$pre_closer_content         = $this->tokens[ ( $comment_closer - 1 ) ]['content'];
+			$trimmed_pre_closer_content = rtrim( $pre_closer_content, ' ' );
+			$whitespace_before_closer   = str_replace( $trimmed_pre_closer_content, '', $pre_closer_content );
+			if ( ' ' !== $whitespace_before_closer ) {
+				$length     = strlen( $whitespace_before_closer );
+				$error_code = ( 0 === $length ) ? 'NoSpaceBeforeCloser' : 'SpaceBeforeCloser';
+
+				$fix = $this->phpcsFile->addFixableError(
+					'There should be one space between the comment content and the closer. Found %s',
+					$comment_closer,
+					$error_code,
+					array( $length )
+				);
+
+				if ( true === $fix ) {
+					if ( 0 === $length ) {
+						$this->phpcsFile->fixer->addContent( ( $comment_closer - 1 ), ' ' );
+					} else {
+						$this->phpcsFile->fixer->replaceToken( ( $comment_closer - 1 ), $trimmed_pre_closer_content . ' ' );
+					}
+				}
+			}
+
+			// No need to check the rest for one-liners.
 			return;
 		}
-
-		unset( $prev, $next );
 
 		/*
 		 * Determine the required indentation based on the docblock opener.
@@ -316,7 +520,74 @@ return;
 		$required_indent .= ' ';
 
 		/*
-		 * Check if that each line starts with a star and that the stars are correctly aligned.
+		 * Check that there are no consecutive blank lines.
+		 */
+		if ( false !== $first_doc_content ) {
+			$prev_doc_content = $first_doc_content;
+			while ( $next_doc_content = $this->phpcsFile->findNext( $this->empty_doc_tokens, ( $prev_doc_content + 1 ), $comment_closer, true ) ) {
+
+				if ( $this->tokens[ $next_doc_content ]['line'] > ( $this->tokens[ $prev_doc_content ]['line'] + 2 ) ) {
+					$fix = $this->phpcsFile->addFixableError(
+						'Multiple consecutive blank lines are not allowed in a docblock.',
+						( $prev_doc_content + 2 ),
+						'SuperfluousBlankLines'
+					);
+
+					if ( true === $fix ) {
+						$this->phpcsFile->fixer->beginChangeset();
+						for ( $i = ( $prev_doc_content + 1 ); $i < $next_doc_content; $i++ ) {
+							if ( $this->tokens[ $i ]['line'] === $this->tokens[ $next_doc_content ]['line'] ) {
+								break;
+							}
+
+							$this->phpcsFile->fixer->replaceToken( $i, '' );
+						}
+
+						$this->phpcsFile->fixer->addContent(
+							$prev_doc_content,
+							$this->phpcsFile->eolChar . $required_indent . '*' . $this->phpcsFile->eolChar
+						);
+						$this->phpcsFile->fixer->endChangeset();
+					}
+				}
+
+				$prev_doc_content = $next_doc_content;
+			}
+		}
+		unset( $first_doc_content );
+
+		/*
+		 * Check that there is exactly one blank line before the first tag.
+		 */
+		if ( isset( $this->tokens[ $stackPtr ]['comment_tags'][0] ) ) {
+			$first_tag        = $this->tokens[ $stackPtr ]['comment_tags'][0];
+			$prev_doc_content = $this->phpcsFile->findPrevious(
+				$this->empty_doc_tokens,
+				( $first_tag - 1 ),
+				( $stackPtr + 1 ), // The open tag should not be considered content.
+				true
+			);
+			if ( false !== $prev_doc_content
+				&& $this->tokens[ $first_tag ]['line'] < ( $this->tokens[ $prev_doc_content ]['line'] + 2 )
+			) {
+				$fix = $this->phpcsFile->addFixableError(
+					'There must be exactly one blank line before the tags in a doc comment.',
+					$first_tag,
+					'NoBlankLineBeforeTags'
+				);
+
+				if ( true === $fix ) {
+					$this->phpcsFile->fixer->addContent(
+						$prev_doc_content,
+						$this->phpcsFile->eolChar . $required_indent . '*' . $this->phpcsFile->eolChar
+					);
+				}
+			}
+			unset( $first_tag, $prev_doc_content );
+		}
+
+		/*
+		 * Check that each line starts with a star, that the stars are correctly aligned.
 		 */
 		for ( $i = ( $stackPtr + 1 ); $i <= $comment_closer; $i++ ) {
 			if ( 1 !== $this->tokens[ $i ]['column'] ) {
@@ -339,8 +610,6 @@ return;
 						) {
 							// Not a blank line.
 							$insert .= ' ';
-						} else {
-							$insert .= $this->phpcsFile->eolChar;
 						}
 
 						$this->phpcsFile->fixer->addContentBefore( $i, $insert );
@@ -413,8 +682,6 @@ return;
 	 * content. More is accepted to allow for, for instance, param comment alignment.
 	 *
 	 * @param int $stackPtr Stackpointer to the comment star.
-	 *
-	 * @return void
 	 */
 	protected function verify_space_after_star( $stackPtr ) {
 		if ( T_DOC_COMMENT_STAR !== $this->tokens[ $stackPtr ]['code'] ) {
