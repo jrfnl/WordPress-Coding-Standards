@@ -411,4 +411,25 @@ Page 3/3
 ',
             );
 
+// Test correct handling of PHPCS annotations.
+$phpcs_whitelist_comment_test = array(
+    1 => false, // phpcs:disable Standard.Category.Sniff
+        2 => false, // phpcs:enable Standard.Category.Sniff
+);
+
+$phpcs_whitelist_comment_test = [
+        /*
+         * phpcs:disable Standard.Category.Sniff -- for reasons.
+         */
+        'truthy' => apply_filters( '...', true ),
+];
+
+$phpcs_whitelist_comment_test = [
+'something' =>
+/*
+ * phpcs:enable Standard.Category.Sniff -- for reasons.
+ */
+apply_filters( '...', true ),
+];
+
 // @codingStandardsChangeSetting WordPress.Arrays.ArrayIndentation tabIndent true

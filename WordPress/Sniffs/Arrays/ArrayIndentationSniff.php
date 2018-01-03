@@ -180,7 +180,8 @@ class ArrayIndentationSniff extends Sniff {
 
 			// Deal with trailing comments.
 			if ( false !== $first_content
-				&& T_COMMENT === $this->tokens[ $first_content ]['code']
+				&& ( T_COMMENT === $this->tokens[ $first_content ]['code']
+					|| isset( $this->phpcsCommentTokens[ $this->tokens[ $first_content ]['type'] ] ) )
 				&& $this->tokens[ $first_content ]['line'] === $this->tokens[ $end_of_previous_item ]['line']
 			) {
 				$first_content = $this->phpcsFile->findNext(
@@ -304,7 +305,8 @@ class ArrayIndentationSniff extends Sniff {
 
 					// Fix second line for the array item.
 					if ( 1 === $this->tokens[ $first_content_on_line2 ]['column']
-						&& T_COMMENT === $this->tokens[ $first_content_on_line2 ]['code']
+						&& ( T_COMMENT === $this->tokens[ $first_content_on_line2 ]['code']
+							|| isset( $this->phpcsCommentTokens[ $this->tokens[ $first_content_on_line2 ]['type'] ] ) )
 					) {
 						$actual_comment = ltrim( $this->tokens[ $first_content_on_line2 ]['content'] );
 						$replacement    = $expected_indent_on_line2 . $actual_comment;
@@ -350,7 +352,8 @@ class ArrayIndentationSniff extends Sniff {
 
 						if ( $found_spaces_on_line !== $expected_spaces_on_line ) {
 							if ( 1 === $this->tokens[ $first_content_on_line ]['column']
-								&& T_COMMENT === $this->tokens[ $first_content_on_line ]['code']
+								&& ( T_COMMENT === $this->tokens[ $first_content_on_line ]['code']
+									|| isset( $this->phpcsCommentTokens[ $this->tokens[ $first_content_on_line2 ]['type'] ] ) )
 							) {
 								$actual_comment = ltrim( $this->tokens[ $first_content_on_line ]['content'] );
 								$replacement    = $expected_indent_on_line . $actual_comment;
@@ -464,7 +467,9 @@ class ArrayIndentationSniff extends Sniff {
 		 * First/Single line is tokenized as T_WHITESPACE + T_COMMENT
 		 * Subsequent lines are tokenized as T_COMMENT including the indentation whitespace.
 		 */
-		if ( T_COMMENT === $this->tokens[ $ptr ]['code'] ) {
+		if ( T_COMMENT === $this->tokens[ $ptr ]['code']
+			|| isset( $this->phpcsCommentTokens[ $this->tokens[ $ptr ]['type'] ] )
+		) {
 			$content        = $this->tokens[ $ptr ]['content'];
 			$actual_comment = ltrim( $content );
 			$whitespace     = str_replace( $actual_comment, '', $content );
