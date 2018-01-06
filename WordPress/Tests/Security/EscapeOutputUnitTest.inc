@@ -265,3 +265,12 @@ trigger_error( $domain ); // Bad.
 
 vprintf( 'Hello %s', [ $foo ] ); // Bad.
 vprintf( 'Hello %s', [ esc_html( $foo ) ] ); // Ok.
+
+echo  // phpcs:ignore WP.Secur1ty.EscapeOutput -- WPCS: XSS ok. (sniff name mangled on purpose).
+	esc_html( $something ),
+	$something_else,
+	esc_html( $something_more );
+
+echo esc_html( $something ),
+	$something_else,
+	esc_html( $something_more ); // phpcs:ignore WP.Secur1ty.EscapeOutput -- WPCS: XSS ok. (sniff name mangled on purpose).
