@@ -108,6 +108,31 @@ class ArrayIndentationSniff extends Sniff {
 			// Not interested in single line arrays.
 			return;
 		}
+ini_set( 'xdebug.overload_var_dump', 1 );
+
+static $dumped = false;
+if($dumped === false) {
+    echo "\n";
+    foreach( $this->tokens as $ptr => $token ) {
+        if ( ! isset( $token['length'] ) ) {
+            $token['length'] = strlen($token['content']);
+        }
+        if ( $token['code'] === T_WHITESPACE || $token['code'] === T_DOC_COMMENT_WHITESPACE ) {
+            if ( strpos( $token['content'], "\t" ) !== false ) {
+                $token['content'] = str_replace( "\t", '\t', $token['content'] );
+            }
+            if ( isset( $token['orig_content'] ) ) {
+                $token['content'] .= ' :: Orig: ' . str_replace( "\t", '\t', $token['orig_content'] );
+            }
+        }
+        echo $ptr . ' :: L' . str_pad( $token['line'] , 3, '0', STR_PAD_LEFT ) . ' :: C' . $token['column'] . ' :: ' . $token['type'] . ' :: (' . $token['length'] . ') :: ' . $token['content'] . "\n";
+//        if ( $token['code'] === T_WHILE || $token['code'] === T_DO || $token['code'] === T_FUNCTION ) {
+//            var_dump( $token );
+//        }
+    }
+    unset( $ptr, $token );
+    $dumped = true;
+}
 
 		/*
 		 * Check the closing bracket is lined up with the start of the content on the line

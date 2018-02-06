@@ -426,9 +426,7 @@ $phpcs_whitelist_comment_test = [
 
 $phpcs_whitelist_comment_test = [
     'something' =>
-        /*
-         * phpcs:enable Standard.Category.Sniff -- for reasons.
-         */
+        // phpcs:enable Standard.Category.Sniff -- for reasons.
         apply_filters( '...', true ),
 ];
 
