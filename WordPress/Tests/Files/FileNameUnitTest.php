@@ -56,6 +56,17 @@ class FileNameUnitTest extends AbstractSniffUnitTest {
 		'ClassNonStrictClass.inc'                    => 1,
 
 		/*
+		 * In /FileNameUnitTests/PHPCSAnnotations.
+		 */
+
+		// Non-strict class names still have to comply with lowercase hyphenated.
+		'blanket-disable.inc'                        => 0,
+		'non-relevant-disable.inc'                   => 1,
+		'partial-file-disable.inc'                   => 1,
+		'rule-disable.inc'                           => 0,
+		'wordpress-disable.inc'                      => 0,
+
+		/*
 		 * In /FileNameUnitTests/TestFiles.
 		 */
 		'test-sample-phpunit.inc'                    => 0,
