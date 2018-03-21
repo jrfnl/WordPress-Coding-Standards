@@ -422,12 +422,30 @@ $phpcs_whitelist_comment_test = [
          * phpcs:disable Standard.Category.Sniff -- for reasons.
          */
         'truthy' => apply_filters( '...', true ),
+        'falsy'  => apply_filters(
+            '...',
+            // phpcs:ignore Standard.Category.Sniff -- for reasons.
+            true
+        ),
+'third' =>
+'something'
+// comment
+// phpcs:ignore Standard.Category.Sniff -- for reasons.
+. 'else',
+            'fourth' =>
+                'something'
+                // phpcs:disable Standard.Category.Sniff -- for reasons.
+                // phpcs:disable Standard.Category.Sniff -- for reasons.
+                . 'else',
 ];
 
 $phpcs_whitelist_comment_test = [
-'something' =>
 // phpcs:enable Standard.Category.Sniff -- for reasons.
-apply_filters( '...', true ),
+'something' =>
+    apply_filters( '...', true ),
+'something' =>
+    // phpcs:enable Standard.Category.Sniff -- for reasons.
+    apply_filters( '...', true ),
 ];
 
 // @codingStandardsChangeSetting WordPress.Arrays.ArrayIndentation tabIndent true

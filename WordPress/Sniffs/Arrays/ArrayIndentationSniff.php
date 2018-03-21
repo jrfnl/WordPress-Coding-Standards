@@ -60,6 +60,18 @@ class ArrayIndentationSniff extends Sniff {
 	private $ignore_tokens = array();
 
 	/**
+	 * Tokens to ignore when determining the start of an array item.
+	 *
+	 * Property is enriched in the register() method.
+	 *
+	 * @var array
+	 */
+	private $start_ignore_tokens = array(
+		T_WHITESPACE             => T_WHITESPACE,
+		T_DOC_COMMENT_WHITESPACE => T_DOC_COMMENT_WHITESPACE,
+	);
+
+	/**
 	 * Returns an array of tokens this test wants to listen for.
 	 *
 	 * @return array
@@ -73,6 +85,10 @@ class ArrayIndentationSniff extends Sniff {
 		$this->ignore_tokens = Tokens::$heredocTokens;
 		unset( $this->ignore_tokens[ T_START_HEREDOC ], $this->ignore_tokens[ T_START_NOWDOC ] );
 		$this->ignore_tokens[ T_INLINE_HTML ] = T_INLINE_HTML;
+
+		if ( isset( Tokens::$phpcsCommentTokens ) ) {
+			$this->start_ignore_tokens = $this->start_ignore_tokens + Tokens::$phpcsCommentTokens;
+		}
 
 		return array(
 			T_ARRAY,
@@ -126,9 +142,11 @@ if($dumped === false) {
             }
         }
         echo $ptr . ' :: L' . str_pad( $token['line'] , 3, '0', STR_PAD_LEFT ) . ' :: C' . $token['column'] . ' :: ' . $token['type'] . ' :: (' . $token['length'] . ') :: ' . $token['content'] . "\n";
-//        if ( $token['code'] === T_WHILE || $token['code'] === T_DO || $token['code'] === T_FUNCTION ) {
-//            var_dump( $token );
-//        }
+/*
+        if ( isset( $this->phpcsCommentTokens[ $token['type'] ] ) ) {
+            var_dump( $token );
+        }
+*/
     }
     unset( $ptr, $token );
     $dumped = true;
@@ -197,7 +215,7 @@ if($dumped === false) {
 
 			// Find the line on which the item starts.
 			$first_content = $this->phpcsFile->findNext(
-				array( T_WHITESPACE, T_DOC_COMMENT_WHITESPACE ),
+				$this->start_ignore_tokens,
 				$item['start'],
 				$end_of_this_item,
 				true
@@ -210,7 +228,7 @@ if($dumped === false) {
 				&& $this->tokens[ $first_content ]['line'] === $this->tokens[ $end_of_previous_item ]['line']
 			) {
 				$first_content = $this->phpcsFile->findNext(
-					array( T_WHITESPACE, T_DOC_COMMENT_WHITESPACE ),
+					$this->start_ignore_tokens,
 					( $first_content + 1 ),
 					$end_of_this_item,
 					true
@@ -264,6 +282,12 @@ if($dumped === false) {
 			// If the second line is a heredoc/nowdoc, continue on until we find a line with a different token.
 			// Same for the second line of a multi-line text string.
 			for ( $ptr = ( $first_content + 1 ); $ptr <= $item['end']; $ptr++ ) {
+/*
+				if ( isset( $this->phpcsFile->tokenizer->ignoredLines[ $this->tokens[ $ptr ]['line'] ]['all'] ) ) {
+					// Skip past lines which only contain PHPCS annotations and are being ignored completely.
+					continue;
+				}
+*/
 				if ( $this->tokens[ $first_content ]['line'] !== $this->tokens[ $ptr ]['line']
 					&& 1 === $this->tokens[ $ptr ]['column']
 					&& false === $this->ignore_token( $ptr )
@@ -273,7 +297,7 @@ if($dumped === false) {
 			}
 
 			$first_content_on_line2 = $this->phpcsFile->findNext(
-				array( T_WHITESPACE, T_DOC_COMMENT_WHITESPACE ),
+				$this->start_ignore_tokens,
 				$ptr,
 				$end_of_this_item,
 				true
@@ -327,11 +351,17 @@ if($dumped === false) {
 					$expected_indent_on_line2 = $this->get_indentation_string( $expected_spaces_on_line2 );
 
 					$this->phpcsFile->fixer->beginChangeset();
-
+/*
+				if ( isset( $this->phpcsFile->tokenizer->ignoredLines[ $this->tokens[ $ptr ]['line'] ]['all'] ) ) {
+					// Skip past lines which only contain PHPCS annotations and are being ignored completely.
+					continue;
+				}
+$first_content
+*/
 					// Fix second line for the array item.
 					if ( 1 === $this->tokens[ $first_content_on_line2 ]['column']
-						&& ( T_COMMENT === $this->tokens[ $first_content_on_line2 ]['code']
-							|| isset( $this->phpcsCommentTokens[ $this->tokens[ $first_content_on_line2 ]['type'] ] ) )
+						&& ( T_COMMENT === $this->tokens[ $first_content_on_line2 ]['code'])
+//							|| isset( $this->phpcsCommentTokens[ $this->tokens[ $first_content_on_line2 ]['type'] ] ) )
 					) {
 						$actual_comment = ltrim( $this->tokens[ $first_content_on_line2 ]['content'] );
 						$replacement    = $expected_indent_on_line2 . $actual_comment;
@@ -354,7 +384,7 @@ if($dumped === false) {
 						}
 
 						$first_content_on_line = $this->phpcsFile->findNext(
-							array( T_WHITESPACE, T_DOC_COMMENT_WHITESPACE ),
+							$this->start_ignore_tokens,
 							$i,
 							$end_of_this_item,
 							true
@@ -377,8 +407,8 @@ if($dumped === false) {
 
 						if ( $found_spaces_on_line !== $expected_spaces_on_line ) {
 							if ( 1 === $this->tokens[ $first_content_on_line ]['column']
-								&& ( T_COMMENT === $this->tokens[ $first_content_on_line ]['code']
-									|| isset( $this->phpcsCommentTokens[ $this->tokens[ $first_content_on_line2 ]['type'] ] ) )
+								&& ( T_COMMENT === $this->tokens[ $first_content_on_line ]['code'])
+//									|| isset( $this->phpcsCommentTokens[ $this->tokens[ $first_content_on_line2 ]['type'] ] ) )
 							) {
 								$actual_comment = ltrim( $this->tokens[ $first_content_on_line ]['content'] );
 								$replacement    = $expected_indent_on_line . $actual_comment;
