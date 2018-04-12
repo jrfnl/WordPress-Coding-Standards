@@ -47,3 +47,12 @@
   echo 'this line has precision alignment but shouldn\'t be reported';
 
   echo 'this line has precision alignment but shouldn\'t be reported'; // phpcs:ignore WordPress.WhiteSpace.PrecisionAlignment
+
+// phpcs:disable WordPress.WhiteSpace
+  echo 'this line has precision alignment but shouldn\'t be reported';
+// phpcs:enable WordPress.WhiteSpace.PrecisionAlignment
+  echo 'this line has precision alignment and should be reported again';
+// phpcs:enable WordPress.WhiteSpace.SomeThingElse
+  echo 'this line has precision alignment and should be reported again';
+// phpcs:enable WordPress
+  echo 'this line has precision alignment and should be reported again';

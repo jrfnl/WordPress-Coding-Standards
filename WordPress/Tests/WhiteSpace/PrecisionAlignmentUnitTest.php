@@ -127,6 +127,9 @@ class PrecisionAlignmentUnitTest extends AbstractSniffUnitTest {
 					34 => 1,
 					39 => 1,
 					44 => 1,
+					54 => 1,
+					56 => 0,
+					58 => 1,
 				);
 
 				/*
@@ -137,6 +140,7 @@ class PrecisionAlignmentUnitTest extends AbstractSniffUnitTest {
 				if ( version_compare( PHPCSHelper::get_version(), '3.3.0', '>=' ) === true ) {
 					$warnings[24] = 1;
 					$warnings[29] = 1;
+					$warnings[56] = 1;
 				}
 
 				return $warnings;
