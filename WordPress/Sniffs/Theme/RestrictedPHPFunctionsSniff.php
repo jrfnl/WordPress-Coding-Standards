@@ -3,12 +3,16 @@
  * WordPress_Sniffs_Theme_RestrictedPHPFunctionsSniff.
  *
  * Forbids the use of certain exec and obfuscation functions within Themes.
+namespace WordPress\Sniffs\Theme;
+
+use WordPress\AbstractFunctionRestrictionsSniff;
+
  *
  * @category Theme
  * @package  PHP_CodeSniffer
  * @author   Juliette Reinders Folmer <wpplugins_nospam@adviesenzo.nl>
  */
-class WordPress_Sniffs_Theme_RestrictedPHPFunctionsSniff extends WordPress_Sniffs_Functions_FunctionRestrictionsSniff {
+class RestrictedPHPFunctionsSniff extends AbstractFunctionRestrictionsSniff {
 
 	/**
 	 * Groups of functions to restrict
