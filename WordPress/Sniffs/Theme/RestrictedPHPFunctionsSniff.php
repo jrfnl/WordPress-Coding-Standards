@@ -1,29 +1,27 @@
 <?php
 /**
- * WordPress_Sniffs_Theme_RestrictedPHPFunctionsSniff.
+ * WordPress Coding Standard.
  *
- * Forbids the use of certain exec and obfuscation functions within Themes.
+ * @package WPCS\WordPressCodingStandards
+ * @link    https://github.com/WordPress-Coding-Standards/WordPress-Coding-Standards
+ * @license https://opensource.org/licenses/MIT MIT
+ */
+
 namespace WordPress\Sniffs\Theme;
 
 use WordPress\AbstractFunctionRestrictionsSniff;
 
+/**
+ * Forbids usage of certain PHP functions and recommends alternatives.
  *
- * @category Theme
- * @package  PHP_CodeSniffer
- * @author   Juliette Reinders Folmer <wpplugins_nospam@adviesenzo.nl>
+ * @package WPCS\WordPressCodingStandards
+ *
+ * @since   0.xx.0
  */
 class RestrictedPHPFunctionsSniff extends AbstractFunctionRestrictionsSniff {
 
 	/**
-	 * Groups of functions to restrict
-	 *
-	 * Example: groups => array(
-	 * 	'lambda' => array(
-	 * 		'type'      => 'error' | 'warning',
-	 * 		'message'   => 'Use anonymous functions instead please!',
-	 * 		'functions' => array( 'eval', 'create_function' ),
-	 * 	)
-	 * )
+	 * Groups of functions to restrict.
 	 *
 	 * @return array
 	 */
@@ -71,6 +69,6 @@ class RestrictedPHPFunctionsSniff extends AbstractFunctionRestrictionsSniff {
 				),
 			),
 		);
-
 	}
-} // end class
+
+}
