@@ -28,14 +28,6 @@ class RestrictedPHPFunctionsSniff extends AbstractFunctionRestrictionsSniff {
 	public function getGroups() {
 		return array(
 
-			'eval' => array(
-				'type'      => 'error',
-				'message'   => '%s() is not allowed.',
-				'functions' => array(
-					'eval',
-				),
-			),
-
 			'system_calls' => array(
 				'type'      => 'error',
 				'message'   => 'PHP system calls are often disabled by server admins and should not be in themes. Found %s.',
@@ -66,6 +58,16 @@ class RestrictedPHPFunctionsSniff extends AbstractFunctionRestrictionsSniff {
 					'convert_uudecode',
 					'convert_uuencode',
 					'str_rot13',
+				),
+			),
+
+			'roles' => array(
+				'type'      => 'error',
+				'message'   => '%s() is not allowed. Use capabilities instead.',
+				'functions' => array(
+					'add_role',
+					'remove_role',
+					'get_role',
 				),
 			),
 		);
