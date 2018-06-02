@@ -12,13 +12,13 @@ namespace WordPress\Sniffs\Theme;
 use WordPress\AbstractFunctionRestrictionsSniff;
 
 /**
- * Discouraged functions.
+ * Discouraged WordPress functions.
  *
  * @package WPCS\WordPressCodingStandards
  *
  * @since   0.xx.0
  */
-class DiscouragedFunctionsSniff extends AbstractFunctionRestrictionsSniff {
+class DiscouragedWPFunctionsSniff extends AbstractFunctionRestrictionsSniff {
 
 	/**
 	 * Groups of functions to restrict.

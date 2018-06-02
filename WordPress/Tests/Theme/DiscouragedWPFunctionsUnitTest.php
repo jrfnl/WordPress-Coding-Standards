@@ -12,12 +12,12 @@ namespace WordPress\Tests\Theme;
 use PHP_CodeSniffer\Tests\Standards\AbstractSniffUnitTest;
 
 /**
- * Unit test class for the DiscouragedFunctions sniff.
+ * Unit test class for the DiscouragedWPFunctions sniff.
  *
  * @package WPCS\WordPressCodingStandards
  * @since   0.xx.0
  */
-class DiscouragedFunctionsUnitTest extends AbstractSniffUnitTest {
+class DiscouragedWPFunctionsUnitTest extends AbstractSniffUnitTest {
 
 	/**
 	 * Returns the lines where errors should occur.
