@@ -7,13 +7,17 @@
  * @license https://opensource.org/licenses/MIT MIT
  */
 
+namespace WordPress\Tests\Theme;
+
+use PHP_CodeSniffer\Tests\Standards\AbstractSniffUnitTest;
+
 /**
  * Unit test class for the DiscouragedFunctions sniff.
  *
  * @package WPCS\WordPressCodingStandards
  * @since   0.xx.0
  */
-class WordPress_Tests_Theme_DiscouragedFunctionsUnitTest extends AbstractSniffUnitTest {
+class DiscouragedFunctionsUnitTest extends AbstractSniffUnitTest {
 
 	/**
 	 * Returns the lines where errors should occur.
@@ -22,7 +26,6 @@ class WordPress_Tests_Theme_DiscouragedFunctionsUnitTest extends AbstractSniffUn
 	 */
 	public function getErrorList() {
 		return array();
-
 	}
 
 	/**
@@ -40,7 +43,6 @@ class WordPress_Tests_Theme_DiscouragedFunctionsUnitTest extends AbstractSniffUn
 			8 => 1,
 			9 => 1,
 		);
-
 	}
 
-} // End class.
+}

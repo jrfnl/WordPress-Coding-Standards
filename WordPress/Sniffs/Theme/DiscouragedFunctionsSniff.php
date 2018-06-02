@@ -7,6 +7,10 @@
  * @license https://opensource.org/licenses/MIT MIT
  */
 
+namespace WordPress\Sniffs\Theme;
+
+use WordPress\AbstractFunctionRestrictionsSniff;
+
 /**
  * Discouraged functions.
  *
@@ -14,18 +18,10 @@
  *
  * @since   0.xx.0
  */
-class WordPress_Sniffs_Theme_DiscouragedFunctionsSniff extends WordPress_AbstractFunctionRestrictionsSniff {
+class DiscouragedFunctionsSniff extends AbstractFunctionRestrictionsSniff {
 
 	/**
 	 * Groups of functions to restrict.
-	 *
-	 * Example: groups => array(
-	 * 	'lambda' => array(
-	 * 		'type'      => 'error' | 'warning',
-	 * 		'message'   => 'Use anonymous functions instead please!',
-	 * 		'functions' => array( 'file_get_contents', 'create_function' ),
-	 * 	)
-	 * )
 	 *
 	 * @return array
 	 */
@@ -63,7 +59,6 @@ class WordPress_Sniffs_Theme_DiscouragedFunctionsSniff extends WordPress_Abstrac
 				),
 			),
 		);
-
 	}
 
-} // End class.
+}
