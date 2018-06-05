@@ -41,6 +41,7 @@ class NoRemoveAdminPagesSniff extends AbstractFunctionParameterSniff {
 	 * Sources:
 	 * - wp-admin/menu.php
 	 * - wp-admin/network/menu.php
+	 * - wp-admin/user/menu.php
 	 *
 	 * Last updated: 2018-06-04 / WP 4.9.6.
 	 *
