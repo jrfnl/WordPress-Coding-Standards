@@ -32,9 +32,7 @@ class NoRemoveAdminPagesSniff extends AbstractFunctionParameterSniff {
 	protected $group_name = 'remove_admin_pages';
 
 	/**
-	 * @TODO !!!!!
-	 *
-	 * Array of function, position, argument, and replacement function for restricted argument.
+	 * The functions targetted for examination by this sniff.
 	 *
 	 * @since 0.xx.0
 	 *
@@ -45,29 +43,18 @@ class NoRemoveAdminPagesSniff extends AbstractFunctionParameterSniff {
 	 *
 	 * Last updated: 2018-06-04 / WP 4.9.6.
 	 *
-	 * @var array Multi-dimentional array with parameter details.
-	 *            @type string Function name. {
-	 *                @type int target Parameter positions. {
-	 *                    @type string Alternative.
-	 *                }
-	 *            }
+	 * @var array
 	 */
 	protected $target_functions = array(
 		'remove_menu_page'    => true,
-		'remove_submenu_page' => array(
-			'menu_slug' => array(
-				'submenu_slug' => array(
-					'alt' => 'home_url()',
-				),
-				'wpurl' => array(
-					'alt' => 'site_url()',
-				),
-			),
-		),
+		'remove_submenu_page' => true,
 	);
 
 	/**
-	 * List of file names used by WP core for the admin menus.
+	 * List of file names used by WP core for the theme - "Appearance" - admin submenu.
+	 *
+	 * Includes some WP core pages which normally don't appear in the menu, but belong to the
+	 * theme category. Some of these may have been in the menu in older WP versions.
 	 *
 	 * Sources:
 	 * - wp-admin/menu.php
@@ -75,11 +62,38 @@ class NoRemoveAdminPagesSniff extends AbstractFunctionParameterSniff {
 	 *
 	 * Last updated: 2018-06-04 / WP 4.9.6.
 	 *
-	 * @var array <string File name> => <bool Whether the query string should be examined>
+	 * @var array
 	 */
-	protected $core_admin_pages = array(
-		'index.php' => true
+	protected $theme_subpages = array(
+		'themes.php'        => true,
+		'customize.php'     => true, // Special cased in the logic below.
+		'widgets.php'       => true,
+		'nav-menus.php'     => true,
+		'theme-install.php' => true,
+		'theme-editor.php'  => true,
 	);
+
+
+themes.php
+//add_query_arg( 'return', urlencode( remove_query_arg( wp_removable_query_args(), wp_unslash( $_SERVER['REQUEST_URI'] ) ) ), 'customize.php' );
+http://localhost/wp/4.9_nl/wp-admin/customize.php?return=%2Fwp%2F4.9_nl%2Fwp-admin%2F
+widgets.php (?)
+customize.php
+nav-menus.php
+//add_query_arg( array( 'autofocus' => array( 'control' => 'header_image' ) ), $customize_url );
+http://localhost/wp/4.9_nl/wp-admin/customize.php?return=%2Fwp%2F4.9_nl%2Fwp-admin%2F&autofocus%5Bcontrol%5D=header_image
+add_query_arg( array( 'autofocus' => array( 'control' => 'background_image' ) ), $customize_url );
+http://localhost/wp/4.9_nl/wp-admin/customize.php?return=%2Fwp%2F4.9_nl%2Fwp-admin%2Fthemes.php&autofocus%5Bcontrol%5D=background_image
+theme-editor.php
+
+http://localhost/wp/4.9_nl/wp-admin/customize.php?theme=2016child&return=%2Fwp%2F4.9_nl%2Fwp-admin%2Fthemes.php
+http://localhost/wp/4.9_nl/wp-admin/customize.php?autofocus%5Bpanel%5D=widgets&return=%2Fwp%2F4.9_nl%2Fwp-admin%2Fwidgets.php
+http://localhost/wp/4.9_nl/wp-admin/customize.php?autofocus%5Bpanel%5D=nav_menus&return=%2Fwp%2F4.9_nl%2Fwp-admin%2Fnav-menus.php%3Faction%3Dedit%26menu%3D0
+http://localhost/wp/4.9_nl/wp-admin/customize.php?autofocus%5Bsection%5D=custom_css
+
+themes.php
+theme-install.php
+theme-editor.php
 
 	/**
 	 * Groups of functions to restrict.
@@ -126,12 +140,25 @@ class NoRemoveAdminPagesSniff extends AbstractFunctionParameterSniff {
 				$stackPtr,
 				'RemoveMenuPageFound'
 			);
-			
+
 			return;
 		}
-		
+
 		// Handle `remove_submenu_page()`.
-		
+		if ( ! isset( $parameters[1], $parameters[2] ) ) {
+			// Live coding, parse error or other code error. Not our concern.
+			return;
+		}
+
+		$toplevel_menu = $this->strip_quotes( $parameters[1]['raw'] );
+		if ( 'themes.php' !== $parameters[1]['raw']) {
+			$this->phpcsFile->addError(
+				'Removing admin pages is not allowed from within a theme.',
+				$stackPtr,
+				'RemoveSubMenuPageFound'
+			);
+		}
+
 		// Check if param 1 - menu slug - is one of the core slugs
 		// if not, bow out OR MAYBE BETTER: only allow removing from the `themes` submenu ?
 		
