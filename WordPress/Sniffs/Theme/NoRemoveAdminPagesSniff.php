@@ -10,6 +10,7 @@
 namespace WordPress\Sniffs\Theme;
 
 use WordPress\AbstractFunctionParameterSniff;
+use PHP_CodeSniffer_Tokens as Tokens;
 
 /**
  * Forbids the removing of WP Core admin pages from within themes.
@@ -41,7 +42,7 @@ class NoRemoveAdminPagesSniff extends AbstractFunctionParameterSniff {
 	 * - wp-admin/network/menu.php
 	 * - wp-admin/user/menu.php
 	 *
-	 * Last updated: 2018-06-04 / WP 4.9.6.
+	 * Last updated: 2018-06-04 / WP 4.9.6 / trunk 5.0.
 	 *
 	 * @var array
 	 */
@@ -60,66 +61,51 @@ class NoRemoveAdminPagesSniff extends AbstractFunctionParameterSniff {
 	 * - wp-admin/menu.php
 	 * - wp-admin/network/menu.php
 	 *
-	 * Last updated: 2018-06-04 / WP 4.9.6.
+	 * Last updated: 2018-06-04 / WP 4.9.6 / trunk 5.0.
+	 *
+	 * @var array <string submenu slug> => <bool whether or not query args need examining>
+	 */
+	protected $theme_subpages = array(
+		'themes.php'        => false,
+		'customize.php'     => true,
+		'widgets.php'       => false,
+		'nav-menus.php'     => false,
+		'theme-install.php' => false,
+		'theme-editor.php'  => false,
+		'custom-header'     => false, // WP <= 4.0.
+		'custom-background' => false, // WP <= 4.0.
+	);
+
+	/**
+	 * List of customizer autofocus areas used by WP core for the theme - "Appearance" - admin submenu.
+	 *
+	 * Includes some WP core customizer pages which normally don't appear in the menu, but belong to
+	 * core nonetheless.
+	 *
+	 * Sources:
+	 * - wp-admin/menu.php
+	 * - wp-admin/nav-menus.php
+	 * - wp-admin/theme-editor.php
+	 * - wp-admin/widgets.php
+	 *
+	 * Last updated: 2018-06-04 / WP 4.9.6 / trunk 5.0.
 	 *
 	 * @var array
 	 */
-	protected $theme_subpages = array(
-		'themes.php'        => true,
-		'customize.php'     => true, // Special cased in the logic below.
-		'widgets.php'       => true,
-		'nav-menus.php'     => true,
-		'theme-install.php' => true,
-		'theme-editor.php'  => true,
+	protected $customizer_query_args = array(
+		'control' => array(
+			'header_image'     => true,
+			'background_image' => true,
+		),
+		'panel' => array(
+			'widgets'   => true,
+			'nav-menus' => true,
+		),
+		'section' => array(
+			'custom_css' => true,
+		),
 	);
 
-
-themes.php
-//add_query_arg( 'return', urlencode( remove_query_arg( wp_removable_query_args(), wp_unslash( $_SERVER['REQUEST_URI'] ) ) ), 'customize.php' );
-http://localhost/wp/4.9_nl/wp-admin/customize.php?return=%2Fwp%2F4.9_nl%2Fwp-admin%2F
-widgets.php (?)
-customize.php
-nav-menus.php
-//add_query_arg( array( 'autofocus' => array( 'control' => 'header_image' ) ), $customize_url );
-http://localhost/wp/4.9_nl/wp-admin/customize.php?return=%2Fwp%2F4.9_nl%2Fwp-admin%2F&autofocus%5Bcontrol%5D=header_image
-add_query_arg( array( 'autofocus' => array( 'control' => 'background_image' ) ), $customize_url );
-http://localhost/wp/4.9_nl/wp-admin/customize.php?return=%2Fwp%2F4.9_nl%2Fwp-admin%2Fthemes.php&autofocus%5Bcontrol%5D=background_image
-theme-editor.php
-
-http://localhost/wp/4.9_nl/wp-admin/customize.php?theme=2016child&return=%2Fwp%2F4.9_nl%2Fwp-admin%2Fthemes.php
-http://localhost/wp/4.9_nl/wp-admin/customize.php?autofocus%5Bpanel%5D=widgets&return=%2Fwp%2F4.9_nl%2Fwp-admin%2Fwidgets.php
-http://localhost/wp/4.9_nl/wp-admin/customize.php?autofocus%5Bpanel%5D=nav_menus&return=%2Fwp%2F4.9_nl%2Fwp-admin%2Fnav-menus.php%3Faction%3Dedit%26menu%3D0
-http://localhost/wp/4.9_nl/wp-admin/customize.php?autofocus%5Bsection%5D=custom_css
-
-themes.php
-theme-install.php
-theme-editor.php
-
-	/**
-	 * Groups of functions to restrict.
-	 *
-	 * @return array
-	 */
-	public function getGroups() {
-		return array(
-			'remove_menu_page' => array(
-				'type'      => 'error',
-				'message'   => 'Removing top-level admin pages is not allowed from within a theme.',
-				'functions' => array(
-					'remove_menu_page',
-				),
-			),
-			'remove_submenu_page' => array(
-				'type'      => 'error',
-				'message'   => 'Removing WP core submenu admin pages is not allowed from within a theme.',
-				'functions' => array(
-					'remove_submenu_page',
-				),
-			),
-		);
-	}
-//function remove_menu_page( $menu_slug ) {
-//function remove_submenu_page( $menu_slug, $submenu_slug )
 
 	/**
 	 * Process the parameters of a matched function.
@@ -144,27 +130,124 @@ theme-editor.php
 			return;
 		}
 
-		// Handle `remove_submenu_page()`.
-		if ( ! isset( $parameters[1], $parameters[2] ) ) {
+		/*
+		 * Handle `remove_submenu_page()` function calls.
+		 */
+		if ( ! isset( $parameters[1], $parameters[2] )
+			|| ( isset( $parameters[1] ) && '' === $parameters[1]['raw'] )
+			|| ( isset( $parameters[2] ) && '' === $parameters[2]['raw'] )
+		) {
 			// Live coding, parse error or other code error. Not our concern.
 			return;
 		}
 
-		$toplevel_menu = $this->strip_quotes( $parameters[1]['raw'] );
-		if ( 'themes.php' !== $parameters[1]['raw']) {
-			$this->phpcsFile->addError(
-				'Removing admin pages is not allowed from within a theme.',
+		$string_or_empty_tokens = Tokens::$textStringTokens + Tokens::$emptyTokens;
+
+		// Examine the parent menu slug.
+		$first_non_text = $this->phpcsFile->findNext(
+			$string_or_empty_tokens,
+			$parameters[1]['start'],
+			( $parameters[1]['end'] + 1 ),
+			true
+		);
+
+		if ( false !== $first_non_text ) {
+			$this->phpcsFile->addWarning(
+				'Admin submenu page removal detected. Parent menu could not be determined. Found: %s',
 				$stackPtr,
-				'RemoveSubMenuPageFound'
+				'RemoveSubMenuPageUnknownParent',
+				array( $parameters[1]['raw'] )
 			);
+		} else {
+			$toplevel_menu = $this->strip_quotes( $parameters[1]['raw'] );
+			if ( 'themes.php' !== $toplevel_menu ) {
+				$this->phpcsFile->addError(
+					'Removing WP core submenu admin pages is not allowed from within a theme.',
+					$stackPtr,
+					'RemoveSubMenuPageNonTheme'
+				);
+			}
 		}
+
+		// Examine the submenu slug.
+		$target_param = $parameters[2];
+		$first_text   = $this->phpcsFile->findNext(
+			Tokens::$textStringTokens,
+			$target_param['start'],
+			( $target_param['end'] + 1 )
+		);
+
+		if ( false === $first_text ) {
+			$this->phpcsFile->addWarning(
+				'Admin submenu page removal detected. Submenu could not be determined. Found: %s',
+				$stackPtr,
+				'RemoveSubMenuPageUnknownSubmenu',
+				array( $target_param['raw'] )
+			);
+			
+			return;
+		}
+
+		$first_non_text = $this->phpcsFile->findNext(
+			$string_or_empty_tokens,
+			$target_param['start'],
+			( $target_param['end'] + 1 ),
+			true
+		);
+
+		// Allow for the submenu slug to be wrapped in a call to `esc_url()`.
+		if ( 'esc_url' === $this->tokens[ $first_non_text ]['content'] ) {
+			$next = $this->phpcsFile->findNext(Tokens::$emptyTokens, ( $first_non_text + 1 ), ( $parameters[2]['end'] + 1 ), true );
+			if ( false !== $next ) {
+				$first_param = $this->get_function_call_parameter( $first_non_text, 1 );
+				if ( false !== $first_param ) {
+					$target_param   = $first_param;
+					$first_non_text = $this->phpcsFile->findNext(
+						$string_or_empty_tokens,
+						$target_param['start'],
+						( $target_param['end'] + 1 ),
+						true
+					);
+				}
+			}
+		}
+
+		if ( false === $first_non_text ) {
+			$submenu_slug = $this->strip_quotes( $parameters[2]['raw'] );
+			foreach ( $this->theme_subpages as $theme_subpage => $examine ) {
+
+				if ( strpos( $submenu_slug, $theme_subpage ) === 0 ) {
+					if ( false === $examine || $submenu_slug === $theme_subpage ) {
+						$this->phpcsFile->addError(
+							'Removing WP core submenu admin pages is not allowed from within a theme.',
+							$stackPtr,
+							'RemoveSubMenuPageTheme'
+						);
+						
+						return;
+					}
+					
+					// TODO: examine customize query args
+				}
+			}
+
+			return;
+		}
+
+
+//$customizer_query_args
+
+		// Examine submenu for typical customizer query args
+		
+		
+
 
 		// Check if param 1 - menu slug - is one of the core slugs
 		// if not, bow out OR MAYBE BETTER: only allow removing from the `themes` submenu ?
 		
 		// Check if param 2 - submenu slug - is one of the core slugs
 		// if not, bow out
-		
+
 		// Otherwise, throw error
 
 /*
@@ -179,6 +262,18 @@ theme-editor.php
 				array( $function_call_string )
 			);
 
+*/
+
+/*
+$customize_url = add_query_arg( 'return', urlencode( remove_query_arg( wp_removable_query_args(), wp_unslash( $_SERVER['REQUEST_URI'] ) ) ), 'customize.php' );
+
+remove_submenu_page( 'themes.php', add_query_arg( array( 'autofocus' => array( 'control' => 'header_image' ) ), 'customize.php' ) ); // Error.
+remove_submenu_page( 'themes.php', add_query_arg( array( 'autofocus' => array( 'control' => 'background_image' ) ), $customize_url ); ); // Error.
+remove_submenu_page( 'themes.php', add_query_arg( array( 'autofocus' => [ 'panel' => 'widgets' ] ), 'customize.php' ) ); // Error.
+remove_submenu_page('themes.php', add_query_arg(['autofocus'=>['panel'=>'nav-menus']],'customize.php')); // Error.
+remove_submenu_page( 'themes.php', add_query_arg( array( 'autofocus' => array( 'section' => 'custom_css' ) ), 'customize.php' ) ); // Error.
+
+$page = remove_submenu_page( 'themes.php', esc_url( $customize_url ) ); // Warning.
 */
 
 /*
