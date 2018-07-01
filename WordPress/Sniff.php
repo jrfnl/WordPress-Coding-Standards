@@ -1522,7 +1522,12 @@ abstract class Sniff implements PHPCS_Sniff {
 		$nested_parenthesis = $this->tokens[ $stackPtr ]['nested_parenthesis'];
 		$function_closer    = end( $nested_parenthesis );
 		$function_opener    = key( $nested_parenthesis );
-		$function           = $this->tokens[ ( $function_opener - 1 ) ];
+// JRF: THIS IS WRONG AND NEEDS FIXING!
+		if ( ! isset( $this->tokens[ ( $function_opener - 1 ) ] ) ) {
+			return false;
+		}
+
+		$function = $this->tokens[ ( $function_opener - 1 ) ];
 
 		// If it is just being unset, the value isn't used at all, so it's safe.
 		if ( \T_UNSET === $function['code'] ) {
@@ -1551,7 +1556,12 @@ abstract class Sniff implements PHPCS_Sniff {
 			}
 
 			$function_opener = key( $nested_parenthesis );
-			$functionName    = $this->tokens[ ( $function_opener - 1 ) ]['content'];
+// HERE TOO
+			if ( ! isset( $this->tokens[ ( $function_opener - 1 ) ] ) ) {
+				return false;
+			}
+
+			$functionName = $this->tokens[ ( $function_opener - 1 ) ]['content'];
 
 		} else {
 
@@ -1562,6 +1572,7 @@ abstract class Sniff implements PHPCS_Sniff {
 		if ( 'array_map' === $functionName ) {
 
 			// Get the first parameter.
+// AND HERE
 			$callback = $this->get_function_call_parameter( ( $function_opener - 1 ), 1 );
 
 			if ( ! empty( $callback ) ) {
@@ -1856,6 +1867,7 @@ abstract class Sniff implements PHPCS_Sniff {
 
 		// USE keywords inside closures.
 		$next = $this->phpcsFile->findNext( \T_WHITESPACE, ( $stackPtr + 1 ), null, true );
+//		$next = $this->phpcsFile->findNext( Tokens::$emptyTokens, ( $stackPtr + 1 ), null, true );
 
 		if ( \T_OPEN_PARENTHESIS === $this->tokens[ $next ]['code'] ) {
 			return 'closure';
@@ -2443,19 +2455,28 @@ abstract class Sniff implements PHPCS_Sniff {
 		}
 
 		// Check that this is a method call.
-		$is_object_call = $this->phpcsFile->findNext(
-			array( \T_OBJECT_OPERATOR, \T_DOUBLE_COLON ),
+		$nextNonWhitespace = $this->phpcsFile->findNext(
+			Tokens::$emptyTokens,
 			( $stackPtr + 1 ),
 			null,
-			false,
+			true,
 			null,
 			true
 		);
-		if ( false === $is_object_call ) {
+		if ( false === $nextNonWhitespace
+			|| ! in_array( $this->tokens[ $nextNonWhitespace ]['code'], array( \T_OBJECT_OPERATOR, \T_DOUBLE_COLON ), true )
+		) {
 			return false;
 		}
 
-		$methodPtr = $this->phpcsFile->findNext( \T_WHITESPACE, ( $is_object_call + 1 ), null, true, null, true );
+		$methodPtr = $this->phpcsFile->findNext(
+			Tokens::$emptyTokens,
+			( $nextNonWhitespace + 1 ),
+			null,
+			true,
+			null,
+			true
+		);
 		if ( false === $methodPtr ) {
 			return false;
 		}
@@ -2465,7 +2486,14 @@ abstract class Sniff implements PHPCS_Sniff {
 		}
 
 		// Find the opening parenthesis.
-		$opening_paren = $this->phpcsFile->findNext( \T_WHITESPACE, ( $methodPtr + 1 ), null, true, null, true );
+		$opening_paren = $this->phpcsFile->findNext(
+			Tokens::$emptyTokens,
+			( $methodPtr + 1 ),
+			null,
+			true,
+			null,
+			true
+		);
 
 		if ( false === $opening_paren ) {
 			return false;

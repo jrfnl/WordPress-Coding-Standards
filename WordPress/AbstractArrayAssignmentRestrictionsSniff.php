@@ -10,6 +10,7 @@
 namespace WordPressCS\WordPress;
 
 use WordPressCS\WordPress\Sniff;
+use PHP_CodeSniffer\Util\Tokens;
 
 /**
  * Restricts array assignment of certain keys.
@@ -143,6 +144,7 @@ abstract class AbstractArrayAssignmentRestrictionsSniff extends Sniff {
 
 		if ( \T_CLOSE_SQUARE_BRACKET === $token['code'] ) {
 			$equal = $this->phpcsFile->findNext( \T_WHITESPACE, ( $stackPtr + 1 ), null, true );
+//			$equal = $this->phpcsFile->findNext( Tokens::$emptyTokens, ( $stackPtr + 1 ), null, true );
 			if ( \T_EQUAL !== $this->tokens[ $equal ]['code'] ) {
 				return; // This is not an assignment!
 			}
@@ -166,6 +168,7 @@ abstract class AbstractArrayAssignmentRestrictionsSniff extends Sniff {
 			if ( ! is_numeric( $this->tokens[ $keyIdx ]['content'] ) ) {
 				$key            = $this->strip_quotes( $this->tokens[ $keyIdx ]['content'] );
 				$valStart       = $this->phpcsFile->findNext( array( \T_WHITESPACE ), ( $operator + 1 ), null, true );
+//				$valStart       = $this->phpcsFile->findNext( Tokens::$emptyTokens, ( $operator + 1 ), null, true );
 				$valEnd         = $this->phpcsFile->findNext( array( \T_COMMA, \T_SEMICOLON ), ( $valStart + 1 ), null, false, null, true );
 				$val            = $this->phpcsFile->getTokensAsString( $valStart, ( $valEnd - $valStart ) );
 				$val            = $this->strip_quotes( $val );
