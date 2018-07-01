@@ -112,19 +112,59 @@ class DirectDatabaseQuerySniff extends Sniff {
 	 * @return void
 	 */
 	public function process_token( $stackPtr ) {
+/*
+ini_set( 'xdebug.overload_var_dump', 1 );
 
+static $dumped = false;
+if($dumped === false) {
+    echo "\n";
+    foreach( $this->tokens as $ptr => $token ) {
+        if ( ! isset( $token['length'] ) ) {
+            $token['length'] = strlen($token['content']);
+        }
+        if ( $token['code'] === T_WHITESPACE || (defined('T_DOC_COMMENT_WHITESPACE') && $token['code'] === T_DOC_COMMENT_WHITESPACE) ) {
+            if ( strpos( $token['content'], "\t" ) !== false ) {
+                $token['content'] = str_replace( "\t", '\t', $token['content'] );
+            }
+            if ( isset( $token['orig_content'] ) ) {
+                $token['content'] .= ' :: Orig: ' . str_replace( "\t", '\t', $token['orig_content'] );
+            }
+        }
+        echo $ptr . ' :: L' . str_pad( $token['line'] , 3, '0', STR_PAD_LEFT ) . ' :: C' . $token['column'] . ' :: ' . $token['type'] . ' :: (' . $token['length'] . ') :: ' . $token['content'] . "\n";
+//        if ( $token['code'] === T_WHILE || $token['code'] === T_DO || $token['code'] === T_FUNCTION ) {
+//            var_dump( $token );
+//        }
+    }
+    unset( $ptr, $token );
+    $dumped = true;
+}
+*/
 		// Check for $wpdb variable.
 		if ( '$wpdb' !== $this->tokens[ $stackPtr ]['content'] ) {
 			return;
 		}
 
-		$is_object_call = $this->phpcsFile->findNext( \T_OBJECT_OPERATOR, ( $stackPtr + 1 ), null, false, null, true );
-		if ( false === $is_object_call ) {
+		$next_non_empty = $this->phpcsFile->findNext( Tokens::$emptyTokens, ( $stackPtr + 1 ), null, true, null, true );
+		if ( false === $next_non_empty || \T_OBJECT_OPERATOR !== $this->tokens[ $next_non_empty ]['code'] ) {
 			return; // This is not a call to the wpdb object.
 		}
 
-		$methodPtr = $this->phpcsFile->findNext( array( \T_WHITESPACE ), ( $is_object_call + 1 ), null, true, null, true );
-		$method    = $this->tokens[ $methodPtr ]['content'];
+//		$methodPtr = $this->phpcsFile->findNext( array( \T_WHITESPACE ), ( $next_non_empty + 1 ), null, true, null, true );
+		$methodPtr = $this->phpcsFile->findNext( Tokens::$emptyTokens, ( $next_non_empty + 1 ), null, true, null, true );
+		if ( false === $methodPtr || \T_STRING !== $this->tokens[ $methodPtr ]['code'] ) {
+			return;
+		}
+
+		$open_paren = $this->phpcsFile->findNext( Tokens::$emptyTokens, ( $methodPtr + 1 ), null, true, null, true );
+		if ( false === $open_paren
+			|| \T_OPEN_PARENTHESIS !== $this->tokens[ $open_paren ]['code']
+			|| isset( $this->tokens[ $open_paren ]['parenthesis_closer'] ) === false
+		) {
+			return;
+		}
+
+		$close_paren = $this->tokens[ $open_paren ]['parenthesis_closer'];
+		$method      = $this->tokens[ $methodPtr ]['content'];
 
 		$this->mergeFunctionLists();
 
@@ -132,7 +172,12 @@ class DirectDatabaseQuerySniff extends Sniff {
 			return;
 		}
 
-		$endOfStatement   = $this->phpcsFile->findNext( \T_SEMICOLON, ( $stackPtr + 1 ), null, false, null, true );
+		$ignore_as_end    = array(
+			\T_CLOSE_PARENTHESIS,
+			\T_CLOSE_SQUARE_BRACKET,
+			\T_CLOSE_CURLY_BRACKET,
+		);
+		$endOfStatement   = $this->phpcsFile->findEndOfStatement( $stackPtr, $ignore_as_end );
 		$endOfLineComment = '';
 		for ( $i = ( $endOfStatement + 1 ); $i < $this->phpcsFile->numTokens; $i++ ) {
 
@@ -151,7 +196,7 @@ class DirectDatabaseQuerySniff extends Sniff {
 		}
 
 		// Check for Database Schema Changes.
-		for ( $_pos = ( $stackPtr + 1 ); $_pos < $endOfStatement; $_pos++ ) {
+		for ( $_pos = ( $open_paren + 1 ); $_pos < $close_paren; $_pos++ ) {
 			$_pos = $this->phpcsFile->findNext( Tokens::$textStringTokens, $_pos, $endOfStatement, false, null, true );
 			if ( false === $_pos ) {
 				break;

@@ -299,3 +299,25 @@ EOD
 		wp_cache_add( 'baz', $baz );
 	}
 }
+
+// Oh and all of these are local vars anyway.... but that's for another PR.
+function unstable_token_walking() {
+	$wpdb = $this->insert();
+
+	$wpdb->
+		/* Comment */
+		insert();
+
+	// Property, not method.
+	$wpdb->insert = 'SELECT something FROM somewhere WHERE someotherthing = 1';
+	
+	$array = array(
+		'key1' => $wpdb->get_results( 'SELECT something FROM somewhere WHERE someotherthing = 1' ),
+		'key2' => $wpdb->nothing_interesting,
+	); // Misidentified trailing comment - db call OK, cache OK.
+	
+	$GLOBALS['wpdb']->get_col( 'SELECT something FROM somewhere WHERE someotherthing = 1' ); // Error + Warning.
+}
+
+// Handle parse error/live coding correctly.
+$wpdb->
