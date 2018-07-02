@@ -91,6 +91,31 @@ class ArrayIndentationSniff extends Sniff {
 		if ( ! isset( $this->tab_width ) ) {
 			$this->tab_width = PHPCSHelper::get_tab_width( $this->phpcsFile );
 		}
+ini_set( 'xdebug.overload_var_dump', 1 );
+
+static $dumped = false;
+if($dumped === false) {
+    echo "\n";
+    foreach( $this->tokens as $ptr => $token ) {
+        if ( ! isset( $token['length'] ) ) {
+            $token['length'] = strlen($token['content']);
+        }
+        if ( $token['code'] === T_WHITESPACE || (defined('T_DOC_COMMENT_WHITESPACE') && $token['code'] === T_DOC_COMMENT_WHITESPACE) ) {
+            if ( strpos( $token['content'], "\t" ) !== false ) {
+                $token['content'] = str_replace( "\t", '\t', $token['content'] );
+            }
+            if ( isset( $token['orig_content'] ) ) {
+                $token['content'] .= ' :: Orig: ' . str_replace( "\t", '\t', $token['orig_content'] );
+            }
+        }
+        echo $ptr . ' :: L' . str_pad( $token['line'] , 3, '0', STR_PAD_LEFT ) . ' :: C' . $token['column'] . ' :: ' . $token['type'] . ' :: (' . $token['length'] . ') :: ' . $token['content'] . "\n";
+//        if ( $token['code'] === T_WHILE || $token['code'] === T_DO || $token['code'] === T_FUNCTION ) {
+//            var_dump( $token );
+//        }
+    }
+    unset( $ptr, $token );
+    $dumped = true;
+}
 
 		/*
 		 * Determine the array opener & closer.
@@ -178,19 +203,21 @@ class ArrayIndentationSniff extends Sniff {
 				true
 			);
 
-			// Deal with trailing comments.
-			if ( false !== $first_content
+			// Deal with trailing comments belonging to the previous array item.
+			while ( false !== $first_content
 				&& \T_COMMENT === $this->tokens[ $first_content ]['code']
-				&& $this->tokens[ $first_content ]['line'] === $this->tokens[ $end_of_previous_item ]['line']
+				&& ( $this->tokens[ $first_content ]['line'] === $this->tokens[ $end_of_previous_item ]['line']
+					|| ( $this->tokens[ $first_content ]['line'] !== $this->tokens[ $end_of_previous_item ]['line']
+					&& in_array( substr( ltrim( $this->tokens[ $first_content ]['content'] ), 0, 2 ), array( '//', '/*' ), true ) ) )
 			) {
 				$first_content = $this->phpcsFile->findNext(
-					array( \T_WHITESPACE, \T_DOC_COMMENT_WHITESPACE, \T_COMMENT ),
+					array( \T_WHITESPACE, \T_DOC_COMMENT_WHITESPACE ),
 					( $first_content + 1 ),
 					$end_of_this_item,
 					true
 				);
 			}
-
+var_dump($first_content);
 			if ( false === $first_content ) {
 				$end_of_previous_item = $end_of_this_item;
 				continue;
