@@ -206,10 +206,14 @@ if($dumped === false) {
 			// Deal with trailing comments belonging to the previous array item.
 			while ( false !== $first_content
 				&& \T_COMMENT === $this->tokens[ $first_content ]['code']
-				&& ( $this->tokens[ $first_content ]['line'] === $this->tokens[ $end_of_previous_item ]['line']
-					|| ( $this->tokens[ $first_content ]['line'] !== $this->tokens[ $end_of_previous_item ]['line']
-					&& in_array( substr( ltrim( $this->tokens[ $first_content ]['content'] ), 0, 2 ), array( '//', '/*' ), true ) ) )
 			) {
+				if ( $this->tokens[ $first_content ]['line'] !== $this->tokens[ $end_of_previous_item ]['line']
+					&& ( 1 !== $this->tokens[ $first_content ]['column']
+						|| in_array( substr( ltrim( $this->tokens[ $first_content ]['content'] ), 0, 2 ), array( '//', '/*' ), true ) )
+				) {
+					break;
+				}
+
 				$first_content = $this->phpcsFile->findNext(
 					array( \T_WHITESPACE, \T_DOC_COMMENT_WHITESPACE ),
 					( $first_content + 1 ),
@@ -217,7 +221,7 @@ if($dumped === false) {
 					true
 				);
 			}
-var_dump($first_content);
+
 			if ( false === $first_content ) {
 				$end_of_previous_item = $end_of_this_item;
 				continue;
@@ -400,16 +404,70 @@ var_dump($first_content);
 						&& \T_COMMA === $this->tokens[ $end_of_this_item ]['code']
 						&& ( $this->tokens[ $end_of_this_item ]['column'] - 1 ) !== $expected_spaces
 					) {
-						$this->add_array_alignment_error(
-							$end_of_this_item,
-							'Comma after array item not aligned correctly; expected %s spaces, but found %s',
-							'MultiLineArrayItemCommaNotAligned',
-							$expected_spaces,
-							( $this->tokens[ $end_of_this_item ]['column'] - 1 ),
-							$expected_indent
-						);
+						$this->fix_alignment_error( $end_of_this_item, $expected_indent );
 					}
+					
+					/*
+					 * Check the placement of subsequent lines of trailing comments.
+					 * Indent ...
+					 */
+/*
+					$next_item_or_trailing_comment = $this->phpcsFile->findNext(
+						array( T_WHITESPACE, T_DOC_COMMENT_WHITESPACE ),
+						( $end_of_this_item + 1 ),
+						null,
+						true
+					);
 
+					while ( false !== $next_item_or_trailing_comment
+						&& T_COMMENT === $this->tokens[ $next_item_or_trailing_comment ]['code']
+					) {
+						if ( $this->tokens[ $next_item_or_trailing_comment ]['line'] !== $this->tokens[ $end_of_this_item ]['line']
+							&& ( 1 !== $this->tokens[ $next_item_or_trailing_comment ]['column']
+								|| in_array( substr( ltrim( $this->tokens[ $next_item_or_trailing_comment ]['content'] ), 0, 2 ), array( '//', '/*' ), true ) )
+						) {
+							break;
+						}
+						
+						if ( $this->tokens[ $next_item_or_trailing_comment ]['line'] !== $this->tokens[ $end_of_this_item ]['line'] ) {
+							// Subsequent line of multi-line trailing comment.
+							
+						$found_spaces_on_line    = $this->get_indentation_size( $next_item_or_trailing_comment );
+						$expected_spaces_on_line = ( $expected_spaces_on_line2 + ( $found_spaces_on_line - $found_spaces_on_line2 ) );
+						$expected_spaces_on_line = max( $expected_spaces_on_line, 0 ); // Can't be below 0.
+						$expected_indent_on_line = $this->get_indentation_string( $expected_spaces_on_line );
+
+						if ( $found_spaces_on_line !== $expected_spaces_on_line ) {
+							if ( 1 === $this->tokens[ $first_content_on_line ]['column']
+								&& T_COMMENT === $this->tokens[ $first_content_on_line ]['code']
+							) {
+								$actual_comment = ltrim( $this->tokens[ $first_content_on_line ]['content'] );
+								$replacement    = $expected_indent_on_line . $actual_comment;
+
+								$this->phpcsFile->fixer->replaceToken( $first_content_on_line, $replacement );
+
+						}
+						
+						
+						$next_item_or_trailing_comment = $this->phpcsFile->findNext(
+							array( T_WHITESPACE, T_DOC_COMMENT_WHITESPACE ),
+							( $next_item_or_trailing_comment + 1 ),
+							null,
+							true
+						);
+
+						// Trailing comment found.
+						while (
+
+
+						$indent = $expected_indent_on_line2;
+						if ( isset( $expected_indent_on_line ) ) {
+							$indent = $expected_indent_on_line;
+						}
+
+
+					}
+*/
 					$this->phpcsFile->fixer->endChangeset();
 				}
 			}

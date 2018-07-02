@@ -417,7 +417,7 @@ $NP = array(
 				0x41 => array( 0x61 ),
 				0x33C1  => array( 0x6D, 0x3C9 ), /*
 				,0x33C2  => array(0x61, 0x2E, 0x6D, 0x2E)
-				and another line */
+				and another line */ /* Second trailing comment. */
 				/* Comment about next line. */
 				0x33C3  => array( 0x62, 0x71 ),
 				),
@@ -428,5 +428,5 @@ $my_array = [
 	apply_filters( '...', true ), // A trailing comment.
 // A separate comment relating to the next
 // array item.
-	'something_else',
+'something_else',
 ];
