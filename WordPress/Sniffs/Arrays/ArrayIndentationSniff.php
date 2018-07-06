@@ -209,7 +209,7 @@ if($dumped === false) {
 		$expected_indent      = $this->get_indentation_string( $expected_spaces );
 		$end_of_previous_item = $opener;
 
-		foreach ( $array_items as $item ) {
+		foreach ( $array_items as $nr => $item ) {
 			$end_of_this_item = ( $item['end'] + 1 );
 
 			// Find the line on which the item starts.
@@ -505,6 +505,20 @@ $first_content
 					$this->phpcsFile->fixer->endChangeset();
 				}
 			}
+			/*
+			NOTE: pseudo-code!!!!
+
+			if ( isset( $array_items[ $nr + 1 ] ) ) {
+				if ( $real_end_previous > $array_items[ $nr + 1 ]['end'] ) {
+					// This must have been the last item in the array and it had a trailing comment.
+					break;
+				}
+
+				$array_items[ $nr + 1 ]['start'] = $real_end_previous + 1;
+
+			}
+			*/
+
 
 			$end_of_previous_item = $end_of_this_item;
 		}
