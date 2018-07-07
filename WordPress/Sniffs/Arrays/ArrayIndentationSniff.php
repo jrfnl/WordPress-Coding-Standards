@@ -55,11 +55,25 @@ class ArrayIndentationSniff extends Sniff {
 	 *
 	 * Property is enriched in the register() method.
 	 *
+	 * @since 1.0.0
+	 *
 	 * @var array
 	 */
 	private $start_ignore_tokens = array(
 		\T_WHITESPACE             => \T_WHITESPACE,
 		\T_DOC_COMMENT_WHITESPACE => \T_DOC_COMMENT_WHITESPACE,
+	);
+
+	/**
+	 * Content to expect at the start of an inline comment.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @var array
+	 */
+	private $comment_openers = array(
+		'//' => true,
+		'/*' => true,
 	);
 
 	/**
@@ -126,9 +140,11 @@ if($dumped === false) {
             }
         }
         echo $ptr . ' :: L' . str_pad( $token['line'] , 3, '0', STR_PAD_LEFT ) . ' :: C' . $token['column'] . ' :: ' . $token['type'] . ' :: (' . $token['length'] . ') :: ' . $token['content'] . "\n";
-//        if ( $token['code'] === T_WHILE || $token['code'] === T_DO || $token['code'] === T_FUNCTION ) {
-//            var_dump( $token );
-//        }
+/*
+        if ( $token['code'] === T_COMMENT || isset( $this->phpcsCommentTokens[ $token['type'] ] ) ) {
+            var_dump( $token );
+        }
+*/
     }
     unset( $ptr, $token );
     $dumped = true;
@@ -209,40 +225,78 @@ if($dumped === false) {
 		$expected_indent      = $this->get_indentation_string( $expected_spaces );
 		$end_of_previous_item = $opener;
 
-		foreach ( $array_items as $nr => $item ) {
+		foreach ( $array_items as $param_nr => $item ) {
 			$end_of_this_item = ( $item['end'] + 1 );
 
+/*
 			// Find the line on which the item starts.
-			$first_content = $this->phpcsFile->findNext(
+			$first_content       = $this->phpcsFile->findNext(
 				$this->start_ignore_tokens,
 				$item['start'],
 				$end_of_this_item,
 				true
 			);
 
-			// Deal with trailing comments belonging to the previous array item.
-			while ( false !== $first_content
-				&& \T_COMMENT === $this->tokens[ $first_content ]['code']
-//					|| isset( $this->phpcsCommentTokens[ $this->tokens[ $first_content ]['type'] ] ) )
-			) {
-				if ( $this->tokens[ $first_content ]['line'] !== $this->tokens[ $end_of_previous_item ]['line']
-					&& ( 1 !== $this->tokens[ $first_content ]['column']
-						|| in_array( substr( ltrim( $this->tokens[ $first_content ]['content'] ), 0, 2 ), array( '//', '/*' ), true ) )
-				) {
-					break;
-				}
+			$first_fixer_content = $first_content;
+*/
 
+			// Deal with trailing comments belonging to the previous array item.
+/*			while ( false !== $first_content
+				&& ( \T_COMMENT === $this->tokens[ $first_content ]['code']
+					|| isset( $this->phpcsCommentTokens[ $this->tokens[ $first_content ]['type'] ] ) )
+			) {
+*/
+			$first_content = ( $item['start'] - 1 );
+			do {
+				// Find the line on which the item starts.
 				$first_content = $this->phpcsFile->findNext(
-					( $this->start_ignore_tokens /* + array( \T_COMMENT ) */ ),
+					$this->start_ignore_tokens,
 					( $first_content + 1 ),
 					$end_of_this_item,
 					true
 				);
-			}
+
+				if ( false === $first_content ) {
+					break;
+				}
+				
+				if ( \T_COMMENT !== $this->tokens[ $first_content ]['code']
+					&& isset( $this->phpcsCommentTokens[ $this->tokens[ $first_content ]['type'] ] ) === false
+				) {
+					break;
+				}
+
+				// First content found is a comment or PHPCS annotation. This may be (part of) a trailing comment.
+				$first_two_chars = substr( ltrim( $this->tokens[ $first_content ]['content'] ), 0, 2 );
+				$last_two_chars  = substr( rtrim( $this->tokens[ $first_content ]['content'] ), -2 );
+
+				if ( $this->tokens[ $first_content ]['line'] !== $this->tokens[ $end_of_previous_item ]['line']
+					&& isset( $this->phpcsCommentTokens[ $this->tokens[ $first_content ]['type'] ] )
+					&& isset( $this->comment_openers[ $first_two_chars] )
+				) {
+					// Non-trailing fixer comment belongs to this item.
+					$first_fixer_content = $first_content;
+					continue;
+				}
+
+				// TODO: this will break on a second trailing comment.
+				if ( $this->tokens[ $first_content ]['line'] !== $this->tokens[ $end_of_previous_item ]['line']
+					&& ( 1 !== $this->tokens[ $first_content ]['column']
+						|| isset( $this->comment_openers[ $first_two_chars] ) )
+				) {
+					// New
+					break;
+				}
+
+			} while ( true );
 
 			if ( false === $first_content ) {
 				$end_of_previous_item = $end_of_this_item;
 				continue;
+			}
+
+			if ( ! isset( $first_fixer_content ) ) {
+				$first_fixer_content = $first_content;
 			}
 
 			// Bow out from reporting and fixing mixed multi-line/single-line arrays.
@@ -508,13 +562,13 @@ $first_content
 			/*
 			NOTE: pseudo-code!!!!
 
-			if ( isset( $array_items[ $nr + 1 ] ) ) {
-				if ( $real_end_previous > $array_items[ $nr + 1 ]['end'] ) {
+			if ( isset( $array_items[ $param_nr + 1 ] ) ) {
+				if ( $real_end_previous > $array_items[ $param_nr + 1 ]['end'] ) {
 					// This must have been the last item in the array and it had a trailing comment.
 					break;
 				}
 
-				$array_items[ $nr + 1 ]['start'] = $real_end_previous + 1;
+				$array_items[ $param_nr + 1 ]['start'] = $real_end_previous + 1;
 
 			}
 			*/
