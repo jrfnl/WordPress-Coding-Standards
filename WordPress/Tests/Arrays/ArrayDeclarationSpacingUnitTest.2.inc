@@ -97,3 +97,13 @@ $foo = [
 	'meta_key'   => 'foo', // phpcs:ignore WordPress.VIP.SlowDBQuery.slow_db_query_meta_key
 	'meta_value' => 'bar', // phpcs:ignore WordPress.VIP.SlowDBQuery.slow_db_query_meta_value
 ];
+
+// Test for fixing array with multi-line comments between values.
+$bad = [
+	'key1' => 'value1', /* comment
+	end */ 'key2' => 'value2', // Bad.
+	/* Non-trailing comment. */
+	'key3' => 'value3', /* comment
+	end */
+	'key4' => 'value4'
+];
