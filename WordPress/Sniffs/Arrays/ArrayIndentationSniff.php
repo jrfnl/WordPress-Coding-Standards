@@ -217,7 +217,7 @@ if($dumped === false) {
 		 */
 		$array_items = $this->get_function_call_parameters( $stackPtr );
 		if ( empty( $array_items ) ) {
-			// Strange, no array items found.
+			// No array items found.
 			return;
 		}
 
@@ -322,11 +322,12 @@ if($dumped === false) {
 			}
 
 			// No need for further checking if this is a one-line array item.
+/*
 			if ( $this->tokens[ $first_content ]['line'] === $this->tokens[ $item['end'] ]['line'] ) {
 				$end_of_previous_item = $end_of_this_item;
 				continue;
 			}
-
+*/
 			/*
 			 * Multi-line array items.
 			 *
@@ -382,6 +383,89 @@ if($dumped === false) {
 						( $this->tokens[ $end_of_this_item ]['column'] - 1 ),
 						$expected_indent
 					);
+				}
+				
+				/*
+				 * Also check for potential multi-line trailing comments.
+				 */
+				$next_item_or_trailing_comment = $this->phpcsFile->findNext(
+					$this->start_ignore_tokens,
+					( $end_of_this_item + 1 ),
+					$closer,
+					true
+				);
+
+				if ( $this->tokens[ $next_item_or_trailing_comment ]['line'] === $this->tokens[ $end_of_this_item ]['line']
+					&& ( \T_COMMENT === $this->tokens[ $next_item_or_trailing_comment ]['code']
+						|| isset( $this->phpcsCommentTokens[ $this->tokens[ $next_item_or_trailing_comment ]['type'] ] ) )
+					&& substr( ltrim( $this->tokens[ $next_item_or_trailing_comment ]['content'] ), 0, 2 ) === '/*'
+					&& substr( rtrim( $this->tokens[ $next_item_or_trailing_comment ]['content'] ), -2 ) !== '*/'
+				) {
+
+					/*
+					 * Found multi-line trailing comment.
+					 * Fix lines until the end of the trailing comment is found.
+					 * Fix PHPCS annotation lines regardless of whether this is a fixer run to force fix them.
+					 */
+					$fix    = false;
+					$thrown = false;
+					while ( ( $next_item_or_trailing_comment = $this->phpcsFile->findNext( $this->start_ignore_tokens, ( $next_item_or_trailing_comment + 1 ), $closer, true ) ) !== false
+						&& ( \T_COMMENT === $this->tokens[ $next_item_or_trailing_comment ]['code']
+							|| isset( $this->phpcsCommentTokens[ $this->tokens[ $next_item_or_trailing_comment ]['type'] ] ) )
+						&& 1 === $this->tokens[ $next_item_or_trailing_comment ]['column']
+					) {
+
+						$found_spaces_on_line    = $this->get_indentation_size( $next_item_or_trailing_comment );
+						$expected_spaces_on_line = ( $expected_spaces + ( $found_spaces_on_line - $found_spaces ) );
+						$expected_spaces_on_line = max( $expected_spaces_on_line, 0 ); // Can't be below 0.
+						$expected_indent_on_line = $this->get_indentation_string( $expected_spaces_on_line );
+
+						if ( $found_spaces_on_line !== $expected_spaces_on_line ) {
+							if ( false === $thrown ) {
+								$fix = $this->phpcsFile->addFixableError(
+									'Trailing comment after multi-line array item not aligned correctly; expected %s spaces, but found %s',
+									$next_item_or_trailing_comment,
+									'MultiLineTrailingCommentNotAligned',
+									array( $expected_spaces_on_line, $found_spaces_on_line )
+								);
+							}
+
+							if ( true === $fix
+								|| isset( $this->phpcsCommentTokens[ $this->tokens[ $next_item_or_trailing_comment ]['type'] ] )
+							) {
+								$actual_comment = ltrim( $this->tokens[ $next_item_or_trailing_comment ]['content'] );
+								$replacement    = $expected_indent_on_line . $actual_comment;
+	
+								$this->phpcsFile->fixer->replaceToken( $next_item_or_trailing_comment, $replacement );
+							}
+						}
+
+						if ( substr( rtrim( $this->tokens[ $next_item_or_trailing_comment ]['content'] ), -2 ) === '*/' ) {
+							// Find end of line
+							/*
+							for ( $i = ( $next_item_or_trailing_comment + 1 ); $i < $closer; $i++ ) {
+								if ( $this->tokens[ $i ]['line'] !== $this->tokens[ $next_item_or_trailing_comment ]['line'] ) {
+									--$i;
+									break;
+								}
+							}
+							*/
+
+							$end_of_this_item = ( $next_item_or_trailing_comment + 1 );
+
+							if ( isset( $array_items[ $param_nr + 1 ] ) ) {
+								if ( $end_of_this_item > $array_items[ $param_nr + 1 ]['end'] ) {
+									// This must have been the last item in the array and it had a trailing comment.
+									break 2;
+								}
+				
+								$array_items[ $param_nr + 1 ]['start'] = $end_of_this_item;
+							}
+
+							break;
+						}
+					}
+					unset( $fix, $thrown );
 				}
 
 				$end_of_previous_item = $end_of_this_item;
@@ -468,8 +552,8 @@ $first_content
 
 						if ( $found_spaces_on_line !== $expected_spaces_on_line ) {
 							if ( 1 === $this->tokens[ $first_content_on_line ]['column']
-								&& \T_COMMENT === $this->tokens[ $first_content_on_line ]['code']
-//									|| isset( $this->phpcsCommentTokens[ $this->tokens[ $first_content_on_line2 ]['type'] ] ) )
+								&& ( \T_COMMENT === $this->tokens[ $first_content_on_line ]['code']
+									|| isset( $this->phpcsCommentTokens[ $this->tokens[ $first_content_on_line2 ]['type'] ] ) )
 							) {
 								$actual_comment = ltrim( $this->tokens[ $first_content_on_line ]['content'] );
 								$replacement    = $expected_indent_on_line . $actual_comment;
@@ -490,89 +574,80 @@ $first_content
 					 */
 					if ( $this->tokens[ $item['end'] ]['line'] !== $this->tokens[ $end_of_this_item ]['line']
 						&& \T_COMMA === $this->tokens[ $end_of_this_item ]['code']
-						&& ( $this->tokens[ $end_of_this_item ]['column'] - 1 ) !== $expected_spaces
+						&& ( $this->tokens[ $end_of_this_item ]['column'] - 1 ) !== $expected_spaces_on_line2
 					) {
-						$this->fix_alignment_error( $end_of_this_item, $expected_indent );
+						$this->fix_alignment_error( $end_of_this_item, $expected_indent_on_line2 );
 					}
-					
+
 					/*
-					 * Check the placement of subsequent lines of trailing comments.
-					 * Indent ...
+					 * Check for a multi-line trailing comment and if found, fix the indentation.
 					 */
-/*
 					$next_item_or_trailing_comment = $this->phpcsFile->findNext(
-						$this->start_ignore_tokens,,
+						$this->start_ignore_tokens,
 						( $end_of_this_item + 1 ),
-						null,
+						$closer,
 						true
 					);
 
-					while ( false !== $next_item_or_trailing_comment
-						&& T_COMMENT === $this->tokens[ $next_item_or_trailing_comment ]['code']
+					if ( $this->tokens[ $next_item_or_trailing_comment ]['line'] === $this->tokens[ $end_of_this_item ]['line']
+						&& ( \T_COMMENT === $this->tokens[ $next_item_or_trailing_comment ]['code']
+							|| isset( $this->phpcsCommentTokens[ $this->tokens[ $next_item_or_trailing_comment ]['type'] ] ) )
+						&& substr( ltrim( $this->tokens[ $next_item_or_trailing_comment ]['content'] ), 0, 2 ) === '/*'
+						&& substr( rtrim( $this->tokens[ $next_item_or_trailing_comment ]['content'] ), -2 ) !== '*/'
 					) {
-						if ( $this->tokens[ $next_item_or_trailing_comment ]['line'] !== $this->tokens[ $end_of_this_item ]['line']
-							&& ( 1 !== $this->tokens[ $next_item_or_trailing_comment ]['column']
-								|| in_array( substr( ltrim( $this->tokens[ $next_item_or_trailing_comment ]['content'] ), 0, 2 ), array( '//', '/*' ), true ) )
-						) {
-							break;
-						}
-						
-						if ( $this->tokens[ $next_item_or_trailing_comment ]['line'] !== $this->tokens[ $end_of_this_item ]['line'] ) {
-							// Subsequent line of multi-line trailing comment.
-							
-						$found_spaces_on_line    = $this->get_indentation_size( $next_item_or_trailing_comment );
-						$expected_spaces_on_line = ( $expected_spaces_on_line2 + ( $found_spaces_on_line - $found_spaces_on_line2 ) );
-						$expected_spaces_on_line = max( $expected_spaces_on_line, 0 ); // Can't be below 0.
-						$expected_indent_on_line = $this->get_indentation_string( $expected_spaces_on_line );
 
-						if ( $found_spaces_on_line !== $expected_spaces_on_line ) {
-							if ( 1 === $this->tokens[ $first_content_on_line ]['column']
-								&& T_COMMENT === $this->tokens[ $first_content_on_line ]['code']
-							) {
-								$actual_comment = ltrim( $this->tokens[ $first_content_on_line ]['content'] );
+						/*
+						 * Found multi-line trailing comment.
+						 * Fix lines until the end of the trailing comment is found.
+						 */
+						while ( ( $next_item_or_trailing_comment = $this->phpcsFile->findNext( $this->start_ignore_tokens, ( $next_item_or_trailing_comment + 1 ), $closer, true ) ) !== false
+							&& ( \T_COMMENT === $this->tokens[ $next_item_or_trailing_comment ]['code']
+								|| isset( $this->phpcsCommentTokens[ $this->tokens[ $next_item_or_trailing_comment ]['type'] ] ) )
+							&& 1 === $this->tokens[ $next_item_or_trailing_comment ]['column']
+						) {
+
+							$found_spaces_on_line    = $this->get_indentation_size( $next_item_or_trailing_comment );
+							$expected_spaces_on_line = ( $expected_spaces_on_line2 + ( $found_spaces_on_line - $found_spaces_on_line2 ) );
+							$expected_spaces_on_line = max( $expected_spaces_on_line, 0 ); // Can't be below 0.
+							$expected_indent_on_line = $this->get_indentation_string( $expected_spaces_on_line );
+
+							if ( $found_spaces_on_line !== $expected_spaces_on_line ) {
+								$actual_comment = ltrim( $this->tokens[ $next_item_or_trailing_comment ]['content'] );
 								$replacement    = $expected_indent_on_line . $actual_comment;
 
-								$this->phpcsFile->fixer->replaceToken( $first_content_on_line, $replacement );
+								$this->phpcsFile->fixer->replaceToken( $next_item_or_trailing_comment, $replacement );
+							}
 
+							if ( substr( rtrim( $this->tokens[ $next_item_or_trailing_comment ]['content'] ), -2 ) === '*/' ) {
+								// Find end of line
+								/*
+								for ( $i = ( $next_item_or_trailing_comment + 1 ); $i < $closer; $i++ ) {
+									if ( $this->tokens[ $i ]['line'] !== $this->tokens[ $next_item_or_trailing_comment ]['line'] ) {
+										--$i;
+										break;
+									}
+								}
+								*/
+
+								$end_of_this_item = ( $next_item_or_trailing_comment + 1 );
+
+								if ( isset( $array_items[ $param_nr + 1 ] ) ) {
+									if ( $end_of_this_item > $array_items[ $param_nr + 1 ]['end'] ) {
+										// This must have been the last item in the array and it had a trailing comment.
+										break 2;
+									}
+					
+									$array_items[ $param_nr + 1 ]['start'] = $end_of_this_item;
+								}
+
+								break;
+							}
 						}
-						
-						
-						$next_item_or_trailing_comment = $this->phpcsFile->findNext(
-							$this->start_ignore_tokens,,
-							( $next_item_or_trailing_comment + 1 ),
-							null,
-							true
-						);
-
-						// Trailing comment found.
-						while (
-
-
-						$indent = $expected_indent_on_line2;
-						if ( isset( $expected_indent_on_line ) ) {
-							$indent = $expected_indent_on_line;
-						}
-
-
 					}
-*/
+
 					$this->phpcsFile->fixer->endChangeset();
 				}
 			}
-			/*
-			NOTE: pseudo-code!!!!
-
-			if ( isset( $array_items[ $param_nr + 1 ] ) ) {
-				if ( $real_end_previous > $array_items[ $param_nr + 1 ]['end'] ) {
-					// This must have been the last item in the array and it had a trailing comment.
-					break;
-				}
-
-				$array_items[ $param_nr + 1 ]['start'] = $real_end_previous + 1;
-
-			}
-			*/
-
 
 			$end_of_previous_item = $end_of_this_item;
 		}
@@ -652,8 +727,7 @@ $first_content
 		 * Subsequent lines are tokenized as T_COMMENT including the indentation whitespace.
 		 */
 		if ( \T_COMMENT === $this->tokens[ $ptr ]['code']
-//			|| isset( $this->phpcsCommentTokens[ $this->tokens[ $ptr ]['type'] ] )
-
+			|| isset( $this->phpcsCommentTokens[ $this->tokens[ $ptr ]['type'] ] )
 		) {
 			$content        = $this->tokens[ $ptr ]['content'];
 			$actual_comment = ltrim( $content );

@@ -468,4 +468,14 @@ $phpcs_whitelist_comment_test = [
     apply_filters( '...', true ),
 ];
 
+// Should report the first line, second line and fix the first + second line + the comma on the last line.
+get_current_screen()->add_help_tab( [
+'id'        =>
+    <<<EOD
+Here comes some text.
+And some more text.
+EOD
+    ,
+] );
+
 // @codingStandardsChangeSetting WordPress.Arrays.ArrayIndentation tabIndent true

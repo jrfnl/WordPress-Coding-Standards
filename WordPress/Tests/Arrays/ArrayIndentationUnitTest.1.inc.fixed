@@ -468,3 +468,13 @@ $phpcs_whitelist_comment_test = [
 		// phpcs:enable Standard.Category.Sniff -- for reasons.
 		apply_filters( '...', true ),
 ];
+
+// Should report the first line, second line and fix the first + second line + the comma on the last line.
+get_current_screen()->add_help_tab( array(
+	'id'		=>
+		<<<EOD
+Here comes some text.
+And some more text.
+EOD
+		,
+) );
