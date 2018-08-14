@@ -51,7 +51,10 @@
 	</rule>
 
 	<!-- Prevent duplicate messages from deprecated sniff. -->
-	<rule ref="WordPress.CSRF.NonceVerification.NoNonceVerification">
+	<rule ref="WordPress.CSRF.NonceVerification.Missing">
+		<severity>0</severity>
+	</rule>
+	<rule ref="WordPress.CSRF.NonceVerification.Recommended">
 		<severity>0</severity>
 	</rule>
 
