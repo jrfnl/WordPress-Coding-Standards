@@ -1719,7 +1719,7 @@ abstract class Sniff implements PHPCS_Sniff {
 
 		} else {
 			/*
-			 * We are are more loose, requiring only that the variable be validated
+			 * We are more loose, requiring only that the variable be validated
 			 * in the same function/file scope as it is used.
 			 */
 
@@ -1741,6 +1741,34 @@ abstract class Sniff implements PHPCS_Sniff {
 				}
 			}
 
+/*
+	        if ( ! empty( $tokens[ $stackPtr ]['conditions'] ) ) {
+
+				$validConditions = array(
+					\T_FUNCTION => \T_FUNCTION,
+					\T_CLOSURE  => \T_CLOSURE,
+				);
+
+		        /*
+				 * Walk the condition from outer to inner to see if we can find a valid function/closure scope.
+				 * If the variable is validated in a function and then used within a nested closure
+				 * (or visa versa), that's fine.
+				 *
+				 * ACTUALLY, it's not as we need to discount nested classes/anonymous classes!!!
+				 * /
+		        $conditions = $tokens[$stackPtr]['conditions'];
+		        foreach ($conditions as $ptr => $type) {
+		            if (isset($this->validConditions[$type]) === true) {
+		                $function = $ptr;
+		                break;
+		            }
+		        }
+
+		        $scope_start = $this->tokens[ $function ]['scope_opener'];
+			}
+
+*/
+
 			$scope_end = $stackPtr;
 
 		}
@@ -1753,6 +1781,8 @@ abstract class Sniff implements PHPCS_Sniff {
 			if ( ! \in_array( $this->tokens[ $i ]['code'], array( \T_ISSET, \T_EMPTY, \T_UNSET ), true ) ) {
 				continue;
 			}
+
+			// TO DO: Skip over nested classes, anonymous classes, functions, closures etc
 
 			$issetOpener = $this->phpcsFile->findNext( \T_OPEN_PARENTHESIS, $i );
 			$issetCloser = $this->tokens[ $issetOpener ]['parenthesis_closer'];
