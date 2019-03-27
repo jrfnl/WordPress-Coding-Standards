@@ -10,13 +10,18 @@
 namespace WordPressCS\WordPress\Sniffs\WP;
 
 use WordPressCS\WordPress\AbstractFunctionParameterSniff;
+use PHP_CodeSniffer\Util\Tokens;
+use PHP_CodeSniffer\Util\Sniffs\Conditions;
 
 /**
- * Flag passing an anonymous function or class as the callback when registering a hook-in.
+ * Flag passing an anonymous function or class as the callback when registering a hook-in
+ * as these are difficult to unhook with the current WP Plugins API.
  *
  * @package WPCS\WordPressCodingStandards
  *
  * @since   2.2.0
+ *
+ * @uses    \WordPressCS\WordPress\Sniff::$custom_test_class_whitelist
  */
 class DiscourageAnonymousHookinsSniff extends AbstractFunctionParameterSniff {
 
@@ -47,6 +52,26 @@ class DiscourageAnonymousHookinsSniff extends AbstractFunctionParameterSniff {
 	);
 
 	/**
+	 * Processes this test, when one of its tokens is encountered.
+	 *
+	 * @since 2.2.0
+	 *
+	 * @param int $stackPtr The position of the current token in the stack.
+	 *
+	 * @return int|void Integer stack pointer to skip forward or void to continue
+	 *                  normal file processing.
+	 */
+	public function process_token( $stackPtr ) {
+		// Anonymous hook-ins used in a unit test context are irrelevant.
+		// NOTE: Actually... this should probably not be allowed either as it could influence other unit tests when things aren't being unhooked after a test.
+		if ( $this->is_token_in_test_method( $stackPtr ) === true ) {
+			return;
+		}
+
+		return parent::process_token( $stackPtr );
+	}
+
+	/**
 	 * Process the parameters of a matched function.
 	 *
 	 * @since 2.2.0
@@ -65,8 +90,10 @@ class DiscourageAnonymousHookinsSniff extends AbstractFunctionParameterSniff {
 		}
 		
 		$target_param = $parameters[ $target_param_position ];
+		$param_start  = $target_param['start'];
+		$param_end    = ($target_param['end'] + 1);
 		
-		$has_anon = $this->phpcsFile->findNext( [T_ANON_CLASS, T_CLOSURE], $target_param['start'], $target_param['end'] );
+		$has_anon = $this->phpcsFile->findNext( [T_ANON_CLASS, T_CLOSURE], $param_start, $param_end );
 		if ( $has_anon !== false ) {
 			$error_msg  = 'Using a closure as the callback for a hook-in is forbidden as it makes unhooking the action/filter very difficult';
 			$error_code = 'ClosureFound';
@@ -83,7 +110,95 @@ class DiscourageAnonymousHookinsSniff extends AbstractFunctionParameterSniff {
 			);
 			return;
 		}
+		
+		/*
+		 * The anonymous function/class may be declared earlier and assigned to a variable.
+		 *
+		 * If the parameter is just and only a variable, search within the function scope to see if we can
+		 * determine whether it is a closure/anonymous class.
+		 */
 
+		$ignore   = Tokens::$emptyTokens;
+		$ignore[] = T_VARIABLE;
+		
+		$non_var = $this->phpcsFile->findNext( $ignore, $param_start, $param_end, true );
+		if ( $non_var !== false ) {
+			// Something other than a variable encountered. Bow out.
+			return;
+		}
+		
+		$function = Conditions::getLastCondition( $this->phpcsFile, $stackPtr, [ T_FUNCTION, T_CLOSURE ] );
+		if ( $function === false ) {
+			// Ignore variables used in the global namespace as they may well be defined in another file.
+			return;
+		}
+
+		// Get the variable.
+		$var = $this->phpcsFile->findNext( T_VARIABLE, $param_start, $param_end );
+		if ( $this->tokens[ $var ]['content'] === '$GLOBALS' ) {
+			// Ignore global variables as they may well be defined in another file.
+			return;
+		}
+		
+		$function_opener = $this->tokens[ $function ]['scope_opener'];
+		$content         = $this->tokens[ $var ]['content'];
+		$current         = $stackPtr;
+		do {
+			$current = $this->phpcsFile->findPrevious( T_VARIABLE, ( $current - 1 ), $function_opener, false, $content );
+			if ( $current === false ) {
+				// Variable is not declared within this function.
+				return;
+			}
+			
+			// Check if variable is found between parenthesis, if so, check for assignment with T_EQUAL to the var between here and close parenthesis
+			// If not, continue
+			// If so check for closure/anon
+			   // If so, throw error
+			   // if not and was "straight" assignment, return.
+			   // If not and was key assignment, continue.
+
+			// Otherwise check till end of statement - same checks
+
+/*
+			is_assignment( $stackPtr )
+
+		static $valid = array(
+			\T_VARIABLE             => true,
+			\T_CLOSE_SQUARE_BRACKET => true,
+		);
+
+		// Must be a variable, constant or closing square bracket (see below).
+		if ( ! isset( $valid[ $this->tokens[ $stackPtr ]['code'] ] ) ) {
+			return false;
+		}
+
+		$next_non_empty = $this->phpcsFile->findNext(
+			Tokens::$emptyTokens,
+			( $stackPtr + 1 ),
+			null,
+			true,
+			null,
+			true
+		);
+
+		// No token found.
+		if ( false === $next_non_empty ) {
+			return false;
+		}
+
+		// If the next token is an assignment, that's all we need to know.
+		if ( isset( Tokens::$assignmentTokens[ $this->tokens[ $next_non_empty ]['code'] ] ) ) {
+			return true;
+		}
+
+		// Check if this is an array assignment, e.g., `$var['key'] = 'val';` .
+		if ( \T_OPEN_SQUARE_BRACKET === $this->tokens[ $next_non_empty ]['code'] ) {
+			return $this->is_assignment( $this->tokens[ $next_non_empty ]['bracket_closer'] );
+		}
+
+		return false;
+*/
+		} while ( true );
 
 /*
 -> findnext in param for T_ANON_CLASS and T_CLOSURE
