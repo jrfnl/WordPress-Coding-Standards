@@ -27,14 +27,13 @@ class DiscourageAnonymousHookinsUnitTest extends AbstractSniffUnitTest {
 	 */
 	public function getErrorList() {
 		return array(
-			19 => 1,
-			23 => 1,
-			28 => 1,
-			30 => 1,
-			39 => 1,
-			48 => 1,
-			55 => 1,
-			61 => 1,
+			32 => 1,
+			36 => 1,
+			41 => 1,
+			43 => 1,
+			52 => 1,
+			79 => 1,
+			86 => 1,
 		);
 	}
 
