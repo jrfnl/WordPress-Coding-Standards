@@ -62,6 +62,7 @@ jobs:
         # For the build to properly error when validating against a scheme, these each have to be in their own condition.
         - xmllint --noout --schema ./vendor/squizlabs/php_codesniffer/phpcs.xsd ./*/ruleset.xml
         - xmllint --noout --schema ./vendor/squizlabs/php_codesniffer/phpcs.xsd ./phpcs.xml.dist.sample
+        - xmllint --noout ./WordPress/Docs/*/*Standard.xml
 
         # Check the code-style consistency of the xml files.
         - diff -B --tabsize=4 ./WordPress/ruleset.xml <(xmllint --format "./WordPress/ruleset.xml")
