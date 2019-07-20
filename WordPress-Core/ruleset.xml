@@ -101,6 +101,17 @@
 
 	<!--
 	#############################################################################
+	#############################################################################
+	Handbook: PHP - Use elseif, not else if.
+	Ref: https://make.wordpress.org/core/handbook/best-practices/coding-standards/php/#use-elseif-not-else-if
+	#############################################################################
+	-->
+	<!-- Covers rule: ... use elseif for conditionals. -->
+	<rule ref="PSR2.ControlStructures.ElseIfDeclaration"/>
+
+
+	<!--
+	#############################################################################
 	Handbook: PHP - Declaring Arrays.
 	Ref: https://make.wordpress.org/core/handbook/best-practices/coding-standards/php/#declaring-arrays
 	#############################################################################
@@ -111,12 +122,13 @@
 
 	<!--
 	#############################################################################
-	Handbook: PHP - Use elseif, not else if.
-	Ref: https://make.wordpress.org/core/handbook/best-practices/coding-standards/php/#use-elseif-not-else-if
+	Handbook: PHP - Closures (Anonymous Functions).
+	Ref: https://make.wordpress.org/core/handbook/best-practices/coding-standards/php/#closures-anonymous-functions
 	#############################################################################
 	-->
-	<!-- Covers rule: ... use elseif for conditionals. -->
-	<rule ref="PSR2.ControlStructures.ElseIfDeclaration"/>
+	<!-- Rule: Closures must not be passed as filter or action callbacks, as they cannot be
+		 removed by remove_action() / remove_filter(). -->
+	<rule ref="WordPress.PHP.DisallowShortArraySyntax"/>
 
 
 	<!--
