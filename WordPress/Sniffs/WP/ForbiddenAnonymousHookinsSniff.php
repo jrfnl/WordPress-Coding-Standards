@@ -14,16 +14,22 @@ use PHP_CodeSniffer\Util\Tokens;
 use PHP_CodeSniffer\Util\Sniffs\Conditions;
 
 /**
- * Flag passing an anonymous function or class as the callback when registering a hook-in
- * as these are difficult to unhook with the current WP Plugins API.
+ * Closures must not be passed as filter or action callbacks, as they cannot be
+ * removed by remove_action() / remove_filter() (at this time).
+ *
+ * Note: While closures used for hook-ins in a unit test context may seem innocent, they
+ * are not as they cannot be unhooked when tearing down the unit test, so may inadvertently
+ * influence the result of other unit tests.
+ * With that in mind, no exceptions are made for closure hook-ins in a unit test context.
+ *
+ * @link    https://make.wordpress.org/core/handbook/best-practices/coding-standards/php/#closures-anonymous-functions
+ * @link    https://core.trac.wordpress.org/ticket/46635
  *
  * @package WPCS\WordPressCodingStandards
  *
  * @since   2.2.0
- *
- * @uses    \WordPressCS\WordPress\Sniff::$custom_test_class_whitelist
  */
-class DiscourageAnonymousHookinsSniff extends AbstractFunctionParameterSniff {
+class ForbiddenAnonymousHookinsSniff extends AbstractFunctionParameterSniff {
 
 	/**
 	 * The group name for this group of functions.
@@ -52,26 +58,6 @@ class DiscourageAnonymousHookinsSniff extends AbstractFunctionParameterSniff {
 	);
 
 	/**
-	 * Processes this test, when one of its tokens is encountered.
-	 *
-	 * @since 2.2.0
-	 *
-	 * @param int $stackPtr The position of the current token in the stack.
-	 *
-	 * @return int|void Integer stack pointer to skip forward or void to continue
-	 *                  normal file processing.
-	 */
-	public function process_token( $stackPtr ) {
-		// Anonymous hook-ins used in a unit test context are irrelevant.
-		// NOTE: Actually... this should probably not be allowed either as it could influence other unit tests when things aren't being unhooked after a test.
-		if ( $this->is_token_in_test_method( $stackPtr ) === true ) {
-			return;
-		}
-
-		return parent::process_token( $stackPtr );
-	}
-
-	/**
 	 * Process the parameters of a matched function.
 	 *
 	 * @since 2.2.0
@@ -88,26 +74,29 @@ class DiscourageAnonymousHookinsSniff extends AbstractFunctionParameterSniff {
 		if ( isset( $parameters[ $target_param_position ] ) === false ) {
 			return;
 		}
-		
+
 		$target_param = $parameters[ $target_param_position ];
 		$param_start  = $target_param['start'];
 		$param_end    = ($target_param['end'] + 1);
 		
 		$has_anon = $this->phpcsFile->findNext( [T_ANON_CLASS, T_CLOSURE], $param_start, $param_end );
 		if ( $has_anon !== false ) {
-			$error_msg  = 'Using a closure as the callback for a hook-in is forbidden as it makes unhooking the action/filter very difficult';
+			$error_msg  = 'Using %s as the callback for %s() is forbidden as unhooking it is nearly impossible (at this time - see trac ticket 46635)';
 			$error_code = 'ClosureFound';
+			$data       = array(
+				'a closure',
+				$matched_content,
+			);
 
 			if ( T_ANON_CLASS === $this->tokens[ $has_anon ]['code'] ) {
-				$error_msg  = 'Using an anonymous class in the callback for a hook-in is forbidden as it makes unhooking the action/filter very difficult';
 				$error_code = 'AnonClassFound';
+				$data       = array(
+					'an anonymous class',
+					$matched_content,
+				);
 			}
 
-			$this->phpcsFile->addError(
-				$error_msg,
-				$has_anon,
-				$error_code
-			);
+			$this->phpcsFile->addError( $error_msg, $has_anon, $error_code, $data );
 			return;
 		}
 		
@@ -121,12 +110,14 @@ class DiscourageAnonymousHookinsSniff extends AbstractFunctionParameterSniff {
 		$ignore   = Tokens::$emptyTokens;
 		$ignore[] = T_VARIABLE;
 		
+// @todo Revisit this logic as array based callbacks would now always be ignored, even when the class may be
+// an anonymous class
 		$non_var = $this->phpcsFile->findNext( $ignore, $param_start, $param_end, true );
 		if ( $non_var !== false ) {
 			// Something other than a variable encountered. Bow out.
 			return;
 		}
-		
+
 		$function = Conditions::getLastCondition( $this->phpcsFile, $stackPtr, [ T_FUNCTION, T_CLOSURE ] );
 		if ( $function === false ) {
 			// Ignore variables used in the global namespace as they may well be defined in another file.

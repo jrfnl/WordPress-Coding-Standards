@@ -167,14 +167,10 @@
 		</properties>
 	</rule>
 
-	<!-- While for Core anonymous hookins are forbidden, for plugins and themes, they are only discouraged. -->
-	<rule ref="WordPress.WP.DiscourageAnonymousHookins.ClosureFound">
+	<!-- While for Core anonymous hookins are forbidden, for plugins and themes, they are discouraged. -->
+	<rule ref="WordPress.WP.ForbiddenAnonymousHookins">
 		<type>warning</type>
-		<message>Using a closure as the callback for a hook-in is strongly discouraged as it makes unhooking the action/filter very difficult</message>
-	</rule>
-	<rule ref="WordPress.WP.DiscourageAnonymousHookins.AnonClassFound">
-		<type>warning</type>
-		<message>Using an anonymous class in the callback for a hook-in is strongly discouraged as it makes unhooking the action/filter very difficult</message>
+		<message>Using %s as the callback for %s() is strongly discouraged as unhooking it is nearly impossible (at this time - see trac ticket 46635)</message>
 	</rule>
 
 

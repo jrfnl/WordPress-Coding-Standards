@@ -1,0 +1,64 @@
+<documentation title="Forbidden Anonymous Hookins">
+    <standard>
+    <![CDATA[
+    Closures must not be passed as filter or action callbacks, as they cannot currently be removed by remove_action() / remove_filter() (see trac ticket #46635 for a proposal to address this).
+    ]]>
+    </standard>
+    <code_comparison>
+        <code title="Valid: using a non-anonymous callback.">
+        <![CDATA[
+add_action(
+    'hook-name',
+    <em>'function_name'</em>
+);
+
+
+
+add_filter(
+    'hook-name',
+    <em>array( $this, 'method' )</em>,
+    10,
+    2
+);
+
+
+
+register_activation_hook(
+    __FILE__,
+    <em>[ __CLASS__, 'activate' ]</em>
+);
+        ]]>
+        </code>
+        <code title="Invalid: using an anonymous callback.">
+        <![CDATA[
+add_action(
+    'hook-name',
+    <em>function( $param ) {
+        // Do something.
+    }</em>
+);
+
+add_filter(
+    'hook-name',
+    <em>function( $param, $mul ) {
+        return $param * $mul;
+    }</em>,
+    10,
+    2
+);
+
+register_activation_hook(
+    __FILE__,
+    [
+        <em>new class() {
+            function activate() {
+                // Do something.
+            }
+        }</em>,
+        'activate'
+    ]
+);
+        ]]>
+        </code>
+    </code_comparison>
+</documentation>

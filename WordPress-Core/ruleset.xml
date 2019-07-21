@@ -128,7 +128,7 @@
 	-->
 	<!-- Rule: Closures must not be passed as filter or action callbacks, as they cannot be
 		 removed by remove_action() / remove_filter(). -->
-	<rule ref="WordPress.PHP.DisallowShortArraySyntax"/>
+	<rule ref="WordPress.WP.ForbiddenAnonymousHookins"/>
 
 
 	<!--
@@ -447,9 +447,6 @@
 	<!-- Rule: create_function() function, which internally performs an eval(),
 		 is deprecated in PHP 7.2. ... these must not be used. -->
 	<rule ref="WordPress.PHP.RestrictedPHPFunctions"/>
-
-	<!-- Rule: ... -->
-	<rule ref="WordPress.WP.DiscourageAnonymousHookins"/>
 
 
 	<!--

@@ -12,13 +12,13 @@ namespace WordPressCS\WordPress\Tests\WP;
 use PHP_CodeSniffer\Tests\Standards\AbstractSniffUnitTest;
 
 /**
- * Unit test class for the DiscourageAnonymousHookins sniff.
+ * Unit test class for the ForbiddenAnonymousHookins sniff.
  *
  * @package WPCS\WordPressCodingStandards
  *
  * @since   2.2.0
  */
-class DiscourageAnonymousHookinsUnitTest extends AbstractSniffUnitTest {
+class ForbiddenAnonymousHookinsUnitTest extends AbstractSniffUnitTest {
 
 	/**
 	 * Returns the lines where errors should occur.
@@ -27,13 +27,13 @@ class DiscourageAnonymousHookinsUnitTest extends AbstractSniffUnitTest {
 	 */
 	public function getErrorList() {
 		return array(
-			32 => 1,
-			36 => 1,
-			41 => 1,
-			43 => 1,
-			52 => 1,
-			79 => 1,
-			86 => 1,
+			22 => 1,
+			26 => 1,
+			31 => 1,
+			33 => 1,
+			42 => 1,
+			54 => 1,
+			58 => 1,
 		);
 	}
 
