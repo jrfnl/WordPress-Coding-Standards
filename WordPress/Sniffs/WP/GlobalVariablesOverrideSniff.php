@@ -57,8 +57,6 @@ class GlobalVariablesOverrideSniff extends Sniff {
 	 * @var array
 	 */
 	protected $override_allowed = array(
-		'content_width'     => true,
-		'wp_cockneyreplace' => true,
 	);
 
 	/**
@@ -246,7 +244,14 @@ class GlobalVariablesOverrideSniff extends Sniff {
 		/*
 		 * Is this one of the WP global variables ?
 		 */
+		/*
 		if ( isset( $this->wp_globals[ $var_name ] ) === false ) {
+			return;
+		}*/
+
+		if ( in_array( '$' . $var_name, $this->input_superglobals, true )
+			|| 'HTTP_RAW_POST_DATA' === $var_name
+		) {
 			return;
 		}
 
@@ -290,6 +295,8 @@ class GlobalVariablesOverrideSniff extends Sniff {
 			return;
 		}
 
+		$this->phpcsFile->recordMetric( $stackPtr, 'Global variables', $var_name );
+
 		// Still here ? In that case, the WP global variable is being tampered with.
 		$this->add_error( $stackPtr, $data );
 	}
@@ -321,8 +328,10 @@ class GlobalVariablesOverrideSniff extends Sniff {
 
 			if ( \T_VARIABLE === $var['code'] ) {
 				$var_name = substr( $var['content'], 1 );
-				if ( isset( $this->wp_globals[ $var_name ] )
-					&& isset( $this->override_allowed[ $var_name ] ) === false
+				if ( /*isset( $this->wp_globals[ $var_name ] )
+					&&*/ isset( $this->override_allowed[ $var_name ] ) === false
+					&& in_array( $var['content'], $this->input_superglobals, true ) === false
+					&& '$HTTP_RAW_POST_DATA' !== $var_name
 				) {
 					$search[] = $var['content'];
 				}
@@ -433,6 +442,8 @@ class GlobalVariablesOverrideSniff extends Sniff {
 	 * @return void
 	 */
 	protected function maybe_add_error( $stackPtr ) {
+		$this->phpcsFile->recordMetric( $stackPtr, 'Global variables', substr( $this->tokens[ $stackPtr ]['content'], 1 ) );
+
 		if ( $this->has_whitelist_comment( 'override', $stackPtr ) === false ) {
 			$this->add_error( $stackPtr );
 		}
