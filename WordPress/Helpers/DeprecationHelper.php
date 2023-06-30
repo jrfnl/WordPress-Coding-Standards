@@ -11,6 +11,7 @@ namespace WordPressCS\WordPress\Helpers;
 
 use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Util\Tokens;
+use PHPCSUtils\Tokens\Collections;
 
 /**
  * Helper utilities for checking whether something has been marked as deprecated.
@@ -44,16 +45,37 @@ final class DeprecationHelper {
 	 * @return bool
 	 */
 	public static function is_function_deprecated( File $phpcsFile, $stackPtr ) {
+		return self::is_deprecated( $phpcsFile, $stackPtr, Tokens::$methodPrefixes );
+	}
+
+	/**
+	 * Check whether a language construct has been marked as deprecated via a @deprecated tag
+	 * in the construct's docblock.
+	 *
+	 * @since x.x.x Split off from the `is_function_deprecated()` method.
+	 *
+	 * @param \PHP_CodeSniffer\Files\File   $phpcsFile The file being scanned.
+	 * @param int                           $stackPtr  The position of a construct token in the stack.
+	 * @param array<int|string, int|string> $skip_over Optional. List of tokens to ignore when trying to
+	 *                                                 find the docblock for the construct.
+	 *                                                 The list is expected to have the tokens
+	 *                                                 as the array keys, value is irrelevant.
+	 *                                                 Example: for a function docblock, the
+	 *                                                 method prefixes, like `public`, `static`
+	 *                                                 should be skipped over.
+	 *
+	 * @return bool
+	 */
+	public static function is_deprecated( File $phpcsFile, $stackPtr, array $skip_over = array() ) {
 		$tokens = $phpcsFile->getTokens();
 		if ( isset( $tokens[ $stackPtr ] ) === false ) {
 			return false;
 		}
 
-		$ignore                  = Tokens::$methodPrefixes;
-		$ignore[ \T_WHITESPACE ] = \T_WHITESPACE;
+		$skip_over[ \T_WHITESPACE ] = \T_WHITESPACE;
 
 		for ( $comment_end = ( $stackPtr - 1 ); $comment_end >= 0; $comment_end-- ) {
-			if ( isset( $ignore[ $tokens[ $comment_end ]['code'] ] ) === true ) {
+			if ( isset( $skip_over[ $tokens[ $comment_end ]['code'] ] ) === true ) {
 				continue;
 			}
 
@@ -68,7 +90,7 @@ final class DeprecationHelper {
 		}
 
 		if ( \T_DOC_COMMENT_CLOSE_TAG !== $tokens[ $comment_end ]['code'] ) {
-			// Function doesn't have a doc comment or is using the wrong type of comment.
+			// Target doesn't have a doc comment or is using the wrong type of comment.
 			return false;
 		}
 
