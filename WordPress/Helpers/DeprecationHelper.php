@@ -49,6 +49,22 @@ final class DeprecationHelper {
 	}
 
 	/**
+	 * Check whether a class has been marked as deprecated via a @deprecated tag
+	 * in the class docblock.
+	 *
+	 * @since x.x.x
+	 *
+	 * @param \PHP_CodeSniffer\Files\File $phpcsFile The file being scanned.
+	 * @param int                         $stackPtr  The position of a T_FUNCTION
+	 *                                               token in the stack.
+	 *
+	 * @return bool
+	 */
+	public static function is_class_deprecated( File $phpcsFile, $stackPtr ) {
+		return self::is_deprecated( $phpcsFile, $stackPtr, Collections::classModifierKeywords() );
+	}
+
+	/**
 	 * Check whether a language construct has been marked as deprecated via a @deprecated tag
 	 * in the construct's docblock.
 	 *
