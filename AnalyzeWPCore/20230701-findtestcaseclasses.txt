@@ -1,0 +1,32 @@
+PHP 8.2.7 (cli) (built: Jun  7 2023 10:25:38) (ZTS Visual C++ 2019 x64)
+Copyright (c) The PHP Group
+Zend Engine v4.2.7, Copyright (c) Zend Technologies
+    with Zend OPcache v8.2.7, Copyright (c), by Zend Technologies
+
+PHP_CodeSniffer version 3.7.2 (stable) by Squiz (http://www.squiz.net)
+
+................................................. 49 / 49 (100%)
+
+
+
+PHP CODE SNIFFER INFORMATION REPORT
+----------------------------------------------------------------------
+Test Case classes :
+	PHPUnit_Adapter_TestCase                   =>  1 ( 10.00%)
+	WP_Ajax_UnitTestCase                       =>  1 ( 10.00%)
+	WP_Canonical_UnitTestCase                  =>  1 ( 10.00%)
+	WP_Test_REST_Controller_Testcase           =>  1 ( 10.00%)
+	WP_Test_REST_Post_Type_Controller_Testcase =>  1 ( 10.00%)
+	WP_Test_REST_TestCase                      =>  1 ( 10.00%)
+	WP_Test_XML_TestCase                       =>  1 ( 10.00%)
+	WP_UnitTestCase                            =>  1 ( 10.00%)
+	WP_UnitTestCase_Base                       =>  1 ( 10.00%)
+	WP_XMLRPC_UnitTestCase                     =>  1 ( 10.00%)
+	-----------------------------------------------------------
+	total                                      => 10 (100.00%)
+
+----------------------------------------------------------------------
+Time: 647ms; Memory: 16MB
+
+
+Exit code is 0
