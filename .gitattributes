@@ -12,6 +12,7 @@
 /phpstan.neon.dist  export-ignore
 /phpunit.xml.dist   export-ignore
 /.github            export-ignore
+/AnalyzeWPCore      export-ignore
 /Tests              export-ignore
 /WordPress/Tests    export-ignore
 

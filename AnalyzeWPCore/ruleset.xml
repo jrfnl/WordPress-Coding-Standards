@@ -1,0 +1,93 @@
+<?xml version="1.0"?>
+<ruleset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="AnalyzeWPCore" namespace="WordPressCS\AnalyzeWPCore" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/squizlabs/PHP_CodeSniffer/master/phpcs.xsd">
+
+	<description>Helpers to update WPCS</description>
+
+	<!-- Only scan PHP files. -->
+	<arg name="extensions" value="php"/>
+
+	<!-- Strip the filepaths down to the relevant bit. -->
+	<arg name="basepath" value="./"/>
+
+	<!-- Check up to 20 files simultaneously. -->
+	<arg name="parallel" value="20"/>
+
+	<!-- Show sniff codes in all reports. -->
+	<arg value="ps"/>
+
+	<arg name="report" value="code,summary,source,info"/>
+
+	<!-- No need to scan the tests, those are irrelevant for our purposes. -->
+	<!--
+	<file>/src/</file>
+	-->
+	<file>../../../WP_Test_suite/src/</file>
+
+	<!-- Exclude externally maintained third-party tools. -->
+	<exclude-pattern>/src/wp-includes/random_compat/*</exclude-pattern>
+	<exclude-pattern>/src/wp-includes/sodium_compat/*</exclude-pattern>
+
+	<!-- Plugins. -->
+	<exclude-pattern>/src/wp-content/plugins/*</exclude-pattern>
+
+	<!-- Themes except the twenty* themes. -->
+	<exclude-pattern>/src/wp-content/themes/(?!twenty)*</exclude-pattern>
+
+	<rule ref="AnalyzeWPCore.WP.FindDeprecatedClasses">
+		<!-- Exclude externally maintained third-party tools. -->
+		<exclude-pattern>/src/wp-includes/ID3/*</exclude-pattern>
+		<exclude-pattern>/src/wp-includes/PHPMailer/*</exclude-pattern>
+		<exclude-pattern>/src/wp-includes/class-requests\.php</exclude-pattern>
+		<exclude-pattern>/src/wp-includes/Requests/*</exclude-pattern>
+		<exclude-pattern>/src/wp-includes/SimplePie/*</exclude-pattern>
+	</rule>
+
+	<rule ref="AnalyzeWPCore.WP.FindDeprecatedFunctions">
+		<!-- Exclude externally maintained third-party tools. -->
+		<exclude-pattern>/src/wp-includes/ID3/*</exclude-pattern>
+		<exclude-pattern>/src/wp-includes/PHPMailer/*</exclude-pattern>
+		<exclude-pattern>/src/wp-includes/class-requests\.php</exclude-pattern>
+		<exclude-pattern>/src/wp-includes/Requests/*</exclude-pattern>
+		<exclude-pattern>/src/wp-includes/SimplePie/*</exclude-pattern>
+	</rule>
+
+	<rule ref="AnalyzeWPCore.WP.FindDeprecatedParameters">
+		<!-- Exclude externally maintained third-party tools. -->
+		<exclude-pattern>/src/wp-includes/ID3/*</exclude-pattern>
+		<exclude-pattern>/src/wp-includes/PHPMailer/*</exclude-pattern>
+		<exclude-pattern>/src/wp-includes/class-requests\.php</exclude-pattern>
+		<exclude-pattern>/src/wp-includes/Requests/*</exclude-pattern>
+		<exclude-pattern>/src/wp-includes/SimplePie/*</exclude-pattern>
+	</rule>
+
+	<rule ref="AnalyzeWPCore.WP.FindPluggableClasses">
+		<!-- Exclude externally maintained third-party tools. -->
+		<exclude-pattern>/src/wp-includes/class-snoopy\.php</exclude-pattern>
+		<exclude-pattern>/src/wp-includes/pomo/*</exclude-pattern>
+		<exclude-pattern>/src/wp-includes/Requests/*</exclude-pattern>
+	</rule>
+
+	<rule ref="AnalyzeWPCore.WP.FindPluggableFunctions">
+		<!-- Ignore polyfills for PHP native functionality. -->
+		<exclude-pattern>/src/wp-includes/compat\.php</exclude-pattern>
+		<!-- Ignore pluggable functions from a deprecated external dependency. -->
+		<exclude-pattern>/src/wp-includes/rss\.php</exclude-pattern>
+	</rule>
+
+	<rule ref="AnalyzeWPCore.WP.FindPluggableConstants">
+		<!-- Only scan this one file. -->
+		<include-pattern>/src/wp-includes/default-constants\.php</include-pattern>
+	</rule>
+
+	<rule ref="AnalyzeWPCore.WP.FindReservedPostTypes">
+		<!-- Only scan this one file. -->
+		<include-pattern>/src/wp-includes/post\.php</include-pattern>
+	</rule>
+
+	<rule ref="AnalyzeWPCore.WP.FindTestCaseClasses">
+		<!-- Only scan this one directory. -->
+		<!-- NOTE: won't work out of the box due to the -file- directive above. -->
+		<include-pattern>/tests/phpunit/includes/</include-pattern>
+	</rule>
+
+</ruleset>
