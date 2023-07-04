@@ -122,10 +122,11 @@ final class FindDeprecatedFunctionsSniff extends AbstractFunctionRestrictionsSni
 		}
 
 		$functionName = FunctionDeclarations::getName( $this->phpcsFile, $functionPtr );
+/*
 		if ( isset( $this->seen_functions[ $functionName ] ) === true ) {
 			return;
 		}
-
+*/
 		$this->phpcsFile->addError( 'Function %s is deprecated since ...', $stackPtr, 'Found', array( $functionName ) );
 		$this->seen_functions[ $functionName ] = true;
 	}
