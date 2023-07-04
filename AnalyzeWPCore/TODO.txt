@@ -1,0 +1,15 @@
+#1804 - helper sniffs TODO:
+
+* Create a sniff which checks the parameter names of WP functions for various sniffs.
+    This can probably be one sniff which then in the `metric` references the sniff which may need updating ?
+    We may want the sniff to check against the currently used param name to only get a list of params which need updating (though that list would also need to be maintained then and kept in sync with the sniff).
+* Possibly do the same for PHP native functions, but then using Reflection ?
+* For sniffs which check against a default value (DeprecatedParamValues, EnqueuedResourceParams etc), have a sniff which check the WP function declarations to ensure the default value is still the same.
+
+Notes about reporting:
+- Metric name in constant = sniff code
+- Special casing based on metric name
+  -> for instance to add certain comments
+- var_export($v, false) to create the array to use in the output
+- Use PHPCBF on the output to get the formatting fixed ?
+
