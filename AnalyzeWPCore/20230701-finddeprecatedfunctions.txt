@@ -3,30 +3,30 @@ Copyright (c) The PHP Group
 Zend Engine v4.2.7, Copyright (c) Zend Technologies
     with Zend OPcache v8.2.7, Copyright (c), by Zend Technologies
 
-PHP_CodeSniffer version 3.7.2 (stable) by Squiz (http://www.squiz.net)
+PHP_CodeSniffer version 3.8.0 (stable) by Squiz (http://www.squiz.net)
 
-................................E...........................   60 / 1281 (5%)
-........................................E...E........E......  120 / 1281 (9%)
-........E.....E.............................................  180 / 1281 (14%)
-............................................................  240 / 1281 (19%)
-................................................E...........  300 / 1281 (23%)
-...................E..........................E.............  360 / 1281 (28%)
-................E..................................E........  420 / 1281 (33%)
-...................E...............................E........  480 / 1281 (37%)
-...................E.......................E................  540 / 1281 (42%)
-...............E............................................  600 / 1281 (47%)
-............................................................  660 / 1281 (52%)
-............................................................  720 / 1281 (56%)
-.......................E....................................  780 / 1281 (61%)
-....E.......................................................  840 / 1281 (66%)
-............................................................  900 / 1281 (70%)
-.........................................................E.E  960 / 1281 (75%)
-........EE.........................................E.......E 1020 / 1281 (80%)
-..E.......E...E.........E.E................................. 1080 / 1281 (84%)
-............................................................ 1140 / 1281 (89%)
-............................................................ 1200 / 1281 (94%)
-............................................................ 1260 / 1281 (98%)
-...................E.                                        1281 / 1281 (100%)
+.................................E..........................   60 / 1284 (5%)
+.........................................E...E........E.....  120 / 1284 (9%)
+.........E....E.............................................  180 / 1284 (14%)
+............................................................  240 / 1284 (19%)
+................................................E...........  300 / 1284 (23%)
+...................E..........................E.............  360 / 1284 (28%)
+................E..................................E........  420 / 1284 (33%)
+...................E...............................E........  480 / 1284 (37%)
+...................E.......................E................  540 / 1284 (42%)
+...............E............................................  600 / 1284 (47%)
+............................................................  660 / 1284 (51%)
+............................................................  720 / 1284 (56%)
+.......................E....................................  780 / 1284 (61%)
+......E.....................................................  840 / 1284 (65%)
+............................................................  900 / 1284 (70%)
+...........................................................E  960 / 1284 (75%)
+.E........EE.........................................E...... 1020 / 1284 (79%)
+.E..E.......E...E.........E.E............................... 1080 / 1284 (84%)
+............................................................ 1140 / 1284 (89%)
+............................................................ 1200 / 1284 (93%)
+............................................................ 1260 / 1284 (98%)
+......................E.                                     1284 / 1284 (100%)
 
 
 
@@ -34,45 +34,45 @@ FILE: D:\000_GitHub\WP_test_suite\src\wp-admin\includes\ajax-actions.php
 ---------------------------------------------------------------------------------------------------------------------------------------------
 FOUND 5 ERRORS AFFECTING 5 LINES
 ---------------------------------------------------------------------------------------------------------------------------------------------
-LINE 2849: ERROR Function wp_ajax_wp_fullscreen_save_post is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedFunctions.Found)
+LINE 2859: ERROR Function wp_ajax_wp_fullscreen_save_post is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedFunctions.Found)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-   2847:   *
-   2848:   * @since 3.1.0
->> 2849:   * @deprecated 4.3.0
-   2850:   */
-   2851:  function wp_ajax_wp_fullscreen_save_post() {
+   2857:   *
+   2858:   * @since 3.1.0
+>> 2859:   * @deprecated 4.3.0
+   2860:   */
+   2861:  function wp_ajax_wp_fullscreen_save_post() {
 ---------------------------------------------------------------------------------------------------------------------------------------------
-LINE 5292: ERROR Function wp_ajax_health_check_dotorg_communication is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedFunctions.Found)
+LINE 5304: ERROR Function wp_ajax_health_check_dotorg_communication is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedFunctions.Found)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-   5290:   *
-   5291:   * @since 5.2.0
->> 5292:   * @deprecated 5.6.0 Use WP_REST_Site_Health_Controller::test_dotorg_communication()
-   5293:   * @see WP_REST_Site_Health_Controller::test_dotorg_communication()
-   5294:   */
+   5302:   *
+   5303:   * @since 5.2.0
+>> 5304:   * @deprecated 5.6.0 Use WP_REST_Site_Health_Controller::test_dotorg_communication()
+   5305:   * @see WP_REST_Site_Health_Controller::test_dotorg_communication()
+   5306:   */
 ---------------------------------------------------------------------------------------------------------------------------------------------
-LINE 5325: ERROR Function wp_ajax_health_check_background_updates is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedFunctions.Found)
+LINE 5337: ERROR Function wp_ajax_health_check_background_updates is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedFunctions.Found)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-   5323:   *
-   5324:   * @since 5.2.0
->> 5325:   * @deprecated 5.6.0 Use WP_REST_Site_Health_Controller::test_background_updates()
-   5326:   * @see WP_REST_Site_Health_Controller::test_background_updates()
-   5327:   */
+   5335:   *
+   5336:   * @since 5.2.0
+>> 5337:   * @deprecated 5.6.0 Use WP_REST_Site_Health_Controller::test_background_updates()
+   5338:   * @see WP_REST_Site_Health_Controller::test_background_updates()
+   5339:   */
 ---------------------------------------------------------------------------------------------------------------------------------------------
-LINE 5358: ERROR Function wp_ajax_health_check_loopback_requests is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedFunctions.Found)
+LINE 5370: ERROR Function wp_ajax_health_check_loopback_requests is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedFunctions.Found)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-   5356:   *
-   5357:   * @since 5.2.0
->> 5358:   * @deprecated 5.6.0 Use WP_REST_Site_Health_Controller::test_loopback_requests()
-   5359:   * @see WP_REST_Site_Health_Controller::test_loopback_requests()
-   5360:   */
+   5368:   *
+   5369:   * @since 5.2.0
+>> 5370:   * @deprecated 5.6.0 Use WP_REST_Site_Health_Controller::test_loopback_requests()
+   5371:   * @see WP_REST_Site_Health_Controller::test_loopback_requests()
+   5372:   */
 ---------------------------------------------------------------------------------------------------------------------------------------------
-LINE 5408: ERROR Function wp_ajax_health_check_get_sizes is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedFunctions.Found)
+LINE 5420: ERROR Function wp_ajax_health_check_get_sizes is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedFunctions.Found)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-   5406:   *
-   5407:   * @since 5.2.0
->> 5408:   * @deprecated 5.6.0 Use WP_REST_Site_Health_Controller::get_directory_sizes()
-   5409:   * @see WP_REST_Site_Health_Controller::get_directory_sizes()
-   5410:   */
+   5418:   *
+   5419:   * @since 5.2.0
+>> 5420:   * @deprecated 5.6.0 Use WP_REST_Site_Health_Controller::get_directory_sizes()
+   5421:   * @see WP_REST_Site_Health_Controller::get_directory_sizes()
+   5422:   */
 ---------------------------------------------------------------------------------------------------------------------------------------------
 
 FILE: D:\000_GitHub\WP_test_suite\src\wp-admin\includes\deprecated.php
@@ -1363,13 +1363,13 @@ FILE: D:\000_GitHub\WP_test_suite\src\wp-admin\includes\upgrade.php
 ---------------------------------------------------------------------------------------------------------------
 FOUND 1 ERROR AFFECTING 1 LINE
 ---------------------------------------------------------------------------------------------------------------
-LINE 2130: ERROR Function upgrade_500 is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedFunctions.Found)
+LINE 2134: ERROR Function upgrade_500 is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedFunctions.Found)
 ---------------------------------------------------------------------------------------------------------------
-   2128:   * @ignore
-   2129:   * @since 5.0.0
->> 2130:   * @deprecated 5.1.0
-   2131:   */
-   2132:  function upgrade_500() {
+   2132:   * @ignore
+   2133:   * @since 5.0.0
+>> 2134:   * @deprecated 5.1.0
+   2135:   */
+   2136:  function upgrade_500() {
 ---------------------------------------------------------------------------------------------------------------
 
 FILE: D:\000_GitHub\WP_test_suite\src\wp-content\themes\twentyfifteen\functions.php
@@ -1616,7 +1616,7 @@ LINE 410: ERROR Function wp_cache_reset is deprecated since ... (AnalyzeWPCore.W
 
 FILE: D:\000_GitHub\WP_test_suite\src\wp-includes\deprecated.php
 -----------------------------------------------------------------------------------------------------------------------------------------------------------
-FOUND 432 ERRORS AFFECTING 432 LINES
+FOUND 434 ERRORS AFFECTING 434 LINES
 -----------------------------------------------------------------------------------------------------------------------------------------------------------
 LINE   19: ERROR Function get_postdata is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedFunctions.Found)
 -----------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -5039,40 +5039,56 @@ LINE 5217: ERROR Function wp_render_duotone_support is deprecated since ... (Ana
    5215:   */
    5216:  function wp_render_duotone_support( $block_content, $block ) {
 >> 5217:   _deprecated_function( __FUNCTION__, '6.3.0', 'WP_Duotone::render_duotone_support()' );
-   5218:   return WP_Duotone::render_duotone_support( $block_content, $block );
-   5219:  }
+   5218:   $wp_block = new WP_Block( $block );
+   5219:   return WP_Duotone::render_duotone_support( $block_content, $block, $wp_block );
 -----------------------------------------------------------------------------------------------------------------------------------------------------------
-LINE 5225: ERROR Function wp_get_global_styles_svg_filters is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedFunctions.Found)
+LINE 5226: ERROR Function wp_get_global_styles_svg_filters is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedFunctions.Found)
 -----------------------------------------------------------------------------------------------------------------------------------------------------------
-   5223:   *
-   5224:   * @since 5.9.1
->> 5225:   * @deprecated 6.3.0 SVG generation is handled on a per-block basis in block supports.
-   5226:   *
-   5227:   * @return string
+   5224:   *
+   5225:   * @since 5.9.1
+>> 5226:   * @deprecated 6.3.0 SVG generation is handled on a per-block basis in block supports.
+   5227:   *
+   5228:   * @return string
 -----------------------------------------------------------------------------------------------------------------------------------------------------------
-LINE 5230: ERROR Function wp_get_global_styles_svg_filters is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedFunctions.Found)
+LINE 5231: ERROR Function wp_get_global_styles_svg_filters is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedFunctions.Found)
 -----------------------------------------------------------------------------------------------------------------------------------------------------------
-   5228:   */
-   5229:  function wp_get_global_styles_svg_filters() {
->> 5230:   _deprecated_function( __FUNCTION__, '6.3.0' );
-   5231:  
-   5232:   /*
+   5229:   */
+   5230:  function wp_get_global_styles_svg_filters() {
+>> 5231:   _deprecated_function( __FUNCTION__, '6.3.0' );
+   5232:  
+   5233:   /*
 -----------------------------------------------------------------------------------------------------------------------------------------------------------
-LINE 5272: ERROR Function wp_global_styles_render_svg_filters is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedFunctions.Found)
+LINE 5273: ERROR Function wp_global_styles_render_svg_filters is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedFunctions.Found)
 -----------------------------------------------------------------------------------------------------------------------------------------------------------
-   5270:   *
-   5271:   * @since 5.9.1
->> 5272:   * @deprecated 6.3.0 SVG generation is handled on a per-block basis in block supports.
-   5273:   */
-   5274:  function wp_global_styles_render_svg_filters() {
+   5271:   *
+   5272:   * @since 5.9.1
+>> 5273:   * @deprecated 6.3.0 SVG generation is handled on a per-block basis in block supports.
+   5274:   */
+   5275:  function wp_global_styles_render_svg_filters() {
 -----------------------------------------------------------------------------------------------------------------------------------------------------------
-LINE 5275: ERROR Function wp_global_styles_render_svg_filters is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedFunctions.Found)
+LINE 5276: ERROR Function wp_global_styles_render_svg_filters is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedFunctions.Found)
 -----------------------------------------------------------------------------------------------------------------------------------------------------------
-   5273:   */
-   5274:  function wp_global_styles_render_svg_filters() {
->> 5275:   _deprecated_function( __FUNCTION__, '6.3.0' );
-   5276:  
-   5277:   /*
+   5274:   */
+   5275:  function wp_global_styles_render_svg_filters() {
+>> 5276:   _deprecated_function( __FUNCTION__, '6.3.0' );
+   5277:  
+   5278:   /*
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+LINE 5300: ERROR Function block_core_navigation_submenu_build_css_colors is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedFunctions.Found)
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+   5298:   *
+   5299:   * @since 5.9.0
+>> 5300:   * @deprecated 6.3.0 This was removed from the Navigation Submenu block in favour of `wp_apply_colors_support()`.
+   5301:   *                   `wp_apply_colors_support()` returns an array with similar class and style values,
+   5302:   *                   but with different keys: `class` and `style`.
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+LINE 5310: ERROR Function block_core_navigation_submenu_build_css_colors is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedFunctions.Found)
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+   5308:   */
+   5309:  function block_core_navigation_submenu_build_css_colors( $context, $attributes, $is_sub_menu = false ) {
+>> 5310:   _deprecated_function( __FUNCTION__, '6.3.0' );
+   5311:   $colors = array(
+   5312:    'css_classes'   => array(),
 -----------------------------------------------------------------------------------------------------------------------------------------------------------
 
 FILE: D:\000_GitHub\WP_test_suite\src\wp-includes\embed.php
@@ -5092,55 +5108,55 @@ FILE: D:\000_GitHub\WP_test_suite\src\wp-includes\formatting.php
 ----------------------------------------------------------------------------------------------------------------------------
 FOUND 1 ERROR AFFECTING 1 LINE
 ----------------------------------------------------------------------------------------------------------------------------
-LINE 3250: ERROR Function wp_rel_nofollow_callback is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedFunctions.Found)
+LINE 3268: ERROR Function wp_rel_nofollow_callback is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedFunctions.Found)
 ----------------------------------------------------------------------------------------------------------------------------
-   3248:   *
-   3249:   * @since 2.3.0
->> 3250:   * @deprecated 5.3.0 Use wp_rel_callback()
-   3251:   *
-   3252:   * @param array $matches Single match.
+   3266:   *
+   3267:   * @since 2.3.0
+>> 3268:   * @deprecated 5.3.0 Use wp_rel_callback()
+   3269:   *
+   3270:   * @param array $matches Single match.
 ----------------------------------------------------------------------------------------------------------------------------
 
 FILE: D:\000_GitHub\WP_test_suite\src\wp-includes\functions.php
 -------------------------------------------------------------------------------------------------------------------------
 FOUND 2 ERRORS AFFECTING 2 LINES
 -------------------------------------------------------------------------------------------------------------------------
-LINE 4392: ERROR Function _wp_json_prepare_data is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedFunctions.Found)
+LINE 4394: ERROR Function _wp_json_prepare_data is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedFunctions.Found)
 -------------------------------------------------------------------------------------------------------------------------
-   4390:   * @ignore
-   4391:   * @since 4.4.0
->> 4392:   * @deprecated 5.3.0 This function is no longer needed as support for PHP 5.2-5.3
-   4393:   *                   has been dropped.
-   4394:   * @access private
+   4392:   * @ignore
+   4393:   * @since 4.4.0
+>> 4394:   * @deprecated 5.3.0 This function is no longer needed as support for PHP 5.2-5.3
+   4395:   *                   has been dropped.
+   4396:   * @access private
 -------------------------------------------------------------------------------------------------------------------------
-LINE 4400: ERROR Function _wp_json_prepare_data is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedFunctions.Found)
+LINE 4402: ERROR Function _wp_json_prepare_data is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedFunctions.Found)
 -------------------------------------------------------------------------------------------------------------------------
-   4398:   */
-   4399:  function _wp_json_prepare_data( $data ) {
->> 4400:   _deprecated_function( __FUNCTION__, '5.3.0' );
-   4401:   return $data;
-   4402:  }
+   4400:   */
+   4401:  function _wp_json_prepare_data( $data ) {
+>> 4402:   _deprecated_function( __FUNCTION__, '5.3.0' );
+   4403:   return $data;
+   4404:  }
 -------------------------------------------------------------------------------------------------------------------------
 
 FILE: D:\000_GitHub\WP_test_suite\src\wp-includes\load.php
 ----------------------------------------------------------------------------------------------------------------------
 FOUND 2 ERRORS AFFECTING 2 LINES
 ----------------------------------------------------------------------------------------------------------------------
-LINE  316: ERROR Function wp_favicon_request is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedFunctions.Found)
+LINE  349: ERROR Function wp_favicon_request is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedFunctions.Found)
 ----------------------------------------------------------------------------------------------------------------------
-    314:   *
-    315:   * @since 3.0.0
->>  316:   * @deprecated 5.4.0 Deprecated in favor of do_favicon().
-    317:   */
-    318:  function wp_favicon_request() {
+    347:   *
+    348:   * @since 3.0.0
+>>  349:   * @deprecated 5.4.0 Deprecated in favor of do_favicon().
+    350:   */
+    351:  function wp_favicon_request() {
 ----------------------------------------------------------------------------------------------------------------------
-LINE 1203: ERROR Function wp_clone is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedFunctions.Found)
+LINE 1261: ERROR Function wp_clone is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedFunctions.Found)
 ----------------------------------------------------------------------------------------------------------------------
-   1201:   *
-   1202:   * @since 2.7.0
->> 1203:   * @deprecated 3.2.0
-   1204:   *
-   1205:   * @param object $input_object The object to clone.
+   1259:   *
+   1260:   * @since 2.7.0
+>> 1261:   * @deprecated 3.2.0
+   1262:   *
+   1263:   * @param object $input_object The object to clone.
 ----------------------------------------------------------------------------------------------------------------------
 
 FILE: D:\000_GitHub\WP_test_suite\src\wp-includes\ms-deprecated.php
@@ -5520,53 +5536,53 @@ FILE: D:\000_GitHub\WP_test_suite\src\wp-includes\ms-load.php
 ------------------------------------------------------------------------------------------------------------------------
 FOUND 6 ERRORS AFFECTING 6 LINES
 ------------------------------------------------------------------------------------------------------------------------
-LINE 518: ERROR Function get_current_site_name is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedFunctions.Found)
+LINE 522: ERROR Function get_current_site_name is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedFunctions.Found)
 ------------------------------------------------------------------------------------------------------------------------
-   516:   * @access private
-   517:   * @since 3.0.0
->> 518:   * @deprecated 3.9.0 Use get_current_site() instead.
-   519:   *
-   520:   * @param WP_Network $current_site
+   520:   * @access private
+   521:   * @since 3.0.0
+>> 522:   * @deprecated 3.9.0 Use get_current_site() instead.
+   523:   *
+   524:   * @param WP_Network $current_site
 ------------------------------------------------------------------------------------------------------------------------
-LINE 524: ERROR Function get_current_site_name is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedFunctions.Found)
+LINE 528: ERROR Function get_current_site_name is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedFunctions.Found)
 ------------------------------------------------------------------------------------------------------------------------
-   522:   */
-   523:  function get_current_site_name( $current_site ) {
->> 524:   _deprecated_function( __FUNCTION__, '3.9.0', 'get_current_site()' );
-   525:   return $current_site;
-   526:  }
+   526:   */
+   527:  function get_current_site_name( $current_site ) {
+>> 528:   _deprecated_function( __FUNCTION__, '3.9.0', 'get_current_site()' );
+   529:   return $current_site;
+   530:  }
 ------------------------------------------------------------------------------------------------------------------------
-LINE 536: ERROR Function wpmu_current_site is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedFunctions.Found)
+LINE 540: ERROR Function wpmu_current_site is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedFunctions.Found)
 ------------------------------------------------------------------------------------------------------------------------
-   534:   * @access private
-   535:   * @since 3.0.0
->> 536:   * @deprecated 3.9.0
-   537:   *
-   538:   * @global WP_Network $current_site
+   538:   * @access private
+   539:   * @since 3.0.0
+>> 540:   * @deprecated 3.9.0
+   541:   *
+   542:   * @global WP_Network $current_site
 ------------------------------------------------------------------------------------------------------------------------
-LINE 544: ERROR Function wpmu_current_site is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedFunctions.Found)
+LINE 548: ERROR Function wpmu_current_site is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedFunctions.Found)
 ------------------------------------------------------------------------------------------------------------------------
-   542:  function wpmu_current_site() {
-   543:   global $current_site;
->> 544:   _deprecated_function( __FUNCTION__, '3.9.0' );
-   545:   return $current_site;
-   546:  }
+   546:  function wpmu_current_site() {
+   547:   global $current_site;
+>> 548:   _deprecated_function( __FUNCTION__, '3.9.0' );
+   549:   return $current_site;
+   550:  }
 ------------------------------------------------------------------------------------------------------------------------
-LINE 552: ERROR Function wp_get_network is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedFunctions.Found)
+LINE 556: ERROR Function wp_get_network is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedFunctions.Found)
 ------------------------------------------------------------------------------------------------------------------------
-   550:   *
-   551:   * @since 3.9.0
->> 552:   * @deprecated 4.7.0 Use get_network()
-   553:   * @see get_network()
    554:   *
+   555:   * @since 3.9.0
+>> 556:   * @deprecated 4.7.0 Use get_network()
+   557:   * @see get_network()
+   558:   *
 ------------------------------------------------------------------------------------------------------------------------
-LINE 561: ERROR Function wp_get_network is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedFunctions.Found)
+LINE 565: ERROR Function wp_get_network is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedFunctions.Found)
 ------------------------------------------------------------------------------------------------------------------------
-   559:   */
-   560:  function wp_get_network( $network ) {
->> 561:   _deprecated_function( __FUNCTION__, '4.7.0', 'get_network()' );
-   562:  
-   563:   $network = get_network( $network );
+   563:   */
+   564:  function wp_get_network( $network ) {
+>> 565:   _deprecated_function( __FUNCTION__, '4.7.0', 'get_network()' );
+   566:  
+   567:   $network = get_network( $network );
 ------------------------------------------------------------------------------------------------------------------------
 
 FILE: D:\000_GitHub\WP_test_suite\src\wp-includes\php-compat\readonly.php
@@ -5727,34 +5743,34 @@ FILE: D:\000_GitHub\WP_test_suite\src\wp-includes\post-template.php
 ------------------------------------------------------------------------------------------------------------
 FOUND 2 ERRORS AFFECTING 2 LINES
 ------------------------------------------------------------------------------------------------------------
-LINE 1115: ERROR Function the_meta is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedFunctions.Found)
+LINE 1117: ERROR Function the_meta is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedFunctions.Found)
 ------------------------------------------------------------------------------------------------------------
-   1113:   * @since 1.2.0
-   1114:   *
->> 1115:   * @deprecated 6.0.2 Use get_post_meta() to retrieve post meta and render manually.
-   1116:   */
-   1117:  function the_meta() {
+   1115:   * @since 1.2.0
+   1116:   *
+>> 1117:   * @deprecated 6.0.2 Use get_post_meta() to retrieve post meta and render manually.
+   1118:   */
+   1119:  function the_meta() {
 ------------------------------------------------------------------------------------------------------------
-LINE 1118: ERROR Function the_meta is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedFunctions.Found)
+LINE 1120: ERROR Function the_meta is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedFunctions.Found)
 ------------------------------------------------------------------------------------------------------------
-   1116:   */
-   1117:  function the_meta() {
->> 1118:   _deprecated_function( __FUNCTION__, '6.0.2', 'get_post_meta()' );
-   1119:   $keys = get_post_custom_keys();
-   1120:   if ( $keys ) {
+   1118:   */
+   1119:  function the_meta() {
+>> 1120:   _deprecated_function( __FUNCTION__, '6.0.2', 'get_post_meta()' );
+   1121:   $keys = get_post_custom_keys();
+   1122:   if ( $keys ) {
 ------------------------------------------------------------------------------------------------------------
 
 FILE: D:\000_GitHub\WP_test_suite\src\wp-includes\post.php
 ------------------------------------------------------------------------------------------------------------
 FOUND 1 ERROR AFFECTING 1 LINE
 ------------------------------------------------------------------------------------------------------------
-LINE 5676: ERROR Function get_page is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedFunctions.Found)
+LINE 5677: ERROR Function get_page is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedFunctions.Found)
 ------------------------------------------------------------------------------------------------------------
-   5674:   *
-   5675:   * @since 1.5.1
->> 5676:   * @deprecated 3.5.0 Use get_post()
-   5677:   *
-   5678:   * @param int|WP_Post $page   Page object or page ID. Passed by reference.
+   5675:   *
+   5676:   * @since 1.5.1
+>> 5677:   * @deprecated 3.5.0 Use get_post()
+   5678:   *
+   5679:   * @param int|WP_Post $page   Page object or page ID. Passed by reference.
 ------------------------------------------------------------------------------------------------------------
 
 FILE: D:\000_GitHub\WP_test_suite\src\xmlrpc.php
@@ -5777,7 +5793,7 @@ LINE 101: ERROR Function logIO is deprecated since ... (AnalyzeWPCore.WP.FindDep
    102:   if ( ! empty( $GLOBALS['xmlrpc_logging'] ) ) {
    103:    error_log( $io . ' - ' . $msg );
 --------------------------------------------------------------------------------------------------------------------------
-Time: 30.93 secs; Memory: 90MB
+Time: 26.17 secs; Memory: 92MB
 
 
 PHP CODE SNIFFER REPORT SUMMARY
@@ -5802,7 +5818,7 @@ D:\000_GitHub\WP_test_suite\src\wp-content\themes\twentytwelve\functions.php    
 D:\000_GitHub\WP_test_suite\src\wp-content\themes\twentytwenty\functions.php        1       0
 D:\000_GitHub\WP_test_suite\src\wp-content\themes\twentytwentyone\functions.php     1       0
 D:\000_GitHub\WP_test_suite\src\wp-includes\cache.php                               2       0
-D:\000_GitHub\WP_test_suite\src\wp-includes\deprecated.php                          432     0
+D:\000_GitHub\WP_test_suite\src\wp-includes\deprecated.php                          434     0
 D:\000_GitHub\WP_test_suite\src\wp-includes\embed.php                               1       0
 D:\000_GitHub\WP_test_suite\src\wp-includes\formatting.php                          1       0
 D:\000_GitHub\WP_test_suite\src\wp-includes\functions.php                           2       0
@@ -5815,7 +5831,7 @@ D:\000_GitHub\WP_test_suite\src\wp-includes\post.php                            
 D:\000_GitHub\WP_test_suite\src\wp-includes\blocks\navigation.php                   10      0
 D:\000_GitHub\WP_test_suite\src\wp-includes\php-compat\readonly.php                 2       0
 ----------------------------------------------------------------------------------------------------
-A TOTAL OF 699 ERRORS AND 0 WARNINGS WERE FOUND IN 1281 FILES
+A TOTAL OF 701 ERRORS AND 0 WARNINGS WERE FOUND IN 1284 FILES
 ----------------------------------------------------------------------------------------------------
 
 
@@ -5823,9 +5839,9 @@ PHP CODE SNIFFER VIOLATION SOURCE SUMMARY
 ----------------------------------------------------------------------
 SOURCE                                                           COUNT
 ----------------------------------------------------------------------
-AnalyzeWPCore.WP.FindDeprecatedFunctions.Found                   699
+AnalyzeWPCore.WP.FindDeprecatedFunctions.Found                   701
 ----------------------------------------------------------------------
-A TOTAL OF 699 SNIFF VIOLATIONS WERE FOUND IN 1 SOURCE
+A TOTAL OF 701 SNIFF VIOLATIONS WERE FOUND IN 1 SOURCE
 ----------------------------------------------------------------------
 
 
