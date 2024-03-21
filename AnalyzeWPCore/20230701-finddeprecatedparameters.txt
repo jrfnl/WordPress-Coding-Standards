@@ -1,32 +1,34 @@
-PHP 8.2.7 (cli) (built: Jun  7 2023 10:25:38) (ZTS Visual C++ 2019 x64)
+PHP 8.3.4 (cli) (built: Mar 13 2024 11:43:12) (ZTS Visual C++ 2019 x64)
 Copyright (c) The PHP Group
-Zend Engine v4.2.7, Copyright (c) Zend Technologies
-    with Zend OPcache v8.2.7, Copyright (c), by Zend Technologies
+Zend Engine v4.3.4, Copyright (c) Zend Technologies
+    with Zend OPcache v8.3.4, Copyright (c), by Zend Technologies
+    with Xdebug v3.3.1, Copyright (c) 2002-2023, by Derick Rethans
 
-PHP_CodeSniffer version 3.8.0 (stable) by Squiz (http://www.squiz.net)
+PHP_CodeSniffer version 3.9.1 (stable) by Squiz and PHPCSStandards
 
-............................................................   60 / 1284 (5%)
-.........................................E...E.....E........  120 / 1284 (9%)
-EE......E.....E.............................................  180 / 1284 (14%)
-............................................................  240 / 1284 (19%)
-............................................................  300 / 1284 (23%)
-............................................................  360 / 1284 (28%)
-............................................................  420 / 1284 (33%)
-............................................................  480 / 1284 (37%)
-............................................................  540 / 1284 (42%)
-............................................................  600 / 1284 (47%)
-............................................................  660 / 1284 (51%)
-..................E........E................................  720 / 1284 (56%)
-............................................................  780 / 1284 (61%)
-.........EE.................................................  840 / 1284 (65%)
-............................................................  900 / 1284 (70%)
-...............EE.E........................................E  960 / 1284 (75%)
-.........EEE..E...................................EEEE...EEE 1020 / 1284 (79%)
-.E.E.......E....EE........E.E............................... 1080 / 1284 (84%)
-............................................................ 1140 / 1284 (89%)
-..........................E................................. 1200 / 1284 (93%)
-.........................E.......................E.......... 1260 / 1284 (98%)
-............E...........                                     1284 / 1284 (100%)
+............................................................   60 / 1380 (4%)
+.........................................E...E.....E........  120 / 1380 (9%)
+EE......E.....E.............................................  180 / 1380 (13%)
+............................................................  240 / 1380 (17%)
+............................................................  300 / 1380 (22%)
+............................................................  360 / 1380 (26%)
+............................................................  420 / 1380 (30%)
+............................................................  480 / 1380 (35%)
+............................................................  540 / 1380 (39%)
+............................................................  600 / 1380 (43%)
+............................................................  660 / 1380 (48%)
+............................................................  720 / 1380 (52%)
+................E...........E...............................  780 / 1380 (57%)
+............................................................  840 / 1380 (61%)
+...............EE...........................................  900 / 1380 (65%)
+............................................................  960 / 1380 (70%)
+..........................EE.E.............................. 1020 / 1380 (74%)
+..........E.........E......EE..E............................ 1080 / 1380 (78%)
+................E.....EEE...EEE.E.E......E....EE........E.E. 1140 / 1380 (83%)
+............................................................ 1200 / 1380 (87%)
+............................................................ 1260 / 1380 (91%)
+.E.......................................................... 1320 / 1380 (96%)
+.E.......................E......................E........... 1380 / 1380 (100%)
 
 
 
@@ -34,166 +36,142 @@ FILE: D:\000_GitHub\WP_test_suite\src\wp-admin\includes\deprecated.php
 -----------------------------------------------------------------------------------------------------------------------------------------
 FOUND 1 ERROR AFFECTING 1 LINE
 -----------------------------------------------------------------------------------------------------------------------------------------
-LINE 1134: ERROR Parameter 3 in function wp_create_thumbnail() is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedParameters.Found)
+LINE 1135: ERROR Parameter 3 in function wp_create_thumbnail() is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedParameters.Found)
 -----------------------------------------------------------------------------------------------------------------------------------------
-   1132:   * @return string Thumbnail path on success, Error string on failure.
-   1133:   */
->> 1134:  function wp_create_thumbnail( $file, $max_side, $deprecated = '' ) {
-   1135:   _deprecated_function( __FUNCTION__, '3.5.0', 'image_resize()' );
-   1136:   return apply_filters( 'wp_create_thumbnail', image_resize( $file, $max_side, $max_side ) );
+   1133:   * @return string Thumbnail path on success, Error string on failure.
+   1134:   */
+>> 1135:  function wp_create_thumbnail( $file, $max_side, $deprecated = '' ) {
+   1136:   _deprecated_function( __FUNCTION__, '3.5.0', 'image_resize()' );
+   1137:   return apply_filters( 'wp_create_thumbnail', image_resize( $file, $max_side, $max_side ) );
 -----------------------------------------------------------------------------------------------------------------------------------------
 
 FILE: D:\000_GitHub\WP_test_suite\src\wp-admin\includes\image-edit.php
 --------------------------------------------------------------------------------------------------------------------------------------------
 FOUND 3 ERRORS AFFECTING 3 LINES
 --------------------------------------------------------------------------------------------------------------------------------------------
-LINE 363: ERROR Parameter in function wp_stream_image() is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedParameters.Found)
+LINE 364: ERROR Parameter in function wp_stream_image() is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedParameters.Found)
 --------------------------------------------------------------------------------------------------------------------------------------------
-   361:   } else {
-   362:    /* translators: 1: $image, 2: WP_Image_Editor */
->> 363:    _deprecated_argument( __FUNCTION__, '3.5.0', sprintf( __( '%1$s needs to be a %2$s object.' ), '$image', 'WP_Image_Editor' ) );
-   364:  
-   365:    /**
+   362:   } else {
+   363:    /* translators: 1: $image, 2: WP_Image_Editor */
+>> 364:    _deprecated_argument( __FUNCTION__, '3.5.0', sprintf( __( '%1$s needs to be a %2$s object.' ), '$image', 'WP_Image_Editor' ) );
+   365:  
+   366:    /**
 --------------------------------------------------------------------------------------------------------------------------------------------
-LINE 452: ERROR Parameter in function wp_save_image_file() is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedParameters.Found)
+LINE 459: ERROR Parameter in function wp_save_image_file() is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedParameters.Found)
 --------------------------------------------------------------------------------------------------------------------------------------------
-   450:   } else {
-   451:    /* translators: 1: $image, 2: WP_Image_Editor */
->> 452:    _deprecated_argument( __FUNCTION__, '3.5.0', sprintf( __( '%1$s needs to be a %2$s object.' ), '$image', 'WP_Image_Editor' ) );
-   453:  
-   454:    /** This filter is documented in wp-admin/includes/image-edit.php */
+   457:   } else {
+   458:    /* translators: 1: $image, 2: WP_Image_Editor */
+>> 459:    _deprecated_argument( __FUNCTION__, '3.5.0', sprintf( __( '%1$s needs to be a %2$s object.' ), '$image', 'WP_Image_Editor' ) );
+   460:  
+   461:    /** This filter is documented in wp-admin/includes/image-edit.php */
 --------------------------------------------------------------------------------------------------------------------------------------------
-LINE 617: ERROR Parameter in function image_edit_apply_changes() is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedParameters.Found)
+LINE 629: ERROR Parameter in function image_edit_apply_changes() is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedParameters.Found)
 --------------------------------------------------------------------------------------------------------------------------------------------
-   615:   if ( is_gd_image( $image ) ) {
-   616:    /* translators: 1: $image, 2: WP_Image_Editor */
->> 617:    _deprecated_argument( __FUNCTION__, '3.5.0', sprintf( __( '%1$s needs to be a %2$s object.' ), '$image', 'WP_Image_Editor' ) );
-   618:   }
-   619:
+   627:   if ( is_gd_image( $image ) ) {
+   628:    /* translators: 1: $image, 2: WP_Image_Editor */
+>> 629:    _deprecated_argument( __FUNCTION__, '3.5.0', sprintf( __( '%1$s needs to be a %2$s object.' ), '$image', 'WP_Image_Editor' ) );
+   630:   }
+   631:
 --------------------------------------------------------------------------------------------------------------------------------------------
 
 FILE: D:\000_GitHub\WP_test_suite\src\wp-admin\includes\meta-boxes.php
 -------------------------------------------------------------------------------------------------------------------------------
 FOUND 2 ERRORS AFFECTING 2 LINES
 -------------------------------------------------------------------------------------------------------------------------------
-LINE 1267: ERROR Parameter 3 in function xfn_check() is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedParameters.Found)
+LINE 1266: ERROR Parameter 3 in function xfn_check() is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedParameters.Found)
 -------------------------------------------------------------------------------------------------------------------------------
-   1265:   * @param mixed  $deprecated       Deprecated. Not used.
-   1266:   */
->> 1267:  function xfn_check( $xfn_relationship, $xfn_value = '', $deprecated = '' ) {
-   1268:   global $link;
-   1269:
+   1264:   * @param mixed  $deprecated       Deprecated. Not used.
+   1265:   */
+>> 1266:  function xfn_check( $xfn_relationship, $xfn_value = '', $deprecated = '' ) {
+   1267:   global $link;
+   1268:
 -------------------------------------------------------------------------------------------------------------------------------
-LINE 1271: ERROR Parameter in function xfn_check() is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedParameters.Found)
+LINE 1270: ERROR Parameter in function xfn_check() is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedParameters.Found)
 -------------------------------------------------------------------------------------------------------------------------------
-   1269:  
-   1270:   if ( ! empty( $deprecated ) ) {
->> 1271:    _deprecated_argument( __FUNCTION__, '2.5.0' ); // Never implemented.
-   1272:   }
-   1273:
+   1268:  
+   1269:   if ( ! empty( $deprecated ) ) {
+>> 1270:    _deprecated_argument( __FUNCTION__, '2.5.0' ); // Never implemented.
+   1271:   }
+   1272:
 -------------------------------------------------------------------------------------------------------------------------------
 
 FILE: D:\000_GitHub\WP_test_suite\src\wp-admin\includes\plugin-install.php
 ----------------------------------------------------------------------------------------------------------------------------------------
-FOUND 2 ERRORS AFFECTING 2 LINES
+FOUND 1 ERROR AFFECTING 1 LINE
 ----------------------------------------------------------------------------------------------------------------------------------------
 LINE 317: ERROR Parameter 1 in function install_search_form() is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedParameters.Found)
 ----------------------------------------------------------------------------------------------------------------------------------------
    315:   * @param bool $deprecated Not used.
    316:   */
 >> 317:  function install_search_form( $deprecated = true ) {
-   318:   if ( true !== $deprecated ) {
-   319:    _deprecated_argument( __FUNCTION__, '4.6.0' );
-----------------------------------------------------------------------------------------------------------------------------------------
-LINE 319: ERROR Parameter in function install_search_form() is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedParameters.Found)
-----------------------------------------------------------------------------------------------------------------------------------------
-   317:  function install_search_form( $deprecated = true ) {
-   318:   if ( true !== $deprecated ) {
->> 319:    _deprecated_argument( __FUNCTION__, '4.6.0' );
-   320:   }
-   321:
+   318:   $type = isset( $_REQUEST['type'] ) ? wp_unslash( $_REQUEST['type'] ) : 'term';
+   319:   $term = isset( $_REQUEST['s'] ) ? urldecode( wp_unslash( $_REQUEST['s'] ) ) : '';
 ----------------------------------------------------------------------------------------------------------------------------------------
 
 FILE: D:\000_GitHub\WP_test_suite\src\wp-admin\includes\plugin.php
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-FOUND 3 ERRORS AFFECTING 3 LINES
+FOUND 2 ERRORS AFFECTING 2 LINES
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-LINE  96: ERROR Parameter in function get_plugin_data() is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedParameters.Found)
+LINE  99: ERROR Parameter in function get_plugin_data() is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedParameters.Found)
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-    94:   if ( ! $plugin_data['Network'] && $plugin_data['_sitewide'] ) {
-    95:    /* translators: 1: Site Wide Only: true, 2: Network: true */
->>  96:    _deprecated_argument( __FUNCTION__, '3.0.0', sprintf( __( 'The %1$s plugin header is deprecated. Use %2$s instead.' ), '<code>Site Wide Only: true</code>', '<code>Network: true</code>' ) );
-    97:    $plugin_data['Network'] = $plugin_data['_sitewide'];
-    98:   }
+    97:   if ( ! $plugin_data['Network'] && $plugin_data['_sitewide'] ) {
+    98:    /* translators: 1: Site Wide Only: true, 2: Network: true */
+>>  99:    _deprecated_argument( __FUNCTION__, '3.0.0', sprintf( __( 'The %1$s plugin header is deprecated. Use %2$s instead.' ), '<code>Site Wide Only: true</code>', '<code>Network: true</code>' ) );
+   100:    $plugin_data['Network'] = $plugin_data['_sitewide'];
+   101:   }
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-LINE 894: ERROR Parameter 2 in function delete_plugins() is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedParameters.Found)
+LINE 906: ERROR Parameter 2 in function delete_plugins() is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedParameters.Found)
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-   892:   *                            `null` if filesystem credentials are required to proceed.
-   893:   */
->> 894:  function delete_plugins( $plugins, $deprecated = '' ) {
-   895:   global $wp_filesystem;
-   896:
-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-LINE 898: ERROR Parameter in function delete_plugins() is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedParameters.Found)
-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-   896:  
-   897:   if ( '' !== $deprecated ) {
->> 898:    _deprecated_argument( __FUNCTION__, '4.0.0' );
-   899:   }
-   900:
+   904:   *                            `null` if filesystem credentials are required to proceed.
+   905:   */
+>> 906:  function delete_plugins( $plugins, $deprecated = '' ) {
+   907:   global $wp_filesystem;
+   908:
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 FILE: D:\000_GitHub\WP_test_suite\src\wp-admin\includes\template.php
 ----------------------------------------------------------------------------------------------------------------------------------------
-FOUND 6 ERRORS AFFECTING 6 LINES
+FOUND 5 ERRORS AFFECTING 5 LINES
 ----------------------------------------------------------------------------------------------------------------------------------------
-LINE 1637: ERROR Parameter in function add_settings_section() is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedParameters.Found)
+LINE 1649: ERROR Parameter in function add_settings_section() is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedParameters.Found)
 ----------------------------------------------------------------------------------------------------------------------------------------
-   1635:  
-   1636:   if ( 'misc' === $page ) {
->> 1637:    _deprecated_argument(
-   1638:     __FUNCTION__,
-   1639:     '3.0.0',
+   1647:  
+   1648:   if ( 'misc' === $page ) {
+>> 1649:    _deprecated_argument(
+   1650:     __FUNCTION__,
+   1651:     '3.0.0',
 ----------------------------------------------------------------------------------------------------------------------------------------
-LINE 1650: ERROR Parameter in function add_settings_section() is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedParameters.Found)
+LINE 1662: ERROR Parameter in function add_settings_section() is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedParameters.Found)
 ----------------------------------------------------------------------------------------------------------------------------------------
-   1648:  
-   1649:   if ( 'privacy' === $page ) {
->> 1650:    _deprecated_argument(
-   1651:     __FUNCTION__,
-   1652:     '3.5.0',
+   1660:  
+   1661:   if ( 'privacy' === $page ) {
+>> 1662:    _deprecated_argument(
+   1663:     __FUNCTION__,
+   1664:     '3.5.0',
 ----------------------------------------------------------------------------------------------------------------------------------------
-LINE 1704: ERROR Parameter in function add_settings_field() is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedParameters.Found)
+LINE 1716: ERROR Parameter in function add_settings_field() is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedParameters.Found)
 ----------------------------------------------------------------------------------------------------------------------------------------
-   1702:  
-   1703:   if ( 'misc' === $page ) {
->> 1704:    _deprecated_argument(
-   1705:     __FUNCTION__,
-   1706:     '3.0.0',
+   1714:  
+   1715:   if ( 'misc' === $page ) {
+>> 1716:    _deprecated_argument(
+   1717:     __FUNCTION__,
+   1718:     '3.0.0',
 ----------------------------------------------------------------------------------------------------------------------------------------
-LINE 1717: ERROR Parameter in function add_settings_field() is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedParameters.Found)
+LINE 1729: ERROR Parameter in function add_settings_field() is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedParameters.Found)
 ----------------------------------------------------------------------------------------------------------------------------------------
-   1715:  
-   1716:   if ( 'privacy' === $page ) {
->> 1717:    _deprecated_argument(
-   1718:     __FUNCTION__,
-   1719:     '3.5.0',
+   1727:  
+   1728:   if ( 'privacy' === $page ) {
+>> 1729:    _deprecated_argument(
+   1730:     __FUNCTION__,
+   1731:     '3.5.0',
 ----------------------------------------------------------------------------------------------------------------------------------------
-LINE 2114: ERROR Parameter 2 in function iframe_header() is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedParameters.Found)
+LINE 2127: ERROR Parameter 2 in function iframe_header() is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedParameters.Found)
 ----------------------------------------------------------------------------------------------------------------------------------------
-   2112:   * @param bool   $deprecated Not used.
-   2113:   */
->> 2114:  function iframe_header( $title = '', $deprecated = false ) {
-   2115:   if ( false !== $deprecated ) {
-   2116:    _deprecated_argument( __FUNCTION__, '4.2.0' );
-----------------------------------------------------------------------------------------------------------------------------------------
-LINE 2116: ERROR Parameter in function iframe_header() is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedParameters.Found)
-----------------------------------------------------------------------------------------------------------------------------------------
-   2114:  function iframe_header( $title = '', $deprecated = false ) {
-   2115:   if ( false !== $deprecated ) {
->> 2116:    _deprecated_argument( __FUNCTION__, '4.2.0' );
-   2117:   }
-   2118:
+   2125:   * @param bool   $deprecated Not used.
+   2126:   */
+>> 2127:  function iframe_header( $title = '', $deprecated = false ) {
+   2128:   global $hook_suffix, $admin_body_class, $body_id, $wp_locale;
+   2129:
 ----------------------------------------------------------------------------------------------------------------------------------------
 
 FILE: D:\000_GitHub\WP_test_suite\src\wp-admin\includes\upgrade.php
@@ -283,26 +261,26 @@ FILE: D:\000_GitHub\WP_test_suite\src\wp-includes\block-patterns.php
 ------------------------------------------------------------------------------------------------------------------------------------------------
 FOUND 2 ERRORS AFFECTING 2 LINES
 ------------------------------------------------------------------------------------------------------------------------------------------------
-LINE 197: ERROR Parameter 1 in function _load_remote_block_patterns() is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedParameters.Found)
+LINE 211: ERROR Parameter 1 in function _load_remote_block_patterns() is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedParameters.Found)
 ------------------------------------------------------------------------------------------------------------------------------------------------
-   195:   * @param WP_Screen $deprecated Unused. Formerly the screen that the current request was triggered from.
-   196:   */
->> 197:  function _load_remote_block_patterns( $deprecated = null ) {
-   198:   if ( ! empty( $deprecated ) ) {
-   199:    _deprecated_argument( __FUNCTION__, '5.9.0' );
+   209:   * @param WP_Screen $deprecated Unused. Formerly the screen that the current request was triggered from.
+   210:   */
+>> 211:  function _load_remote_block_patterns( $deprecated = null ) {
+   212:   if ( ! empty( $deprecated ) ) {
+   213:    _deprecated_argument( __FUNCTION__, '5.9.0' );
 ------------------------------------------------------------------------------------------------------------------------------------------------
-LINE 199: ERROR Parameter in function _load_remote_block_patterns() is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedParameters.Found)
+LINE 213: ERROR Parameter in function _load_remote_block_patterns() is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedParameters.Found)
 ------------------------------------------------------------------------------------------------------------------------------------------------
-   197:  function _load_remote_block_patterns( $deprecated = null ) {
-   198:   if ( ! empty( $deprecated ) ) {
->> 199:    _deprecated_argument( __FUNCTION__, '5.9.0' );
-   200:    $current_screen = $deprecated;
-   201:    if ( ! $current_screen->is_block_editor ) {
+   211:  function _load_remote_block_patterns( $deprecated = null ) {
+   212:   if ( ! empty( $deprecated ) ) {
+>> 213:    _deprecated_argument( __FUNCTION__, '5.9.0' );
+   214:    $current_screen = $deprecated;
+   215:    if ( ! $current_screen->is_block_editor ) {
 ------------------------------------------------------------------------------------------------------------------------------------------------
 
 FILE: D:\000_GitHub\WP_test_suite\src\wp-includes\category-template.php
 ------------------------------------------------------------------------------------------------------------------------------------------
-FOUND 5 ERRORS AFFECTING 5 LINES
+FOUND 4 ERRORS AFFECTING 4 LINES
 ------------------------------------------------------------------------------------------------------------------------------------------
 LINE   47: ERROR Parameter 5 in function get_category_parents() is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedParameters.Found)
 ------------------------------------------------------------------------------------------------------------------------------------------
@@ -333,16 +311,8 @@ LINE 1265: ERROR Parameter 2 in function term_description() is deprecated since 
    1263:   * @return string Term description, if available.
    1264:   */
 >> 1265:  function term_description( $term = 0, $deprecated = null ) {
-   1266:   if ( ! empty( $deprecated ) ) {
-   1267:    _deprecated_argument( __FUNCTION__, '4.9.2' );
-------------------------------------------------------------------------------------------------------------------------------------------
-LINE 1267: ERROR Parameter in function term_description() is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedParameters.Found)
-------------------------------------------------------------------------------------------------------------------------------------------
-   1265:  function term_description( $term = 0, $deprecated = null ) {
-   1266:   if ( ! empty( $deprecated ) ) {
->> 1267:    _deprecated_argument( __FUNCTION__, '4.9.2' );
-   1268:   }
-   1269:
+   1266:   if ( ! $term && ( is_tax() || is_tag() || is_category() ) ) {
+   1267:    $term = get_queried_object();
 ------------------------------------------------------------------------------------------------------------------------------------------
 
 FILE: D:\000_GitHub\WP_test_suite\src\wp-includes\category.php
@@ -424,47 +394,47 @@ FILE: D:\000_GitHub\WP_test_suite\src\wp-includes\comment.php
 --------------------------------------------------------------------------------------------------------------------------------------------------
 FOUND 2 ERRORS AFFECTING 2 LINES
 --------------------------------------------------------------------------------------------------------------------------------------------------
-LINE 2794: ERROR Parameter 2 in function discover_pingback_server_uri() is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedParameters.Found)
+LINE 2795: ERROR Parameter 2 in function discover_pingback_server_uri() is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedParameters.Found)
 --------------------------------------------------------------------------------------------------------------------------------------------------
-   2792:   * @return string|false String containing URI on success, false on failure.
-   2793:   */
->> 2794:  function discover_pingback_server_uri( $url, $deprecated = '' ) {
-   2795:   if ( ! empty( $deprecated ) ) {
-   2796:    _deprecated_argument( __FUNCTION__, '2.7.0' );
+   2793:   * @return string|false String containing URI on success, false on failure.
+   2794:   */
+>> 2795:  function discover_pingback_server_uri( $url, $deprecated = '' ) {
+   2796:   if ( ! empty( $deprecated ) ) {
+   2797:    _deprecated_argument( __FUNCTION__, '2.7.0' );
 --------------------------------------------------------------------------------------------------------------------------------------------------
-LINE 2796: ERROR Parameter in function discover_pingback_server_uri() is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedParameters.Found)
+LINE 2797: ERROR Parameter in function discover_pingback_server_uri() is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedParameters.Found)
 --------------------------------------------------------------------------------------------------------------------------------------------------
-   2794:  function discover_pingback_server_uri( $url, $deprecated = '' ) {
-   2795:   if ( ! empty( $deprecated ) ) {
->> 2796:    _deprecated_argument( __FUNCTION__, '2.7.0' );
-   2797:   }
-   2798:
+   2795:  function discover_pingback_server_uri( $url, $deprecated = '' ) {
+   2796:   if ( ! empty( $deprecated ) ) {
+>> 2797:    _deprecated_argument( __FUNCTION__, '2.7.0' );
+   2798:   }
+   2799:
 --------------------------------------------------------------------------------------------------------------------------------------------------
 
 FILE: D:\000_GitHub\WP_test_suite\src\wp-includes\cron.php
--------------------------------------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------------------------
 FOUND 1 ERROR AFFECTING 1 LINE
--------------------------------------------------------------------------------------------------------------------------------------------------------------
-LINE 549: ERROR Parameter in function wp_clear_scheduled_hook() is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedParameters.Found)
--------------------------------------------------------------------------------------------------------------------------------------------------------------
-   547:    */
-   548:   if ( ! is_array( $args ) ) {
->> 549:    _deprecated_argument( __FUNCTION__, '3.0.0', __( 'This argument has changed to an array to match the behavior of the other cron functions.' ) );
-   550:    $args     = array_slice( func_get_args(), 1 ); // phpcs:ignore PHPCompatibility.FunctionUse.ArgumentFunctionsReportCurrentValue.NeedsInspection
-   551:    $wp_error = false;
--------------------------------------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------------------------
+LINE 555: ERROR Parameter in function wp_clear_scheduled_hook() is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedParameters.Found)
+------------------------------------------------------------------------------------------------------------------------------------------
+   553:    */
+   554:   if ( ! is_array( $args ) ) {
+>> 555:    _deprecated_argument(
+   556:     __FUNCTION__,
+   557:     '3.0.0',
+------------------------------------------------------------------------------------------------------------------------------------------
 
 FILE: D:\000_GitHub\WP_test_suite\src\wp-includes\deprecated.php
 -----------------------------------------------------------------------------------------------------------------------------------------
 FOUND 1 ERROR AFFECTING 1 LINE
 -----------------------------------------------------------------------------------------------------------------------------------------
-LINE 874: ERROR Parameter 1 in function permalink_single_rss() is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedParameters.Found)
+LINE 876: ERROR Parameter 1 in function permalink_single_rss() is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedParameters.Found)
 -----------------------------------------------------------------------------------------------------------------------------------------
-   872:   * @param string $deprecated
-   873:   */
->> 874:  function permalink_single_rss($deprecated = '') {
-   875:   _deprecated_function( __FUNCTION__, '2.3.0', 'the_permalink_rss()' );
-   876:   the_permalink_rss();
+   874:   * @param string $deprecated
+   875:   */
+>> 876:  function permalink_single_rss($deprecated = '') {
+   877:   _deprecated_function( __FUNCTION__, '2.3.0', 'the_permalink_rss()' );
+   878:   the_permalink_rss();
 -----------------------------------------------------------------------------------------------------------------------------------------
 
 FILE: D:\000_GitHub\WP_test_suite\src\wp-includes\feed.php
@@ -508,37 +478,37 @@ FILE: D:\000_GitHub\WP_test_suite\src\wp-includes\formatting.php
 -----------------------------------------------------------------------------------------------------------------------------------
 FOUND 4 ERRORS AFFECTING 4 LINES
 -----------------------------------------------------------------------------------------------------------------------------------
-LINE 2479: ERROR Parameter 2 in function convert_chars() is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedParameters.Found)
+LINE 2483: ERROR Parameter 2 in function convert_chars() is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedParameters.Found)
 -----------------------------------------------------------------------------------------------------------------------------------
-   2477:   * @return string Converted string.
-   2478:   */
->> 2479:  function convert_chars( $content, $deprecated = '' ) {
-   2480:   if ( ! empty( $deprecated ) ) {
-   2481:    _deprecated_argument( __FUNCTION__, '0.71' );
+   2481:   * @return string Converted string.
+   2482:   */
+>> 2483:  function convert_chars( $content, $deprecated = '' ) {
+   2484:   if ( ! empty( $deprecated ) ) {
+   2485:    _deprecated_argument( __FUNCTION__, '0.71' );
 -----------------------------------------------------------------------------------------------------------------------------------
-LINE 2481: ERROR Parameter in function convert_chars() is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedParameters.Found)
+LINE 2485: ERROR Parameter in function convert_chars() is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedParameters.Found)
 -----------------------------------------------------------------------------------------------------------------------------------
-   2479:  function convert_chars( $content, $deprecated = '' ) {
-   2480:   if ( ! empty( $deprecated ) ) {
->> 2481:    _deprecated_argument( __FUNCTION__, '0.71' );
-   2482:   }
-   2483:
+   2483:  function convert_chars( $content, $deprecated = '' ) {
+   2484:   if ( ! empty( $deprecated ) ) {
+>> 2485:    _deprecated_argument( __FUNCTION__, '0.71' );
+   2486:   }
+   2487:
 -----------------------------------------------------------------------------------------------------------------------------------
-LINE 3545: ERROR Parameter 2 in function is_email() is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedParameters.Found)
+LINE 3551: ERROR Parameter 2 in function is_email() is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedParameters.Found)
 -----------------------------------------------------------------------------------------------------------------------------------
-   3543:   * @return string|false Valid email address on success, false on failure.
-   3544:   */
->> 3545:  function is_email( $email, $deprecated = false ) {
-   3546:   if ( ! empty( $deprecated ) ) {
-   3547:    _deprecated_argument( __FUNCTION__, '3.0.0' );
+   3549:   * @return string|false Valid email address on success, false on failure.
+   3550:   */
+>> 3551:  function is_email( $email, $deprecated = false ) {
+   3552:   if ( ! empty( $deprecated ) ) {
+   3553:    _deprecated_argument( __FUNCTION__, '3.0.0' );
 -----------------------------------------------------------------------------------------------------------------------------------
-LINE 3547: ERROR Parameter in function is_email() is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedParameters.Found)
+LINE 3553: ERROR Parameter in function is_email() is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedParameters.Found)
 -----------------------------------------------------------------------------------------------------------------------------------
-   3545:  function is_email( $email, $deprecated = false ) {
-   3546:   if ( ! empty( $deprecated ) ) {
->> 3547:    _deprecated_argument( __FUNCTION__, '3.0.0' );
-   3548:   }
-   3549:
+   3551:  function is_email( $email, $deprecated = false ) {
+   3552:   if ( ! empty( $deprecated ) ) {
+>> 3553:    _deprecated_argument( __FUNCTION__, '3.0.0' );
+   3554:   }
+   3555:
 -----------------------------------------------------------------------------------------------------------------------------------
 
 FILE: D:\000_GitHub\WP_test_suite\src\wp-includes\functions.php
@@ -561,21 +531,21 @@ LINE  984: ERROR Parameter in function wp_get_http_headers() is deprecated since
     985:   }
     986:
 -----------------------------------------------------------------------------------------------------------------------------------------
-LINE 2877: ERROR Parameter 2 in function wp_upload_bits() is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedParameters.Found)
+LINE 2882: ERROR Parameter 2 in function wp_upload_bits() is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedParameters.Found)
 -----------------------------------------------------------------------------------------------------------------------------------------
-   2875:   * }
-   2876:   */
->> 2877:  function wp_upload_bits( $name, $deprecated, $bits, $time = null ) {
-   2878:   if ( ! empty( $deprecated ) ) {
-   2879:    _deprecated_argument( __FUNCTION__, '2.0.0' );
+   2880:   * }
+   2881:   */
+>> 2882:  function wp_upload_bits( $name, $deprecated, $bits, $time = null ) {
+   2883:   if ( ! empty( $deprecated ) ) {
+   2884:    _deprecated_argument( __FUNCTION__, '2.0.0' );
 -----------------------------------------------------------------------------------------------------------------------------------------
-LINE 2879: ERROR Parameter in function wp_upload_bits() is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedParameters.Found)
+LINE 2884: ERROR Parameter in function wp_upload_bits() is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedParameters.Found)
 -----------------------------------------------------------------------------------------------------------------------------------------
-   2877:  function wp_upload_bits( $name, $deprecated, $bits, $time = null ) {
-   2878:   if ( ! empty( $deprecated ) ) {
->> 2879:    _deprecated_argument( __FUNCTION__, '2.0.0' );
-   2880:   }
-   2881:
+   2882:  function wp_upload_bits( $name, $deprecated, $bits, $time = null ) {
+   2883:   if ( ! empty( $deprecated ) ) {
+>> 2884:    _deprecated_argument( __FUNCTION__, '2.0.0' );
+   2885:   }
+   2886:
 -----------------------------------------------------------------------------------------------------------------------------------------
 
 FILE: D:\000_GitHub\WP_test_suite\src\wp-includes\general-template.php
@@ -603,43 +573,43 @@ FILE: D:\000_GitHub\WP_test_suite\src\wp-includes\kses.php
 -----------------------------------------------------------------------------------------------------------------------------------------
 FOUND 2 ERRORS AFFECTING 2 LINES
 -----------------------------------------------------------------------------------------------------------------------------------------
-LINE 2295: ERROR Parameter 2 in function safecss_filter_attr() is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedParameters.Found)
+LINE 2312: ERROR Parameter 2 in function safecss_filter_attr() is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedParameters.Found)
 -----------------------------------------------------------------------------------------------------------------------------------------
-   2293:   * @return string Filtered string of CSS rules.
-   2294:   */
->> 2295:  function safecss_filter_attr( $css, $deprecated = '' ) {
-   2296:   if ( ! empty( $deprecated ) ) {
-   2297:    _deprecated_argument( __FUNCTION__, '2.8.1' ); // Never implemented.
+   2310:   * @return string Filtered string of CSS rules.
+   2311:   */
+>> 2312:  function safecss_filter_attr( $css, $deprecated = '' ) {
+   2313:   if ( ! empty( $deprecated ) ) {
+   2314:    _deprecated_argument( __FUNCTION__, '2.8.1' ); // Never implemented.
 -----------------------------------------------------------------------------------------------------------------------------------------
-LINE 2297: ERROR Parameter in function safecss_filter_attr() is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedParameters.Found)
+LINE 2314: ERROR Parameter in function safecss_filter_attr() is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedParameters.Found)
 -----------------------------------------------------------------------------------------------------------------------------------------
-   2295:  function safecss_filter_attr( $css, $deprecated = '' ) {
-   2296:   if ( ! empty( $deprecated ) ) {
->> 2297:    _deprecated_argument( __FUNCTION__, '2.8.1' ); // Never implemented.
-   2298:   }
-   2299:
+   2312:  function safecss_filter_attr( $css, $deprecated = '' ) {
+   2313:   if ( ! empty( $deprecated ) ) {
+>> 2314:    _deprecated_argument( __FUNCTION__, '2.8.1' ); // Never implemented.
+   2315:   }
+   2316:
 -----------------------------------------------------------------------------------------------------------------------------------------
 
 FILE: D:\000_GitHub\WP_test_suite\src\wp-includes\l10n.php
--------------------------------------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------------------------
 FOUND 2 ERRORS AFFECTING 2 LINES
--------------------------------------------------------------------------------------------------------------------------------------------
-LINE 935: ERROR Parameter 2 in function load_plugin_textdomain() is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedParameters.Found)
--------------------------------------------------------------------------------------------------------------------------------------------
-   933:   * @return bool True when textdomain is successfully loaded, false otherwise.
-   934:   */
->> 935:  function load_plugin_textdomain( $domain, $deprecated = false, $plugin_rel_path = false ) {
-   936:   /** @var WP_Textdomain_Registry $wp_textdomain_registry */
-   937:   global $wp_textdomain_registry;
--------------------------------------------------------------------------------------------------------------------------------------------
-LINE 959: ERROR Parameter in function load_plugin_textdomain() is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedParameters.Found)
--------------------------------------------------------------------------------------------------------------------------------------------
-   957:    $path = WP_PLUGIN_DIR . '/' . trim( $plugin_rel_path, '/' );
-   958:   } elseif ( false !== $deprecated ) {
->> 959:    _deprecated_argument( __FUNCTION__, '2.7.0' );
-   960:    $path = ABSPATH . trim( $deprecated, '/' );
-   961:   } else {
--------------------------------------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------------------------
+LINE  988: ERROR Parameter 2 in function load_plugin_textdomain() is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedParameters.Found)
+--------------------------------------------------------------------------------------------------------------------------------------------
+    986:   * @return bool True when textdomain is successfully loaded, false otherwise.
+    987:   */
+>>  988:  function load_plugin_textdomain( $domain, $deprecated = false, $plugin_rel_path = false ) {
+    989:   /** @var WP_Textdomain_Registry $wp_textdomain_registry */
+    990:   global $wp_textdomain_registry;
+--------------------------------------------------------------------------------------------------------------------------------------------
+LINE 1012: ERROR Parameter in function load_plugin_textdomain() is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedParameters.Found)
+--------------------------------------------------------------------------------------------------------------------------------------------
+   1010:    $path = WP_PLUGIN_DIR . '/' . trim( $plugin_rel_path, '/' );
+   1011:   } elseif ( false !== $deprecated ) {
+>> 1012:    _deprecated_argument( __FUNCTION__, '2.7.0' );
+   1013:    $path = ABSPATH . trim( $deprecated, '/' );
+   1014:   } else {
+--------------------------------------------------------------------------------------------------------------------------------------------
 
 FILE: D:\000_GitHub\WP_test_suite\src\wp-includes\link-template.php
 ------------------------------------------------------------------------------------------------------------------------------------------
@@ -674,39 +644,31 @@ FILE: D:\000_GitHub\WP_test_suite\src\wp-includes\load.php
 ------------------------------------------------------------------------------------------------------------------------------------------
 FOUND 1 ERROR AFFECTING 1 LINE
 ------------------------------------------------------------------------------------------------------------------------------------------
-LINE 240: ERROR Parameter in function wp_get_environment_type() is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedParameters.Found)
+LINE 245: ERROR Parameter in function wp_get_environment_type() is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedParameters.Found)
 ------------------------------------------------------------------------------------------------------------------------------------------
-   238:    }
-   239:  
->> 240:    _deprecated_argument(
-   241:     'define()',
-   242:     '5.5.1',
+   243:    }
+   244:  
+>> 245:    _deprecated_argument(
+   246:     'define()',
+   247:     '5.5.1',
 ------------------------------------------------------------------------------------------------------------------------------------------
 
 FILE: D:\000_GitHub\WP_test_suite\src\wp-includes\meta.php
 -----------------------------------------------------------------------------------------------------------------------------------
-FOUND 2 ERRORS AFFECTING 2 LINES
+FOUND 1 ERROR AFFECTING 1 LINE
 -----------------------------------------------------------------------------------------------------------------------------------
-LINE 1401: ERROR Parameter 4 in function register_meta() is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedParameters.Found)
+LINE 1404: ERROR Parameter 4 in function register_meta() is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedParameters.Found)
 -----------------------------------------------------------------------------------------------------------------------------------
-   1399:   *              but will not add to the global registry.
-   1400:   */
->> 1401:  function register_meta( $object_type, $meta_key, $args, $deprecated = null ) {
-   1402:   global $wp_meta_keys;
-   1403:
------------------------------------------------------------------------------------------------------------------------------------
-LINE 1405: ERROR Parameter in function register_meta() is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedParameters.Found)
------------------------------------------------------------------------------------------------------------------------------------
-   1403:  
-   1404:   if ( isset( $deprecated ) ) {
->> 1405:    _deprecated_argument( __FUNCTION__, '4.6.0' );
-   1406:   }
-   1407:
+   1402:   *              but will not add to the global registry.
+   1403:   */
+>> 1404:  function register_meta( $object_type, $meta_key, $args, $deprecated = null ) {
+   1405:   global $wp_meta_keys;
+   1406:
 -----------------------------------------------------------------------------------------------------------------------------------
 
 FILE: D:\000_GitHub\WP_test_suite\src\wp-includes\ms-blogs.php
 ---------------------------------------------------------------------------------------------------------------------------------------
-FOUND 8 ERRORS AFFECTING 8 LINES
+FOUND 7 ERRORS AFFECTING 7 LINES
 ---------------------------------------------------------------------------------------------------------------------------------------
 LINE 459: ERROR Parameter 4 in function update_blog_option() is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedParameters.Found)
 ---------------------------------------------------------------------------------------------------------------------------------------
@@ -724,53 +686,45 @@ LINE 463: ERROR Parameter in function update_blog_option() is deprecated since .
    464:   }
    465:
 ---------------------------------------------------------------------------------------------------------------------------------------
-LINE 500: ERROR Parameter 2 in function switch_to_blog() is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedParameters.Found)
+LINE 499: ERROR Parameter 2 in function switch_to_blog() is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedParameters.Found)
 ---------------------------------------------------------------------------------------------------------------------------------------
-   498:   * @return true Always returns true.
-   499:   */
->> 500:  function switch_to_blog( $new_blog_id, $deprecated = null ) {
-   501:   global $wpdb;
-   502:
+   497:   * @return true Always returns true.
+   498:   */
+>> 499:  function switch_to_blog( $new_blog_id, $deprecated = null ) {
+   500:   global $wpdb;
+   501:
 ---------------------------------------------------------------------------------------------------------------------------------------
-LINE 504: ERROR Parameter in function switch_to_blog() is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedParameters.Found)
+LINE 761: ERROR Parameter 4 in function update_blog_status() is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedParameters.Found)
 ---------------------------------------------------------------------------------------------------------------------------------------
-   502:  
-   503:   if ( isset( $deprecated ) ) {
->> 504:    _deprecated_argument( __FUNCTION__, '3.5.0' );
-   505:   }
-   506:
+   759:   * @return string|false $value
+   760:   */
+>> 761:  function update_blog_status( $blog_id, $pref, $value, $deprecated = null ) {
+   762:   global $wpdb;
+   763:
 ---------------------------------------------------------------------------------------------------------------------------------------
-LINE 764: ERROR Parameter 4 in function update_blog_status() is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedParameters.Found)
+LINE 765: ERROR Parameter in function update_blog_status() is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedParameters.Found)
 ---------------------------------------------------------------------------------------------------------------------------------------
-   762:   * @return string|false $value
-   763:   */
->> 764:  function update_blog_status( $blog_id, $pref, $value, $deprecated = null ) {
-   765:   global $wpdb;
-   766:
+   763:  
+   764:   if ( null !== $deprecated ) {
+>> 765:    _deprecated_argument( __FUNCTION__, '3.1.0' );
+   766:   }
+   767:
 ---------------------------------------------------------------------------------------------------------------------------------------
-LINE 768: ERROR Parameter in function update_blog_status() is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedParameters.Found)
+LINE 823: ERROR Parameter 1 in function get_last_updated() is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedParameters.Found)
 ---------------------------------------------------------------------------------------------------------------------------------------
-   766:  
-   767:   if ( null !== $deprecated ) {
->> 768:    _deprecated_argument( __FUNCTION__, '3.1.0' );
-   769:   }
-   770:
+   821:   * @return array The list of blogs.
+   822:   */
+>> 823:  function get_last_updated( $deprecated = '', $start = 0, $quantity = 40 ) {
+   824:   global $wpdb;
+   825:
 ---------------------------------------------------------------------------------------------------------------------------------------
-LINE 826: ERROR Parameter 1 in function get_last_updated() is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedParameters.Found)
+LINE 827: ERROR Parameter in function get_last_updated() is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedParameters.Found)
 ---------------------------------------------------------------------------------------------------------------------------------------
-   824:   * @return array The list of blogs.
-   825:   */
->> 826:  function get_last_updated( $deprecated = '', $start = 0, $quantity = 40 ) {
-   827:   global $wpdb;
-   828:
----------------------------------------------------------------------------------------------------------------------------------------
-LINE 830: ERROR Parameter in function get_last_updated() is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedParameters.Found)
----------------------------------------------------------------------------------------------------------------------------------------
-   828:  
-   829:   if ( ! empty( $deprecated ) ) {
->> 830:    _deprecated_argument( __FUNCTION__, 'MU' ); // Never used.
-   831:   }
-   832:
+   825:  
+   826:   if ( ! empty( $deprecated ) ) {
+>> 827:    _deprecated_argument( __FUNCTION__, 'MU' ); // Never used.
+   828:   }
+   829:
 ---------------------------------------------------------------------------------------------------------------------------------------
 
 FILE: D:\000_GitHub\WP_test_suite\src\wp-includes\ms-default-constants.php
@@ -825,60 +779,36 @@ LINE 747: ERROR Parameter 2 in function global_terms() is deprecated since ... (
 
 FILE: D:\000_GitHub\WP_test_suite\src\wp-includes\ms-functions.php
 ----------------------------------------------------------------------------------------------------------------------------------------------
-FOUND 6 ERRORS AFFECTING 6 LINES
+FOUND 3 ERRORS AFFECTING 3 LINES
 ----------------------------------------------------------------------------------------------------------------------------------------------
 LINE 1425: ERROR Parameter 2 in function newblog_notify_siteadmin() is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedParameters.Found)
 ----------------------------------------------------------------------------------------------------------------------------------------------
    1423:   * @return bool
    1424:   */
 >> 1425:  function newblog_notify_siteadmin( $blog_id, $deprecated = '' ) {
-   1426:   if ( '' !== $deprecated ) {
-   1427:    _deprecated_argument( __FUNCTION__, '3.0.0' );
+   1426:   if ( is_object( $blog_id ) ) {
+   1427:    $blog_id = $blog_id->blog_id;
 ----------------------------------------------------------------------------------------------------------------------------------------------
-LINE 1427: ERROR Parameter in function newblog_notify_siteadmin() is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedParameters.Found)
+LINE 2022: ERROR Parameter 1 in function update_posts_count() is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedParameters.Found)
 ----------------------------------------------------------------------------------------------------------------------------------------------
-   1425:  function newblog_notify_siteadmin( $blog_id, $deprecated = '' ) {
-   1426:   if ( '' !== $deprecated ) {
->> 1427:    _deprecated_argument( __FUNCTION__, '3.0.0' );
-   1428:   }
-   1429:
+   2020:   * @param string $deprecated Not used.
+   2021:   */
+>> 2022:  function update_posts_count( $deprecated = '' ) {
+   2023:   global $wpdb;
+   2024:   update_option( 'post_count', (int) $wpdb->get_var( "SELECT COUNT(ID) FROM {$wpdb->posts} WHERE post_status = 'publish' and post_type = 'post'" ) );
 ----------------------------------------------------------------------------------------------------------------------------------------------
-LINE 2026: ERROR Parameter 1 in function update_posts_count() is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedParameters.Found)
+LINE 2076: ERROR Parameter 1 in function redirect_this_site() is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedParameters.Found)
 ----------------------------------------------------------------------------------------------------------------------------------------------
-   2024:   * @param string $deprecated Not used.
-   2025:   */
->> 2026:  function update_posts_count( $deprecated = '' ) {
-   2027:   global $wpdb;
-   2028:
-----------------------------------------------------------------------------------------------------------------------------------------------
-LINE 2030: ERROR Parameter in function update_posts_count() is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedParameters.Found)
-----------------------------------------------------------------------------------------------------------------------------------------------
-   2028:  
-   2029:   if ( '' !== $deprecated ) {
->> 2030:    _deprecated_argument( __FUNCTION__, '3.0.0' );
-   2031:   }
-   2032:
-----------------------------------------------------------------------------------------------------------------------------------------------
-LINE 2085: ERROR Parameter 1 in function redirect_this_site() is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedParameters.Found)
-----------------------------------------------------------------------------------------------------------------------------------------------
-   2083:   * }
-   2084:   */
->> 2085:  function redirect_this_site( $deprecated = '' ) {
-   2086:   if ( '' !== $deprecated ) {
-   2087:    _deprecated_argument( __FUNCTION__, '3.0.0' );
-----------------------------------------------------------------------------------------------------------------------------------------------
-LINE 2087: ERROR Parameter in function redirect_this_site() is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedParameters.Found)
-----------------------------------------------------------------------------------------------------------------------------------------------
-   2085:  function redirect_this_site( $deprecated = '' ) {
-   2086:   if ( '' !== $deprecated ) {
->> 2087:    _deprecated_argument( __FUNCTION__, '3.0.0' );
-   2088:   }
-   2089:
+   2074:   * }
+   2075:   */
+>> 2076:  function redirect_this_site( $deprecated = '' ) {
+   2077:   return array( get_network()->domain );
+   2078:  }
 ----------------------------------------------------------------------------------------------------------------------------------------------
 
 FILE: D:\000_GitHub\WP_test_suite\src\wp-includes\option.php
 ----------------------------------------------------------------------------------------------------------------------------------------
-FOUND 14 ERRORS AFFECTING 14 LINES
+FOUND 12 ERRORS AFFECTING 12 LINES
 ----------------------------------------------------------------------------------------------------------------------------------------
 LINE   99: ERROR Parameter in function get_option() is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedParameters.Found)
 ----------------------------------------------------------------------------------------------------------------------------------------
@@ -888,109 +818,93 @@ LINE   99: ERROR Parameter in function get_option() is deprecated since ... (Ana
     100:     __FUNCTION__,
     101:     '5.5.0',
 ----------------------------------------------------------------------------------------------------------------------------------------
-LINE  456: ERROR Parameter in function update_option() is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedParameters.Found)
+LINE  742: ERROR Parameter in function update_option() is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedParameters.Found)
 ----------------------------------------------------------------------------------------------------------------------------------------
-    454:  
-    455:   if ( isset( $deprecated_keys[ $option ] ) && ! wp_installing() ) {
->>  456:    _deprecated_argument(
-    457:     __FUNCTION__,
-    458:     '5.5.0',
+    740:  
+    741:   if ( isset( $deprecated_keys[ $option ] ) && ! wp_installing() ) {
+>>  742:    _deprecated_argument(
+    743:     __FUNCTION__,
+    744:     '5.5.0',
 ----------------------------------------------------------------------------------------------------------------------------------------
-LINE  621: ERROR Parameter 3 in function add_option() is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedParameters.Found)
+LINE  934: ERROR Parameter 3 in function add_option() is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedParameters.Found)
 ----------------------------------------------------------------------------------------------------------------------------------------
-    619:   * @return bool True if the option was added, false otherwise.
-    620:   */
->>  621:  function add_option( $option, $value = '', $deprecated = '', $autoload = 'yes' ) {
-    622:   global $wpdb;
-    623:
+    932:   * @return bool True if the option was added, false otherwise.
+    933:   */
+>>  934:  function add_option( $option, $value = '', $deprecated = '', $autoload = 'yes' ) {
+    935:   global $wpdb;
+    936:
 ----------------------------------------------------------------------------------------------------------------------------------------
-LINE  625: ERROR Parameter in function add_option() is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedParameters.Found)
+LINE  938: ERROR Parameter in function add_option() is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedParameters.Found)
 ----------------------------------------------------------------------------------------------------------------------------------------
-    623:  
-    624:   if ( ! empty( $deprecated ) ) {
->>  625:    _deprecated_argument( __FUNCTION__, '2.3.0' );
-    626:   }
-    627:
+    936:  
+    937:   if ( ! empty( $deprecated ) ) {
+>>  938:    _deprecated_argument( __FUNCTION__, '2.3.0' );
+    939:   }
+    940:
 ----------------------------------------------------------------------------------------------------------------------------------------
-LINE  646: ERROR Parameter in function add_option() is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedParameters.Found)
+LINE  959: ERROR Parameter in function add_option() is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedParameters.Found)
 ----------------------------------------------------------------------------------------------------------------------------------------
-    644:  
-    645:   if ( isset( $deprecated_keys[ $option ] ) && ! wp_installing() ) {
->>  646:    _deprecated_argument(
-    647:     __FUNCTION__,
-    648:     '5.5.0',
+    957:  
+    958:   if ( isset( $deprecated_keys[ $option ] ) && ! wp_installing() ) {
+>>  959:    _deprecated_argument(
+    960:     __FUNCTION__,
+    961:     '5.5.0',
 ----------------------------------------------------------------------------------------------------------------------------------------
-LINE 1365: ERROR Parameter 3 in function get_site_option() is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedParameters.Found)
+LINE 1680: ERROR Parameter 3 in function get_site_option() is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedParameters.Found)
 ----------------------------------------------------------------------------------------------------------------------------------------
-   1363:   * @return mixed Value set for the option.
-   1364:   */
->> 1365:  function get_site_option( $option, $default_value = false, $deprecated = true ) {
-   1366:   if ( true !== $deprecated ) {
-   1367:    _deprecated_argument( __FUNCTION__, '4.4.0' );
+   1678:   * @return mixed Value set for the option.
+   1679:   */
+>> 1680:  function get_site_option( $option, $default_value = false, $deprecated = true ) {
+   1681:   return get_network_option( null, $option, $default_value );
+   1682:  }
 ----------------------------------------------------------------------------------------------------------------------------------------
-LINE 1367: ERROR Parameter in function get_site_option() is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedParameters.Found)
+LINE 2737: ERROR Parameter in function register_setting() is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedParameters.Found)
 ----------------------------------------------------------------------------------------------------------------------------------------
-   1365:  function get_site_option( $option, $default_value = false, $deprecated = true ) {
-   1366:   if ( true !== $deprecated ) {
->> 1367:    _deprecated_argument( __FUNCTION__, '4.4.0' );
-   1368:   }
-   1369:
+   2735:  
+   2736:   if ( 'misc' === $option_group ) {
+>> 2737:    _deprecated_argument(
+   2738:     __FUNCTION__,
+   2739:     '3.0.0',
 ----------------------------------------------------------------------------------------------------------------------------------------
-LINE 2426: ERROR Parameter in function register_setting() is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedParameters.Found)
+LINE 2750: ERROR Parameter in function register_setting() is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedParameters.Found)
 ----------------------------------------------------------------------------------------------------------------------------------------
-   2424:  
-   2425:   if ( 'misc' === $option_group ) {
->> 2426:    _deprecated_argument(
-   2427:     __FUNCTION__,
-   2428:     '3.0.0',
+   2748:  
+   2749:   if ( 'privacy' === $option_group ) {
+>> 2750:    _deprecated_argument(
+   2751:     __FUNCTION__,
+   2752:     '3.5.0',
 ----------------------------------------------------------------------------------------------------------------------------------------
-LINE 2439: ERROR Parameter in function register_setting() is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedParameters.Found)
+LINE 2800: ERROR Parameter 3 in function unregister_setting() is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedParameters.Found)
 ----------------------------------------------------------------------------------------------------------------------------------------
-   2437:  
-   2438:   if ( 'privacy' === $option_group ) {
->> 2439:    _deprecated_argument(
-   2440:     __FUNCTION__,
-   2441:     '3.5.0',
+   2798:   * @param callable $deprecated   Optional. Deprecated.
+   2799:   */
+>> 2800:  function unregister_setting( $option_group, $option_name, $deprecated = '' ) {
+   2801:   global $new_allowed_options, $wp_registered_settings;
+   2802:
 ----------------------------------------------------------------------------------------------------------------------------------------
-LINE 2489: ERROR Parameter 3 in function unregister_setting() is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedParameters.Found)
+LINE 2810: ERROR Parameter in function unregister_setting() is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedParameters.Found)
 ----------------------------------------------------------------------------------------------------------------------------------------
-   2487:   * @param callable $deprecated   Optional. Deprecated.
-   2488:   */
->> 2489:  function unregister_setting( $option_group, $option_name, $deprecated = '' ) {
-   2490:   global $new_allowed_options, $wp_registered_settings;
-   2491:
+   2808:  
+   2809:   if ( 'misc' === $option_group ) {
+>> 2810:    _deprecated_argument(
+   2811:     __FUNCTION__,
+   2812:     '3.0.0',
 ----------------------------------------------------------------------------------------------------------------------------------------
-LINE 2499: ERROR Parameter in function unregister_setting() is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedParameters.Found)
+LINE 2823: ERROR Parameter in function unregister_setting() is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedParameters.Found)
 ----------------------------------------------------------------------------------------------------------------------------------------
-   2497:  
-   2498:   if ( '' !== $deprecated ) {
->> 2499:    _deprecated_argument( __FUNCTION__, '4.7.0' );
-   2500:   }
-   2501:
+   2821:  
+   2822:   if ( 'privacy' === $option_group ) {
+>> 2823:    _deprecated_argument(
+   2824:     __FUNCTION__,
+   2825:     '3.5.0',
 ----------------------------------------------------------------------------------------------------------------------------------------
-LINE 2503: ERROR Parameter in function unregister_setting() is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedParameters.Found)
+LINE 2845: ERROR Parameter in function unregister_setting() is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedParameters.Found)
 ----------------------------------------------------------------------------------------------------------------------------------------
-   2501:  
-   2502:   if ( 'misc' === $option_group ) {
->> 2503:    _deprecated_argument(
-   2504:     __FUNCTION__,
-   2505:     '3.0.0',
-----------------------------------------------------------------------------------------------------------------------------------------
-LINE 2516: ERROR Parameter in function unregister_setting() is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedParameters.Found)
-----------------------------------------------------------------------------------------------------------------------------------------
-   2514:  
-   2515:   if ( 'privacy' === $option_group ) {
->> 2516:    _deprecated_argument(
-   2517:     __FUNCTION__,
-   2518:     '3.5.0',
-----------------------------------------------------------------------------------------------------------------------------------------
-LINE 2535: ERROR Parameter in function unregister_setting() is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedParameters.Found)
-----------------------------------------------------------------------------------------------------------------------------------------
-   2533:  
-   2534:   if ( '' !== $deprecated ) {
->> 2535:    _deprecated_argument(
-   2536:     __FUNCTION__,
-   2537:     '4.7.0',
+   2843:  
+   2844:   if ( '' !== $deprecated ) {
+>> 2845:    _deprecated_argument(
+   2846:     __FUNCTION__,
+   2847:     '4.7.0',
 ----------------------------------------------------------------------------------------------------------------------------------------
 
 FILE: D:\000_GitHub\WP_test_suite\src\wp-includes\pluggable-deprecated.php
@@ -1055,55 +969,55 @@ LINE  413: ERROR Parameter in function get_the_excerpt() is deprecated since ...
     414:   }
     415:
 ------------------------------------------------------------------------------------------------------------------------------------------
-LINE 1615: ERROR Parameter 3 in function the_attachment_link() is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedParameters.Found)
+LINE 1610: ERROR Parameter 3 in function the_attachment_link() is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedParameters.Found)
 ------------------------------------------------------------------------------------------------------------------------------------------
-   1613:   * @param bool        $permalink Optional. Whether to include permalink. Default false.
-   1614:   */
->> 1615:  function the_attachment_link( $post = 0, $fullsize = false, $deprecated = false, $permalink = false ) {
-   1616:   if ( ! empty( $deprecated ) ) {
-   1617:    _deprecated_argument( __FUNCTION__, '2.5.0' );
+   1608:   * @param bool        $permalink Optional. Whether to include permalink. Default false.
+   1609:   */
+>> 1610:  function the_attachment_link( $post = 0, $fullsize = false, $deprecated = false, $permalink = false ) {
+   1611:   if ( ! empty( $deprecated ) ) {
+   1612:    _deprecated_argument( __FUNCTION__, '2.5.0' );
 ------------------------------------------------------------------------------------------------------------------------------------------
-LINE 1617: ERROR Parameter in function the_attachment_link() is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedParameters.Found)
+LINE 1612: ERROR Parameter in function the_attachment_link() is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedParameters.Found)
 ------------------------------------------------------------------------------------------------------------------------------------------
-   1615:  function the_attachment_link( $post = 0, $fullsize = false, $deprecated = false, $permalink = false ) {
-   1616:   if ( ! empty( $deprecated ) ) {
->> 1617:    _deprecated_argument( __FUNCTION__, '2.5.0' );
-   1618:   }
-   1619:
+   1610:  function the_attachment_link( $post = 0, $fullsize = false, $deprecated = false, $permalink = false ) {
+   1611:   if ( ! empty( $deprecated ) ) {
+>> 1612:    _deprecated_argument( __FUNCTION__, '2.5.0' );
+   1613:   }
+   1614:
 ------------------------------------------------------------------------------------------------------------------------------------------
-LINE 1992: ERROR Parameter in function wp_list_post_revisions() is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedParameters.Found)
+LINE 1987: ERROR Parameter in function wp_list_post_revisions() is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedParameters.Found)
 ------------------------------------------------------------------------------------------------------------------------------------------
-   1990:   if ( is_array( $type ) ) {
-   1991:    $type = ! empty( $type['type'] ) ? $type['type'] : $type;
->> 1992:    _deprecated_argument( __FUNCTION__, '3.6.0' );
-   1993:   }
-   1994:
+   1985:   if ( is_array( $type ) ) {
+   1986:    $type = ! empty( $type['type'] ) ? $type['type'] : $type;
+>> 1987:    _deprecated_argument( __FUNCTION__, '3.6.0' );
+   1988:   }
+   1989:
 ------------------------------------------------------------------------------------------------------------------------------------------
 
 FILE: D:\000_GitHub\WP_test_suite\src\wp-includes\post.php
 -----------------------------------------------------------------------------------------------------------------------------------------------------------
 FOUND 2 ERRORS AFFECTING 2 LINES
 -----------------------------------------------------------------------------------------------------------------------------------------------------------
-LINE 3968: ERROR Parameter in function wp_get_recent_posts() is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedParameters.Found)
+LINE 4046: ERROR Parameter in function wp_get_recent_posts() is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedParameters.Found)
 -----------------------------------------------------------------------------------------------------------------------------------------------------------
-   3966:  
-   3967:   if ( is_numeric( $args ) ) {
->> 3968:    _deprecated_argument( __FUNCTION__, '3.1.0', __( 'Passing an integer number of posts is deprecated. Pass an array of arguments instead.' ) );
-   3969:    $args = array( 'numberposts' => absint( $args ) );
-   3970:   }
+   4044:  
+   4045:   if ( is_numeric( $args ) ) {
+>> 4046:    _deprecated_argument( __FUNCTION__, '3.1.0', __( 'Passing an integer number of posts is deprecated. Pass an array of arguments instead.' ) );
+   4047:    $args = array( 'numberposts' => absint( $args ) );
+   4048:   }
 -----------------------------------------------------------------------------------------------------------------------------------------------------------
-LINE 7499: ERROR Parameter 1 in function _future_post_hook() is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedParameters.Found)
+LINE 7601: ERROR Parameter 1 in function _future_post_hook() is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedParameters.Found)
 -----------------------------------------------------------------------------------------------------------------------------------------------------------
-   7497:   * @param WP_Post $post       Post object.
-   7498:   */
->> 7499:  function _future_post_hook( $deprecated, $post ) {
-   7500:   wp_clear_scheduled_hook( 'publish_future_post', array( $post->ID ) );
-   7501:   wp_schedule_single_event( strtotime( get_gmt_from_date( $post->post_date ) . ' GMT' ), 'publish_future_post', array( $post->ID ) );
+   7599:   * @param WP_Post $post       Post object.
+   7600:   */
+>> 7601:  function _future_post_hook( $deprecated, $post ) {
+   7602:   wp_clear_scheduled_hook( 'publish_future_post', array( $post->ID ) );
+   7603:   wp_schedule_single_event( strtotime( get_gmt_from_date( $post->post_date ) . ' GMT' ), 'publish_future_post', array( $post->ID ) );
 -----------------------------------------------------------------------------------------------------------------------------------------------------------
 
 FILE: D:\000_GitHub\WP_test_suite\src\wp-includes\revision.php
 --------------------------------------------------------------------------------------------------------------------------------------------
-FOUND 2 ERRORS AFFECTING 2 LINES
+FOUND 1 ERROR AFFECTING 1 LINE
 --------------------------------------------------------------------------------------------------------------------------------------------
 LINE 22: ERROR Parameter 2 in function _wp_post_revision_fields() is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedParameters.Found)
 --------------------------------------------------------------------------------------------------------------------------------------------
@@ -1113,55 +1027,47 @@ LINE 22: ERROR Parameter 2 in function _wp_post_revision_fields() is deprecated 
    23:   static $fields = null;
    24:
 --------------------------------------------------------------------------------------------------------------------------------------------
-LINE 26: ERROR Parameter in function _wp_post_revision_fields() is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedParameters.Found)
---------------------------------------------------------------------------------------------------------------------------------------------
-   24:  
-   25:   if ( false !== $deprecated ) {
->> 26:    _deprecated_argument( __FUNCTION__, '4.5.0' );
-   27:   }
-   28:
---------------------------------------------------------------------------------------------------------------------------------------------
 
 FILE: D:\000_GitHub\WP_test_suite\src\wp-includes\taxonomy.php
 ------------------------------------------------------------------------------------------------------------------------------------
 FOUND 2 ERRORS AFFECTING 2 LINES
 ------------------------------------------------------------------------------------------------------------------------------------
-LINE 1267: ERROR Parameter 2 in function get_terms() is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedParameters.Found)
+LINE 1309: ERROR Parameter 2 in function get_terms() is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedParameters.Found)
 ------------------------------------------------------------------------------------------------------------------------------------
-   1265:   *                                                  See the function description for more information.
-   1266:   */
->> 1267:  function get_terms( $args = array(), $deprecated = '' ) {
-   1268:   $term_query = new WP_Term_Query();
-   1269:
+   1307:   *                                                  See the function description for more information.
+   1308:   */
+>> 1309:  function get_terms( $args = array(), $deprecated = '' ) {
+   1310:   $term_query = new WP_Term_Query();
+   1311:
 ------------------------------------------------------------------------------------------------------------------------------------
-LINE 1884: ERROR Parameter 2 in function wp_count_terms() is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedParameters.Found)
+LINE 1925: ERROR Parameter 2 in function wp_count_terms() is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedParameters.Found)
 ------------------------------------------------------------------------------------------------------------------------------------
-   1882:   *                         taxonomy or WP_Error if the taxonomy does not exist.
-   1883:   */
->> 1884:  function wp_count_terms( $args = array(), $deprecated = '' ) {
-   1885:   $use_legacy_args = false;
-   1886:
+   1923:   *                         taxonomy or WP_Error if the taxonomy does not exist.
+   1924:   */
+>> 1925:  function wp_count_terms( $args = array(), $deprecated = '' ) {
+   1926:   $use_legacy_args = false;
+   1927:
 ------------------------------------------------------------------------------------------------------------------------------------
 
 FILE: D:\000_GitHub\WP_test_suite\src\wp-includes\user.php
 ------------------------------------------------------------------------------------------------------------------------------------
 FOUND 2 ERRORS AFFECTING 2 LINES
 ------------------------------------------------------------------------------------------------------------------------------------
-LINE 662: ERROR Parameter 3 in function get_user_option() is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedParameters.Found)
+LINE 663: ERROR Parameter 3 in function get_user_option() is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedParameters.Found)
 ------------------------------------------------------------------------------------------------------------------------------------
-   660:   * @return mixed User option value on success, false on failure.
-   661:   */
->> 662:  function get_user_option( $option, $user = 0, $deprecated = '' ) {
-   663:   global $wpdb;
-   664:
+   661:   * @return mixed User option value on success, false on failure.
+   662:   */
+>> 663:  function get_user_option( $option, $user = 0, $deprecated = '' ) {
+   664:   global $wpdb;
+   665:
 ------------------------------------------------------------------------------------------------------------------------------------
-LINE 666: ERROR Parameter in function get_user_option() is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedParameters.Found)
+LINE 667: ERROR Parameter in function get_user_option() is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedParameters.Found)
 ------------------------------------------------------------------------------------------------------------------------------------
-   664:  
-   665:   if ( ! empty( $deprecated ) ) {
->> 666:    _deprecated_argument( __FUNCTION__, '3.0.0' );
-   667:   }
-   668:
+   665:  
+   666:   if ( ! empty( $deprecated ) ) {
+>> 667:    _deprecated_argument( __FUNCTION__, '3.0.0' );
+   668:   }
+   669:
 ------------------------------------------------------------------------------------------------------------------------------------
 
 FILE: D:\000_GitHub\WP_test_suite\src\wp-includes\widgets.php
@@ -1184,7 +1090,7 @@ LINE 1013: ERROR Parameter in function wp_get_sidebars_widgets() is deprecated s
    1014:   }
    1015:
 ---------------------------------------------------------------------------------------------------------------------------------------------
-Time: 26.76 secs; Memory: 92MB
+Time: 28.7 secs; Memory: 96MB
 
 
 PHP CODE SNIFFER REPORT SUMMARY
@@ -1194,13 +1100,13 @@ FILE                                                                     ERRORS 
 D:\000_GitHub\WP_test_suite\src\wp-admin\includes\deprecated.php         1       0
 D:\000_GitHub\WP_test_suite\src\wp-admin\includes\image-edit.php         3       0
 D:\000_GitHub\WP_test_suite\src\wp-admin\includes\meta-boxes.php         2       0
-D:\000_GitHub\WP_test_suite\src\wp-admin\includes\plugin-install.php     2       0
-D:\000_GitHub\WP_test_suite\src\wp-admin\includes\plugin.php             3       0
-D:\000_GitHub\WP_test_suite\src\wp-admin\includes\template.php           6       0
+D:\000_GitHub\WP_test_suite\src\wp-admin\includes\plugin-install.php     1       0
+D:\000_GitHub\WP_test_suite\src\wp-admin\includes\plugin.php             2       0
+D:\000_GitHub\WP_test_suite\src\wp-admin\includes\template.php           5       0
 D:\000_GitHub\WP_test_suite\src\wp-admin\includes\upgrade.php            2       0
 D:\000_GitHub\WP_test_suite\src\wp-includes\author-template.php          8       0
 D:\000_GitHub\WP_test_suite\src\wp-includes\block-patterns.php           2       0
-D:\000_GitHub\WP_test_suite\src\wp-includes\category-template.php        5       0
+D:\000_GitHub\WP_test_suite\src\wp-includes\category-template.php        4       0
 D:\000_GitHub\WP_test_suite\src\wp-includes\category.php                 1       0
 D:\000_GitHub\WP_test_suite\src\wp-includes\comment-template.php         8       0
 D:\000_GitHub\WP_test_suite\src\wp-includes\comment.php                  2       0
@@ -1214,22 +1120,22 @@ D:\000_GitHub\WP_test_suite\src\wp-includes\kses.php                     2      
 D:\000_GitHub\WP_test_suite\src\wp-includes\l10n.php                     2       0
 D:\000_GitHub\WP_test_suite\src\wp-includes\link-template.php            3       0
 D:\000_GitHub\WP_test_suite\src\wp-includes\load.php                     1       0
-D:\000_GitHub\WP_test_suite\src\wp-includes\meta.php                     2       0
-D:\000_GitHub\WP_test_suite\src\wp-includes\ms-blogs.php                 8       0
+D:\000_GitHub\WP_test_suite\src\wp-includes\meta.php                     1       0
+D:\000_GitHub\WP_test_suite\src\wp-includes\ms-blogs.php                 7       0
 D:\000_GitHub\WP_test_suite\src\wp-includes\ms-default-constants.php     1       0
 D:\000_GitHub\WP_test_suite\src\wp-includes\ms-deprecated.php            4       0
-D:\000_GitHub\WP_test_suite\src\wp-includes\ms-functions.php             6       0
-D:\000_GitHub\WP_test_suite\src\wp-includes\option.php                   14      0
+D:\000_GitHub\WP_test_suite\src\wp-includes\ms-functions.php             3       0
+D:\000_GitHub\WP_test_suite\src\wp-includes\option.php                   12      0
 D:\000_GitHub\WP_test_suite\src\wp-includes\pluggable-deprecated.php     1       0
 D:\000_GitHub\WP_test_suite\src\wp-includes\pluggable.php                4       0
 D:\000_GitHub\WP_test_suite\src\wp-includes\post-template.php            4       0
 D:\000_GitHub\WP_test_suite\src\wp-includes\post.php                     2       0
-D:\000_GitHub\WP_test_suite\src\wp-includes\revision.php                 2       0
+D:\000_GitHub\WP_test_suite\src\wp-includes\revision.php                 1       0
 D:\000_GitHub\WP_test_suite\src\wp-includes\taxonomy.php                 2       0
 D:\000_GitHub\WP_test_suite\src\wp-includes\user.php                     2       0
 D:\000_GitHub\WP_test_suite\src\wp-includes\widgets.php                  2       0
 -----------------------------------------------------------------------------------------
-A TOTAL OF 123 ERRORS AND 0 WARNINGS WERE FOUND IN 1284 FILES
+A TOTAL OF 111 ERRORS AND 0 WARNINGS WERE FOUND IN 37 FILES
 -----------------------------------------------------------------------------------------
 
 
@@ -1237,9 +1143,9 @@ PHP CODE SNIFFER VIOLATION SOURCE SUMMARY
 ----------------------------------------------------------------------
 SOURCE                                                           COUNT
 ----------------------------------------------------------------------
-AnalyzeWPCore.WP.FindDeprecatedParameters.Found                  123
+AnalyzeWPCore.WP.FindDeprecatedParameters.Found                  111
 ----------------------------------------------------------------------
-A TOTAL OF 123 SNIFF VIOLATIONS WERE FOUND IN 1 SOURCE
+A TOTAL OF 111 SNIFF VIOLATIONS WERE FOUND IN 1 SOURCE
 ----------------------------------------------------------------------
 
 

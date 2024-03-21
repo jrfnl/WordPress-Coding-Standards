@@ -1,32 +1,34 @@
-PHP 8.2.7 (cli) (built: Jun  7 2023 10:25:38) (ZTS Visual C++ 2019 x64)
+PHP 8.3.4 (cli) (built: Mar 13 2024 11:43:12) (ZTS Visual C++ 2019 x64)
 Copyright (c) The PHP Group
-Zend Engine v4.2.7, Copyright (c) Zend Technologies
-    with Zend OPcache v8.2.7, Copyright (c), by Zend Technologies
+Zend Engine v4.3.4, Copyright (c) Zend Technologies
+    with Zend OPcache v8.3.4, Copyright (c), by Zend Technologies
+    with Xdebug v3.3.1, Copyright (c) 2002-2023, by Derick Rethans
 
-PHP_CodeSniffer version 3.8.0 (stable) by Squiz (http://www.squiz.net)
+PHP_CodeSniffer version 3.9.1 (stable) by Squiz and PHPCSStandards
 
-............................................................   60 / 1284 (5%)
-.........................................E..................  120 / 1284 (9%)
-............................................................  180 / 1284 (14%)
-............................................................  240 / 1284 (19%)
-............................................................  300 / 1284 (23%)
-............................................................  360 / 1284 (28%)
-............................................................  420 / 1284 (33%)
-............................................................  480 / 1284 (37%)
-............................................................  540 / 1284 (42%)
-............................................................  600 / 1284 (47%)
-............................................................  660 / 1284 (51%)
-............................................................  720 / 1284 (56%)
-............................................................  780 / 1284 (61%)
-..............E.............................................  840 / 1284 (65%)
-..............E.............................................  900 / 1284 (70%)
-..........................................EE................  960 / 1284 (75%)
-............................................................ 1020 / 1284 (79%)
-............................................................ 1080 / 1284 (84%)
-............................................................ 1140 / 1284 (89%)
-............................................................ 1200 / 1284 (93%)
-............................................................ 1260 / 1284 (98%)
-........................                                     1284 / 1284 (100%)
+............................................................   60 / 1380 (4%)
+.........................................E..................  120 / 1380 (9%)
+............................................................  180 / 1380 (13%)
+............................................................  240 / 1380 (17%)
+............................................................  300 / 1380 (22%)
+............................................................  360 / 1380 (26%)
+............................................................  420 / 1380 (30%)
+............................................................  480 / 1380 (35%)
+............................................................  540 / 1380 (39%)
+............................................................  600 / 1380 (43%)
+............................................................  660 / 1380 (48%)
+............................................................  720 / 1380 (52%)
+............................................................  780 / 1380 (57%)
+............................................................  840 / 1380 (61%)
+.....................E......................................  900 / 1380 (65%)
+................E......E....................................  960 / 1380 (70%)
+.....................................................EE..... 1020 / 1380 (74%)
+............................................................ 1080 / 1380 (78%)
+............................................................ 1140 / 1380 (83%)
+............................................................ 1200 / 1380 (87%)
+............................................................ 1260 / 1380 (91%)
+............................................................ 1320 / 1380 (96%)
+............................................................ 1380 / 1380 (100%)
 
 
 
@@ -42,21 +44,21 @@ LINE  337: ERROR Class WP_User_Search is deprecated since ... (AnalyzeWPCore.WP.
     338:   */
     339:  class WP_User_Search {
 -------------------------------------------------------------------------------------------------------------------------------------
-LINE 1532: ERROR Class WP_Privacy_Data_Export_Requests_Table is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedClasses.Found)
+LINE 1533: ERROR Class WP_Privacy_Data_Export_Requests_Table is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedClasses.Found)
 -------------------------------------------------------------------------------------------------------------------------------------
-   1530:   *
-   1531:   * @since 4.9.6
->> 1532:   * @deprecated 5.3.0
-   1533:   */
-   1534:  class WP_Privacy_Data_Export_Requests_Table extends WP_Privacy_Data_Export_Requests_List_Table {
+   1531:   *
+   1532:   * @since 4.9.6
+>> 1533:   * @deprecated 5.3.0
+   1534:   */
+   1535:  class WP_Privacy_Data_Export_Requests_Table extends WP_Privacy_Data_Export_Requests_List_Table {
 -------------------------------------------------------------------------------------------------------------------------------------
-LINE 1550: ERROR Class WP_Privacy_Data_Removal_Requests_Table is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedClasses.Found)
+LINE 1551: ERROR Class WP_Privacy_Data_Removal_Requests_Table is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedClasses.Found)
 -------------------------------------------------------------------------------------------------------------------------------------
-   1548:   *
-   1549:   * @since 4.9.6
->> 1550:   * @deprecated 5.3.0
-   1551:   */
-   1552:  class WP_Privacy_Data_Removal_Requests_Table extends WP_Privacy_Data_Removal_Requests_List_Table {
+   1549:   *
+   1550:   * @since 4.9.6
+>> 1551:   * @deprecated 5.3.0
+   1552:   */
+   1553:  class WP_Privacy_Data_Removal_Requests_Table extends WP_Privacy_Data_Removal_Requests_List_Table {
 -------------------------------------------------------------------------------------------------------------------------------------
 
 FILE: D:\000_GitHub\WP_test_suite\src\wp-includes\class-json.php
@@ -80,17 +82,38 @@ LINE 992: ERROR Class Services_JSON_Error is deprecated since ... (AnalyzeWPCore
    994:              parent::PEAR_Error($message, $code, $mode, $options, $userinfo);
 -----------------------------------------------------------------------------------------------------------------
 
+FILE: D:\000_GitHub\WP_test_suite\src\wp-includes\class-wp-http-curl.php
+---------------------------------------------------------------------------------------------------------
+FOUND 1 ERROR AFFECTING 1 LINE
+---------------------------------------------------------------------------------------------------------
+LINE 18: ERROR Class WP_Http_Curl is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedClasses.Found)
+---------------------------------------------------------------------------------------------------------
+   16:   *
+   17:   * @since 2.7.0
+>> 18:   * @deprecated 6.4.0 Use WP_Http
+   19:   * @see WP_Http
+   20:   */
+---------------------------------------------------------------------------------------------------------
+
 FILE: D:\000_GitHub\WP_test_suite\src\wp-includes\class-wp-http-streams.php
 ---------------------------------------------------------------------------------------------------------------
-FOUND 1 ERROR AFFECTING 1 LINE
+FOUND 2 ERRORS AFFECTING 2 LINES
 ---------------------------------------------------------------------------------------------------------------
-LINE 530: ERROR Class WP_HTTP_Fsockopen is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedClasses.Found)
+LINE  15: ERROR Class WP_Http_Streams is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedClasses.Found)
 ---------------------------------------------------------------------------------------------------------------
-   528:   *
-   529:   * @since 2.7.0
->> 530:   * @deprecated 3.7.0 Please use WP_HTTP::request() directly
-   531:   */
-   532:  class WP_HTTP_Fsockopen extends WP_Http_Streams {
+    13:   * @since 2.7.0
+    14:   * @since 3.7.0 Combined with the fsockopen transport and switched to `stream_socket_client()`.
+>>  15:   * @deprecated 6.4.0 Use WP_Http
+    16:   * @see WP_Http
+    17:   */
+---------------------------------------------------------------------------------------------------------------
+LINE 532: ERROR Class WP_HTTP_Fsockopen is deprecated since ... (AnalyzeWPCore.WP.FindDeprecatedClasses.Found)
+---------------------------------------------------------------------------------------------------------------
+   530:   *
+   531:   * @since 2.7.0
+>> 532:   * @deprecated 3.7.0 Please use WP_HTTP::request() directly
+   533:   */
+   534:  class WP_HTTP_Fsockopen extends WP_Http_Streams {
 ---------------------------------------------------------------------------------------------------------------
 
 FILE: D:\000_GitHub\WP_test_suite\src\wp-includes\customize\class-wp-customize-new-menu-control.php
@@ -118,7 +141,7 @@ LINE 17: ERROR Class WP_Customize_New_Menu_Section is deprecated since ... (Anal
    18:   *
    19:   * @see WP_Customize_Section
 --------------------------------------------------------------------------------------------------------------------------
-Time: 26.16 secs; Memory: 90MB
+Time: 28.54 secs; Memory: 92MB
 
 
 PHP CODE SNIFFER REPORT SUMMARY
@@ -127,11 +150,12 @@ FILE                                                                            
 ------------------------------------------------------------------------------------------------------------------
 D:\000_GitHub\WP_test_suite\src\wp-admin\includes\deprecated.php                                  3       0
 D:\000_GitHub\WP_test_suite\src\wp-includes\class-json.php                                        2       0
-D:\000_GitHub\WP_test_suite\src\wp-includes\class-wp-http-streams.php                             1       0
+D:\000_GitHub\WP_test_suite\src\wp-includes\class-wp-http-curl.php                                1       0
+D:\000_GitHub\WP_test_suite\src\wp-includes\class-wp-http-streams.php                             2       0
 D:\000_GitHub\WP_test_suite\src\wp-includes\customize\class-wp-customize-new-menu-control.php     1       0
 D:\000_GitHub\WP_test_suite\src\wp-includes\customize\class-wp-customize-new-menu-section.php     1       0
 ------------------------------------------------------------------------------------------------------------------
-A TOTAL OF 8 ERRORS AND 0 WARNINGS WERE FOUND IN 1284 FILES
+A TOTAL OF 10 ERRORS AND 0 WARNINGS WERE FOUND IN 6 FILES
 ------------------------------------------------------------------------------------------------------------------
 
 
@@ -139,9 +163,9 @@ PHP CODE SNIFFER VIOLATION SOURCE SUMMARY
 ----------------------------------------------------------------------
 SOURCE                                                           COUNT
 ----------------------------------------------------------------------
-AnalyzeWPCore.WP.FindDeprecatedClasses.Found                     8
+AnalyzeWPCore.WP.FindDeprecatedClasses.Found                     10
 ----------------------------------------------------------------------
-A TOTAL OF 8 SNIFF VIOLATIONS WERE FOUND IN 1 SOURCE
+A TOTAL OF 10 SNIFF VIOLATIONS WERE FOUND IN 1 SOURCE
 ----------------------------------------------------------------------
 
 
