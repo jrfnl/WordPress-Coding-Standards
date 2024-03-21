@@ -20,8 +20,8 @@
 	<!-- No need to scan the tests, those are irrelevant for our purposes. -->
 	<!--
 	<file>/src/</file>
-	-->
 	<file>../../../WP_Test_suite/src/</file>
+	-->
 
 	<!-- Exclude externally maintained third-party tools. -->
 	<exclude-pattern>/src/wp-includes/random_compat/*</exclude-pattern>
@@ -35,6 +35,7 @@
 
 	<rule ref="AnalyzeWPCore.WP.FindDeprecatedClasses">
 		<!-- Exclude externally maintained third-party tools. -->
+		<exclude-pattern>/src/wp-includes/class-avif-info\.php</exclude-pattern>
 		<exclude-pattern>/src/wp-includes/ID3/*</exclude-pattern>
 		<exclude-pattern>/src/wp-includes/PHPMailer/*</exclude-pattern>
 		<exclude-pattern>/src/wp-includes/class-requests\.php</exclude-pattern>
@@ -44,6 +45,7 @@
 
 	<rule ref="AnalyzeWPCore.WP.FindDeprecatedFunctions">
 		<!-- Exclude externally maintained third-party tools. -->
+		<exclude-pattern>/src/wp-includes/class-avif-info\.php</exclude-pattern>
 		<exclude-pattern>/src/wp-includes/ID3/*</exclude-pattern>
 		<exclude-pattern>/src/wp-includes/PHPMailer/*</exclude-pattern>
 		<exclude-pattern>/src/wp-includes/class-requests\.php</exclude-pattern>
@@ -53,6 +55,7 @@
 
 	<rule ref="AnalyzeWPCore.WP.FindDeprecatedParameters">
 		<!-- Exclude externally maintained third-party tools. -->
+		<exclude-pattern>/src/wp-includes/class-avif-info\.php</exclude-pattern>
 		<exclude-pattern>/src/wp-includes/ID3/*</exclude-pattern>
 		<exclude-pattern>/src/wp-includes/PHPMailer/*</exclude-pattern>
 		<exclude-pattern>/src/wp-includes/class-requests\.php</exclude-pattern>
@@ -62,6 +65,7 @@
 
 	<rule ref="AnalyzeWPCore.WP.FindPluggableClasses">
 		<!-- Exclude externally maintained third-party tools. -->
+		<exclude-pattern>/src/wp-includes/class-avif-info\.php</exclude-pattern>
 		<exclude-pattern>/src/wp-includes/class-snoopy\.php</exclude-pattern>
 		<exclude-pattern>/src/wp-includes/pomo/*</exclude-pattern>
 		<exclude-pattern>/src/wp-includes/Requests/*</exclude-pattern>
