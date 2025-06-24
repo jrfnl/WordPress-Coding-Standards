@@ -1,34 +1,37 @@
-PHP 8.3.4 (cli) (built: Mar 13 2024 11:43:12) (ZTS Visual C++ 2019 x64)
+PHP 8.4.8 (cli) (built: Jun  3 2025 17:34:37) (ZTS Visual C++ 2022 x64)
 Copyright (c) The PHP Group
-Zend Engine v4.3.4, Copyright (c) Zend Technologies
-    with Zend OPcache v8.3.4, Copyright (c), by Zend Technologies
-    with Xdebug v3.3.1, Copyright (c) 2002-2023, by Derick Rethans
+Zend Engine v4.4.8, Copyright (c) Zend Technologies
+    with Zend OPcache v8.4.8, Copyright (c), by Zend Technologies
+    with Xdebug v3.4.3, Copyright (c) 2002-2025, by Derick Rethans
 
-PHP_CodeSniffer version 3.9.1 (stable) by Squiz and PHPCSStandards
+PHP_CodeSniffer version 3.13.3 (stable) by Squiz and PHPCSStandards
 
-............................................................   60 / 1380 (4%)
-............................................................  120 / 1380 (9%)
-............................................................  180 / 1380 (13%)
-............................................................  240 / 1380 (17%)
-............................................................  300 / 1380 (22%)
-............................................................  360 / 1380 (26%)
-............................................................  420 / 1380 (30%)
-............................................................  480 / 1380 (35%)
-............................................................  540 / 1380 (39%)
-............................................................  600 / 1380 (43%)
-............................................................  660 / 1380 (48%)
-............................................................  720 / 1380 (52%)
-............................................................  780 / 1380 (57%)
-............................................................  840 / 1380 (61%)
-............................................................  900 / 1380 (65%)
-............................................................  960 / 1380 (70%)
-............................................................ 1020 / 1380 (74%)
-............................................................ 1080 / 1380 (78%)
-............................................................ 1140 / 1380 (83%)
-............................................................ 1200 / 1380 (87%)
-............................................................ 1260 / 1380 (91%)
-............................................................ 1320 / 1380 (96%)
-............................................................ 1380 / 1380 (100%)
+............................................................   60 / 1546 (4%)
+............................................................  120 / 1546 (8%)
+............................................................  180 / 1546 (12%)
+............................................................  240 / 1546 (16%)
+............................................................  300 / 1546 (19%)
+............................................................  360 / 1546 (23%)
+............................................................  420 / 1546 (27%)
+............................................................  480 / 1546 (31%)
+............................................................  540 / 1546 (35%)
+............................................................  600 / 1546 (39%)
+............................................................  660 / 1546 (43%)
+............................................................  720 / 1546 (47%)
+............................................................  780 / 1546 (50%)
+............................................................  840 / 1546 (54%)
+............................................................  900 / 1546 (58%)
+............................................................  960 / 1546 (62%)
+............................................................ 1020 / 1546 (66%)
+............................................................ 1080 / 1546 (70%)
+............................................................ 1140 / 1546 (74%)
+............................................................ 1200 / 1546 (78%)
+............................................................ 1260 / 1546 (82%)
+............................................................ 1320 / 1546 (85%)
+............................................................ 1380 / 1546 (89%)
+............................................................ 1440 / 1546 (93%)
+............................................................ 1500 / 1546 (97%)
+..............................................               1546 / 1546 (100%)
 
 
 
@@ -141,7 +144,43 @@ Requests interface:
 
 SimplePie class:
 	SimplePie                          =>  1 (  1.43%)
+	SimplePie\Author                   =>  1 (  1.43%)
+	SimplePie\Cache                    =>  1 (  1.43%)
+	SimplePie\Cache\BaseDataCache      =>  1 (  1.43%)
+	SimplePie\Cache\CallableNameFilter =>  1 (  1.43%)
+	SimplePie\Cache\DB                 =>  1 (  1.43%)
+	SimplePie\Cache\File               =>  1 (  1.43%)
+	SimplePie\Cache\Memcache           =>  1 (  1.43%)
+	SimplePie\Cache\Memcached          =>  1 (  1.43%)
+	SimplePie\Cache\MySQL              =>  1 (  1.43%)
+	SimplePie\Cache\Psr16              =>  1 (  1.43%)
+	SimplePie\Cache\Redis              =>  1 (  1.43%)
+	SimplePie\Caption                  =>  1 (  1.43%)
+	SimplePie\Category                 =>  1 (  1.43%)
+	SimplePie\Content\Type\Sniffer     =>  1 (  1.43%)
+	SimplePie\Copyright                =>  1 (  1.43%)
+	SimplePie\Credit                   =>  1 (  1.43%)
+	SimplePie\Enclosure                =>  1 (  1.43%)
+	SimplePie\Exception                =>  1 (  1.43%)
+	SimplePie\File                     =>  1 (  1.43%)
+	SimplePie\Gzdecode                 =>  1 (  1.43%)
+	SimplePie\HTTP\Parser              =>  1 (  1.43%)
+	SimplePie\IRI                      =>  1 (  1.43%)
+	SimplePie\Item                     =>  1 (  1.43%)
+	SimplePie\Locator                  =>  1 (  1.43%)
+	SimplePie\Misc                     =>  1 (  1.43%)
+	SimplePie\Net\IPv6                 =>  1 (  1.43%)
+	SimplePie\Parse\Date               =>  1 (  1.43%)
+	SimplePie\Parser                   =>  1 (  1.43%)
+	SimplePie\Rating                   =>  1 (  1.43%)
+	SimplePie\Registry                 =>  1 (  1.43%)
+	SimplePie\Restriction              =>  1 (  1.43%)
+	SimplePie\Sanitize                 =>  1 (  1.43%)
+	SimplePie\SimplePie                =>  1 (  1.43%)
+	SimplePie\Source                   =>  1 (  1.43%)
+	SimplePie\XML\Declaration\Parser   =>  1 (  1.43%)
 	SimplePie_Author                   =>  1 (  1.43%)
+	SimplePie_Autoloader               =>  1 (  1.43%)
 	SimplePie_Cache                    =>  1 (  1.43%)
 	SimplePie_Cache_DB                 =>  1 (  1.43%)
 	SimplePie_Cache_File               =>  1 (  1.43%)
@@ -174,11 +213,17 @@ SimplePie class:
 	SimplePie_Source                   =>  1 (  1.43%)
 	SimplePie_XML_Declaration_Parser   =>  1 (  1.43%)
 	SimplePie_gzdecode                 =>  1 (  1.43%)
-	-------------------------------------------------
-	total                              => 34 (100.00%)
+	---------------------------------------------------
+	total                              => 70 (100.00%)
 
 SimplePie interface:
+	SimplePie\Cache\Base       => 1 ( 20.00%)
+	SimplePie\Cache\DataCache  => 1 ( 20.00%)
+	SimplePie\Cache\NameFilter => 1 ( 20.00%)
+	SimplePie\RegistryAware    => 1 ( 20.00%)
 	SimplePie_Cache_Base       => 1 ( 20.00%)
+	------------------------------------------
+	total                      => 5 (100.00%)
 
 Theme class:
 	Featured_Content                           =>  1 (  5.56%)
@@ -266,6 +311,7 @@ WP Core class:
 	Text_Diff_Op_delete                         =>    1 (  0.26%)
 	Text_Diff_Renderer                          =>    1 (  0.26%)
 	Text_Diff_Renderer_inline                   =>    1 (  0.26%)
+	Text_Exception                              =>    1 (  0.26%)
 	Text_MappedDiff                             =>    1 (  0.26%)
 	Theme_Installer_Skin                        =>    1 (  0.26%)
 	Theme_Upgrader                              =>    1 (  0.26%)
@@ -284,6 +330,7 @@ WP Core class:
 	WP_Block_Bindings_Source                    =>    1 (  0.26%)
 	WP_Block_Editor_Context                     =>    1 (  0.26%)
 	WP_Block_List                               =>    1 (  0.26%)
+	WP_Block_Metadata_Registry                  =>    1 (  0.26%)
 	WP_Block_Parser                             =>    1 (  0.26%)
 	WP_Block_Parser_Block                       =>    1 (  0.26%)
 	WP_Block_Parser_Frame                       =>    1 (  0.26%)
@@ -292,6 +339,7 @@ WP Core class:
 	WP_Block_Styles_Registry                    =>    1 (  0.26%)
 	WP_Block_Supports                           =>    1 (  0.26%)
 	WP_Block_Template                           =>    1 (  0.26%)
+	WP_Block_Templates_Registry                 =>    1 (  0.26%)
 	WP_Block_Type                               =>    1 (  0.26%)
 	WP_Block_Type_Registry                      =>    1 (  0.26%)
 	WP_Classic_To_Block_Menu_Converter          =>    1 (  0.26%)
@@ -345,6 +393,7 @@ WP Core class:
 	WP_Duotone                                  =>    1 (  0.26%)
 	WP_Embed                                    =>    1 (  0.26%)
 	WP_Error                                    =>    1 (  0.26%)
+	WP_Exception                                =>    1 (  0.26%)
 	WP_Fatal_Error_Handler                      =>    1 (  0.26%)
 	WP_Feed_Cache                               =>    1 (  0.26%)
 	WP_Feed_Cache_Transient                     =>    1 (  0.26%)
@@ -360,10 +409,13 @@ WP Core class:
 	WP_Font_Utils                               =>    1 (  0.26%)
 	WP_HTML_Active_Formatting_Elements          =>    1 (  0.26%)
 	WP_HTML_Attribute_Token                     =>    1 (  0.26%)
+	WP_HTML_Decoder                             =>    1 (  0.26%)
+	WP_HTML_Doctype_Info                        =>    1 (  0.26%)
 	WP_HTML_Open_Elements                       =>    1 (  0.26%)
 	WP_HTML_Processor                           =>    1 (  0.26%)
 	WP_HTML_Processor_State                     =>    1 (  0.26%)
 	WP_HTML_Span                                =>    1 (  0.26%)
+	WP_HTML_Stack_Event                         =>    1 (  0.26%)
 	WP_HTML_Tag_Processor                       =>    1 (  0.26%)
 	WP_HTML_Text_Replacement                    =>    1 (  0.26%)
 	WP_HTML_Token                               =>    1 (  0.26%)
@@ -405,6 +457,7 @@ WP Core class:
 	WP_Network                                  =>    1 (  0.26%)
 	WP_Network_Query                            =>    1 (  0.26%)
 	WP_Object_Cache                             =>    1 (  0.26%)
+	WP_PHPMailer                                =>    1 (  0.26%)
 	WP_Paused_Extensions_Storage                =>    1 (  0.26%)
 	WP_Plugin_Dependencies                      =>    1 (  0.26%)
 	WP_Plugin_Install_List_Table                =>    1 (  0.26%)
@@ -502,6 +555,7 @@ WP Core class:
 	WP_Sitemaps_Stylesheet                      =>    1 (  0.26%)
 	WP_Sitemaps_Taxonomies                      =>    1 (  0.26%)
 	WP_Sitemaps_Users                           =>    1 (  0.26%)
+	WP_Speculation_Rules                        =>    1 (  0.26%)
 	WP_Style_Engine                             =>    1 (  0.26%)
 	WP_Style_Engine_CSS_Declarations            =>    1 (  0.26%)
 	WP_Style_Engine_CSS_Rule                    =>    1 (  0.26%)
@@ -523,11 +577,13 @@ WP Core class:
 	WP_Theme_JSON_Resolver                      =>    1 (  0.26%)
 	WP_Theme_JSON_Schema                        =>    1 (  0.26%)
 	WP_Themes_List_Table                        =>    1 (  0.26%)
+	WP_Token_Map                                =>    1 (  0.26%)
 	WP_Translation_Controller                   =>    1 (  0.26%)
 	WP_Translation_File                         =>    1 (  0.26%)
 	WP_Translation_File_MO                      =>    1 (  0.26%)
 	WP_Translation_File_PHP                     =>    1 (  0.26%)
 	WP_Translations                             =>    1 (  0.26%)
+	WP_URL_Pattern_Prefixer                     =>    1 (  0.26%)
 	WP_Upgrader                                 =>    1 (  0.26%)
 	WP_Upgrader_Skin                            =>    1 (  0.26%)
 	WP_User                                     =>    1 (  0.26%)
@@ -582,10 +638,11 @@ WP Core class:
 	wp_xmlrpc_server                            =>    1 (  0.26%)
 	wpdb                                        =>    1 (  0.26%)
 	--------------------------------------------------------------
-	total                                       =>  378 (100.00%)
+	total                                       =>  389 (100.00%)
 
 ----------------------------------------------------------------------
-Time: 27.63 secs; Memory: 68MB
+Time: 1 mins, 5.46 secs; Memory: 72MB
 
 
 Exit code is 0
+
