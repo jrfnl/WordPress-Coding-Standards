@@ -120,6 +120,13 @@ final class FindClassNamesSniff implements Sniff {
 			return;
 		}
 
+		if ( strpos( $file, '/src/wp-includes/php-ai-client/' ) !== false
+			|| strpos( $file, '\\src\\wp-includes\\php-ai-client\\' ) !== false
+		) {
+			$phpcsFile->recordMetric( $stackPtr, 'AI Client ' . $type, $name );
+			return;
+		}
+
 		if ( strpos( $file, '/src/wp-content/themes/' ) !== false
 			|| strpos( $file, '\\src\\wp-content\\themes\\' ) !== false
 		) {
