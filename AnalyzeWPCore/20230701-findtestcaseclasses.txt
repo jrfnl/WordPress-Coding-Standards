@@ -1,7 +1,8 @@
-PHP 8.5.0 (cli) (built: Nov 19 2025 09:58:52) (ZTS Visual C++ 2022 x64)
+PHP 8.5.7 (cli) (built: Jun  2 2026 21:13:51) (ZTS Visual C++ 2022 x64)
 Copyright (c) The PHP Group
-Zend Engine v4.5.0, Copyright (c) Zend Technologies
-    with Zend OPcache v8.5.0, Copyright (c), by Zend Technologies
+Built by The PHP Group
+Zend Engine v4.5.7, Copyright (c) Zend Technologies
+    with Zend OPcache v8.5.7, Copyright (c), by Zend Technologies
 
 PHP_CodeSniffer version 3.13.6 (stable) by Squiz and PHPCSStandards
 
@@ -26,7 +27,7 @@ Test Case classes :
 	total                                      => 10 (100.00%)
 
 ----------------------------------------------------------------------
-Time: 840ms; Memory: 18MB
+Time: 865ms; Memory: 18MB
 
 
 Exit code is 0
