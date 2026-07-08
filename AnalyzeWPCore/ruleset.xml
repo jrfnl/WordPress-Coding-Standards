@@ -39,6 +39,9 @@
 	<exclude-pattern>/src/wp-content/themes/(?!twenty)*</exclude-pattern>
 
 	<rule ref="AnalyzeWPCore.WP.FindDeprecatedClasses">
+		<!-- Exclude themes. -->
+		<exclude-pattern>/src/wp-content/themes/*</exclude-pattern>
+
 		<!-- Exclude externally maintained third-party tools. -->
 		<exclude-pattern>/src/wp-includes/class-avif-info\.php</exclude-pattern>
 		<exclude-pattern>/src/wp-includes/ID3/*</exclude-pattern>
@@ -50,6 +53,9 @@
 	</rule>
 
 	<rule ref="AnalyzeWPCore.WP.FindDeprecatedFunctions">
+		<!-- Exclude themes. -->
+		<exclude-pattern>/src/wp-content/themes/*</exclude-pattern>
+
 		<!-- Exclude externally maintained third-party tools. -->
 		<exclude-pattern>/src/wp-includes/class-avif-info\.php</exclude-pattern>
 		<exclude-pattern>/src/wp-includes/ID3/*</exclude-pattern>
@@ -61,6 +67,9 @@
 	</rule>
 
 	<rule ref="AnalyzeWPCore.WP.FindDeprecatedParameters">
+		<!-- Exclude themes. -->
+		<exclude-pattern>/src/wp-content/themes/*</exclude-pattern>
+
 		<!-- Exclude externally maintained third-party tools. -->
 		<exclude-pattern>/src/wp-includes/class-avif-info\.php</exclude-pattern>
 		<exclude-pattern>/src/wp-includes/ID3/*</exclude-pattern>
