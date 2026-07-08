@@ -9,10 +9,15 @@
 	<!-- Strip the filepaths down to the relevant bit. -->
 	<arg name="basepath" value="./"/>
 
-	<!-- Check up to 20 files simultaneously. -->
-	<arg name="parallel" value="20"/>
+	<!-- Disable parallel processing so the scanned files are always reported in the same
+		 order, which keeps release-to-release diffs of the generated reports clean. -->
+	<arg name="parallel" value="1"/>
 
-	<!-- Show sniff codes in all reports. -->
+	<!-- Fixed report width so long messages don't wrap and the reports are reproducible
+		 (PHPCS otherwise auto-detects the terminal width, which varies between runs). -->
+	<arg name="report-width" value="150"/>
+
+	<!-- Show progress and sniff codes in all reports (progress will drop off once PHPCS 4 is used to run the checks). -->
 	<arg value="ps"/>
 
 	<arg name="report" value="code,summary,source,info"/>
@@ -37,6 +42,7 @@
 		<!-- Exclude externally maintained third-party tools. -->
 		<exclude-pattern>/src/wp-includes/class-avif-info\.php</exclude-pattern>
 		<exclude-pattern>/src/wp-includes/ID3/*</exclude-pattern>
+		<exclude-pattern>/src/wp-includes/php-ai-client/*</exclude-pattern>
 		<exclude-pattern>/src/wp-includes/PHPMailer/*</exclude-pattern>
 		<exclude-pattern>/src/wp-includes/class-requests\.php</exclude-pattern>
 		<exclude-pattern>/src/wp-includes/Requests/*</exclude-pattern>
@@ -47,6 +53,7 @@
 		<!-- Exclude externally maintained third-party tools. -->
 		<exclude-pattern>/src/wp-includes/class-avif-info\.php</exclude-pattern>
 		<exclude-pattern>/src/wp-includes/ID3/*</exclude-pattern>
+		<exclude-pattern>/src/wp-includes/php-ai-client/*</exclude-pattern>
 		<exclude-pattern>/src/wp-includes/PHPMailer/*</exclude-pattern>
 		<exclude-pattern>/src/wp-includes/class-requests\.php</exclude-pattern>
 		<exclude-pattern>/src/wp-includes/Requests/*</exclude-pattern>
@@ -57,6 +64,7 @@
 		<!-- Exclude externally maintained third-party tools. -->
 		<exclude-pattern>/src/wp-includes/class-avif-info\.php</exclude-pattern>
 		<exclude-pattern>/src/wp-includes/ID3/*</exclude-pattern>
+		<exclude-pattern>/src/wp-includes/php-ai-client/*</exclude-pattern>
 		<exclude-pattern>/src/wp-includes/PHPMailer/*</exclude-pattern>
 		<exclude-pattern>/src/wp-includes/class-requests\.php</exclude-pattern>
 		<exclude-pattern>/src/wp-includes/Requests/*</exclude-pattern>
