@@ -6,7 +6,7 @@ Zend Engine v4.5.7, Copyright (c) Zend Technologies
 
 PHP_CodeSniffer version 3.13.6 (stable) by Squiz and PHPCSStandards
 
-................................................... 51 / 51 (100%)
+........................................................ 56 / 56 (100%)
 
 
 
@@ -27,7 +27,7 @@ Test Case classes :
 	total                                      => 10 (100.00%)
 
 ----------------------------------------------------------------------
-Time: 865ms; Memory: 18MB
+Time: 841ms; Memory: 18MB
 
 
 Exit code is 0
